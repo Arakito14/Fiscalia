@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.manzanitacreations.proyectofiscalia;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.regex.*;
 
-/**
- *
- * @author Marlene
- */
 public class Fiscalia {
     private HashMap<String,Fiscal> fiscales;
     private HashMap<String,Causa> causas;
@@ -39,7 +33,7 @@ public class Fiscalia {
   /*Método para mostrar todas las causas de la Hashtable causas*/
  public  void mostrarCausas(){
      int tamaño=causas.size();
-     if(tamaño!=0){//Comprueba que si existen causas que mostrar
+     if(tamaño!=0){
          for (Map.Entry<String, Causa> entry : causas.entrySet()) {
                 Causa aux=entry.getValue();
                System.out.println("Codigo Causa:"+ aux.getCodigo());
@@ -52,10 +46,10 @@ public class Fiscalia {
      } 
  }
  
- /*Método para mostrar todas las causas de la Hashtable causas*/
+ /*Método para mostrar todas las causas que tiene un fiscal*/
  public  void mostrarCausas(HashMap<String,Causa>causas){
      int tamaño=causas.size();
-     if(tamaño!=0){//Comprueba que si existen causas que mostrar
+     if(tamaño!=0){
          for (Map.Entry<String, Causa> entry : causas.entrySet()) {
                 Causa aux=entry.getValue();
                System.out.println("Codigo Causa:"+ aux.getCodigo());
@@ -67,72 +61,107 @@ public class Fiscalia {
           }
      } 
  }
+ 
  /*Método para buscar un fiscal y mostrarlo por pantalla*/
- public void buscarFiscal(){
+ /*Retorna el fiscal si es que existe y null en caso contrario*/
+ public Fiscal buscarFiscal(){
      Scanner leer= new Scanner(System.in);
-     System.out.println("Ingrese el rut del fiscal sin puntos y con guion");/**Falta verificacion*/
-     String rut= leer.nextLine();//Se lee el rut del fiscal
+     Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
+     System.out.println("Ingrese el rut del fiscal sin puntos y con guion");
+     String rut= leer.nextLine();
+     Matcher mat = patron.matcher(rut);
+     while(!mat.matches()){
+          System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+          rut=leer.nextLine();
+          mat=patron.matcher(rut);
+     }
      Fiscal buscado= fiscales.get(rut);
-      if(buscado==null){//Se comprueba que el fiscal exista
-           System.out.println("No se ha encontrado al fiscal buscado");
+      if(buscado==null){
+           System.out.println("El fiscal buscado no existe");
+           return null;
        }else{
-           buscado.imprimirFiscal();//Se muestra al fiscal por pantalla
+           buscado.imprimirFiscal();
            System.out.println("Causas:");
-           mostrarCausas(buscado.getCausasActuales());//Se muestran las causas del fiscal
+           mostrarCausas(buscado.getCausasActuales());
       }
+      return buscado;
  }
  
  /*Método para buscar una causa y mostrarla por pantalla*/
- public void buscarCausa(){
+ /*Retorna la causa si es que existe y null en caso contrario*/
+ public Causa buscarCausa(){
      Scanner leer= new Scanner(System.in);
-     System.out.println("Ingrese el codigo de la causa");
-     String codigo= leer.nextLine();//Se lee el codigo de la causa
+          System.out.println("Ingrese el codigo de la causa");
+          Pattern patron = Pattern.compile("[0-9]{6}");
+          String codigo=leer.nextLine();
+          Matcher mat = patron.matcher(codigo);
+           while(!mat.matches()){
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     codigo=leer.nextLine();
+                     mat=patron.matcher(codigo);
+            }
      Causa buscar= causas.get(codigo);
-      if(buscar!=null){//Se comprueba que la causa exista
-                   buscar.imprimirCausa();//Se muestra la causa por pantalla
-                   buscar.mostrarProcedimientos();//Se muestran los procedimientos de la causa
+      if(buscar!=null){
+                   buscar.imprimirCausa();
+                   buscar.mostrarProcedimientos();
                    System.out.println("----------------------------------------------------------");
+                   return buscar;
       }else{
           System.out.println("La causa buscada no existe");
+          return null;
       }
      
  }
  
- /*Método para buscar una causa y mostrarla por pantalla*/
+ /*Método para buscar una de las causas de un fiscal y mostrarla por pantalla*/
+ /*Recibe como parámetro el mapa de causas dentro del fiscal*/
  public void buscarCausa(HashMap<String,Causa> causas){
-     Scanner leer= new Scanner(System.in);
-     System.out.println("Ingrese el codigo de la causa");
-     String codigo= leer.nextLine();//Se lee el codigo de la causa
+          Scanner leer= new Scanner(System.in);
+          System.out.println("Ingrese el codigo de la causa");
+          Pattern patron = Pattern.compile("[0-9]{6}");
+          String codigo=leer.nextLine();
+          Matcher mat = patron.matcher(codigo);
+           while(!mat.matches()){
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     codigo=leer.nextLine();
+                     mat=patron.matcher(codigo);
+            }
      Causa buscar= causas.get(codigo);
-      if(buscar!=null){//Se comprueba que la causa exista
-                   buscar.imprimirCausa();//Se muestra la causa por pantalla
-                   buscar.mostrarProcedimientos();//Se muestran los procedimientos de la causa
+      if(buscar!=null){
+                   buscar.imprimirCausa();
+                   buscar.mostrarProcedimientos();
                    System.out.println("----------------------------------------------------------");
       }else{
           System.out.println("La causa buscada no existe");
       }
      
  }
- 
  
   /*Método para leer un fiscal e ingresarlo a la Hashtable fiscales*/
  public void nuevoFiscal(){
      Scanner leer= new Scanner(System.in);
-     System.out.println("Ingrese el rut sin puntos y con guion");
-     String rut=leer.nextLine();//Se lee le rut del fiscal a ingresar
+      Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
+     System.out.println("Ingrese el rut del fiscal sin puntos y con guion");
+     String rut= leer.nextLine();
+     Matcher mat = patron.matcher(rut);
+     while(!mat.matches()){
+          System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+          rut=leer.nextLine();
+          mat=patron.matcher(rut);
+     }
      boolean existe= fiscales.containsKey(rut);
-     if(existe){//Se comprueba que no exista un fiscal con el mismo rut
+     if(existe){
          System.out.println("Ya existe un fiscal con ese rut");
      }else{
-         System.out.println("Ingrese el nombre del fiscal");//Se leen los datos del fiscal
+         System.out.println("Ingrese el nombre del fiscal");
          String nombre=leer.nextLine();
          System.out.println("Ingrese la especialidad del fiscal");
          String especialidad=leer.nextLine();
          System.out.println("Ingrese el distrito");
          int distrito=Integer.parseInt(leer.nextLine());
      
-         Fiscal nuevo= new Fiscal(nombre,rut,especialidad,distrito);//Se crea un nuevo objeto Fiscal con los datos
-         fiscales.put(rut,nuevo);//El fiscal es ingresado al mapa
+         Fiscal nuevo= new Fiscal(nombre,rut,especialidad,distrito);
+         fiscales.put(rut,nuevo);
      }
      
  }
@@ -140,33 +169,47 @@ public class Fiscalia {
  /*Método para leer una causa e ingresarla a la HashTable causas*/
  public void nuevaCausa(){
       Scanner leer= new Scanner(System.in);
-     System.out.println("Ingrese el codigo del caso");
-     String codigo=leer.nextLine();//Se lee el codigo de la causa
+          System.out.println("Ingrese el codigo de la causa a asignar");
+          Pattern patron = Pattern.compile("[0-9]{6}");
+          String codigo=leer.nextLine();
+          Matcher mat = patron.matcher(codigo);
+           while(!mat.matches()){
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     codigo=leer.nextLine();
+                     mat=patron.matcher(codigo);
+            }
      boolean existe= causas.containsKey(codigo);
-     if(existe){//Se comprueba que no exista una causa con el mismo código
+     if(existe){
          System.out.println("Ya existe este caso");
      }else{
-         System.out.println("Ingrese el nombre del estado del caso");//Se leen los datos de la causa
+         System.out.println("Ingrese el nombre del estado del caso");
          String estado=leer.nextLine();
          System.out.println("Ingrese el tipo de caso");
          String tipoCaso=leer.nextLine();
          System.out.println("Ingrese el distrito");
          int distrito=Integer.parseInt(leer.nextLine());
      
-         Causa nueva= new Causa(codigo,estado,tipoCaso,distrito);//Se crea un nuevo objeto Causa con los datos
-         causas.put(codigo,nueva);//Se ingresa la causa al mapa causas
+         Causa nueva= new Causa(codigo,estado,tipoCaso,distrito);
+         causas.put(codigo,nueva);
      }
      
  }
  
- /*Método para leer un nuevo procedimiento e ingresarlo al Vector peritajes dentro de una causa*/
+ /*Método para buscar la causa a la que se le agregará un nuevo procedimiento*/
   public void nuevoProcedimiento(){
       Scanner leer= new Scanner(System.in);
-      System.out.println("Ingrese el codigo de la causa");
-      String codigo= leer.nextLine();//Se lee el codigo de la causa a la que se le va a ingresar un procedimiento
+          System.out.println("Ingrese el codigo de la causa");
+          Pattern patron = Pattern.compile("[0-9]{6}");
+          String codigo=leer.nextLine();
+          Matcher mat = patron.matcher(codigo);
+           while(!mat.matches()){
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     codigo=leer.nextLine();
+                     mat=patron.matcher(codigo);
+           }
       Causa buscar= causas.get(codigo);
-      if(buscar!=null){//Se comprueba que la causa exista
-                   buscar.imprimirCausa();//Se muestra la causa por pantalla para que el usuario pueda ver los detalles
+      if(buscar!=null){
+                   buscar.imprimirCausa();
                    buscar.mostrarProcedimientos();
                    System.out.println("----------------------------------------------------------");
                    nuevoProcedimiento(buscar);             
@@ -175,15 +218,15 @@ public class Fiscalia {
       }
      }  
   
+  /*Método que agrega el nuevo procedimiento a la causa*/
    public void nuevoProcedimiento(Causa buscar){
        Scanner leer= new Scanner(System.in);
-       System.out.println("Ingrese el nombre del nuevo procedimiento");//Se leen los datos del nuevo procedimiento
+       System.out.println("Ingrese el nombre del nuevo procedimiento");
        String nombreProc=leer.nextLine();
        Procedimiento nuevo=new Procedimiento();
        nuevo.setNombreProc(nombreProc);
        int opcion=0;
-       do{/*Se leen los datos de los participantes del procedimiento hasta que el usuario seleccione la opcion 0
-       (Los procedimientos deben tener minimo un participante, pero no hay un máximo */
+       do{
            System.out.println("Ingrese el nombre del participante");
            String nombre=leer.nextLine();
            System.out.println("Ingrese el rol del participante (policia, abogado, testigo,etc...)");
@@ -196,13 +239,21 @@ public class Fiscalia {
       System.out.println("Ingrese el resultado del nuevo procedimiento");
       String result=leer.nextLine();
       nuevo.setResultado(result);
-      buscar.getPeritajes().addLast(nuevo);//Se ingresa el procedimiento a la lista que hay dentro de la causa
-   }  
-    
-   void asignarFiscal(){
+      buscar.getPeritajes().addLast(nuevo);
+   }
+ 
+  /*Método para asignar un fiscal a una causa*/
+   public void asignarFiscal(){
           Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa a asignar");
+          Pattern patron = Pattern.compile("[0-9]{6}");
           String codigo=leer.nextLine();
+          Matcher mat = patron.matcher(codigo);
+           while(!mat.matches()){
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     codigo=leer.nextLine();
+                     mat=patron.matcher(codigo);
+            }
           Causa asignada=causas.get(codigo);
           if(asignada!=null){
                 System.out.println(codigo);
@@ -212,15 +263,23 @@ public class Fiscalia {
           }
    }
    
- void modificarDistrito(){
+ /*Método para buscar un fiscal y modificar su distrito*/
+ public void modificarDistrito(){
      Scanner leer= new Scanner(System.in);
-     System.out.println("Ingrese el rut del fiscal sin puntos y con guion");/**Falta verificacion*/
-     String rut= leer.nextLine();//Se lee el rut del fiscal
+     Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
+     System.out.println("Ingrese el rut del fiscal sin puntos y con guion");
+     String rut= leer.nextLine();
+     Matcher mat = patron.matcher(rut);
+     while(!mat.matches()){
+          System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+          rut=leer.nextLine();
+          mat=patron.matcher(rut);
+     }
      Fiscal buscado= fiscales.get(rut);
-      if(buscado==null){//Se comprueba que el fiscal exista
+     if(buscado==null){
            System.out.println("No se ha encontrado al fiscal buscado");
-       }else{
-           buscado.imprimirFiscal();//Se muestra al fiscal por pantalla
+     }else{
+           buscado.imprimirFiscal();
            System.out.println("Ingrese el nuevo distrito");
            int dist= Integer.parseInt(leer.nextLine());
            while(dist<0 || dist>28){
@@ -231,8 +290,72 @@ public class Fiscalia {
       }
  }
  
- 
-   
+ /*Método para cambiar el fiscal de una causa*/
+ public void cambiarFiscal(){
+          Scanner leer= new Scanner(System.in);
+          System.out.println("Ingrese el codigo de la causa requerida");
+          Pattern patron = Pattern.compile("[0-9]{6}");
+          String codigo=leer.nextLine();
+          Matcher mat = patron.matcher(codigo);
+           while(!mat.matches()){
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     codigo=leer.nextLine();
+                     mat=patron.matcher(codigo);
+            }
+          Causa asignada=causas.get(codigo);
+          if(asignada!=null){
+                patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
+                System.out.println("Ingrese el rut del fiscal sin puntos y con guion");
+                String rut= leer.nextLine();
+                 mat = patron.matcher(rut);
+                 while(!mat.matches()){
+                         System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                         rut=leer.nextLine();
+                         mat=patron.matcher(rut);
+                }
+                Fiscal nuevo=fiscales.get(rut);
+                asignada.reemplazarFiscal(nuevo, fiscales, asignada);
+          }else{
+                 System.out.println("La causa requerida no existe");
+          }        
+ }
+ /*Modifica un procedimiento de una causa*/
+ public void modificarProcedimiento(){
+        Causa buscar=buscarCausa();
+        buscar.modificarProcedimiento();
+ }
+ /*Elimina un fiscal de los mapas*/
+ public void eliminarFiscal(){
+        Fiscal eliminado=buscarFiscal();
+        if(eliminado!=null){
+            eliminarFiscal(eliminado.getCausasActuales());
+            fiscales.remove(eliminado.getRut());
+        }else{
+            System.out.println("No hay nada que eliminar");
+        }
+ }
+ /*Elimina el fiscal de todas las causas que tenía a su cargo*/
+ public void eliminarFiscal(HashMap<String,Causa> causas){
+     ArrayList<String> claves= (ArrayList<String>) causas.keySet();
+     for(int i=0;i<claves.size();i++){
+          Causa aux=causas.get(claves.get(i));
+          aux.setEncargado(null);
+     }
+     causas.clear();
+ }
+ /*Elimina la causa de todos los mapas*/
+ public void eliminarCausa(){
+      Causa eliminada=buscarCausa();
+      Fiscal encargado= fiscales.get(eliminada.getEncargado().getRut());
+      encargado.getCausasActuales().remove(eliminada.getCodigo());
+      eliminada.getPeritajes().clear();
+      causas.remove(eliminada.getCodigo());      
+ }
+ /*Busca la causa a la que se le va a eliminar un procedimiento*/
+ public void eliminarProcedimiento(){
+     Causa eliminada=buscarCausa();
+     eliminada.eliminarProcedimiento();
+ }
 /**------------------------------------------Getter y Setter------------------------------------------------*/
     public HashMap<String, Fiscal> getFiscales() {
         return fiscales;

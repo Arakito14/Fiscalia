@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 *
 *@author Marlene Lagos
 *@author Valentina San Martin
+*@author Matias Mujica
 *ICI3241-1
 */
 
@@ -83,6 +84,30 @@ public class ProyectoFiscalia {
             case 8:
                      nueva.asignarFiscal();
                      break;
+           /*Modificar el distrito de un Fiscal*/
+            case 9:
+                     nueva.modificarDistrito();
+                     break;
+           /*Cambiar al fiscal encargado de una causa*/
+            case 10:
+                     nueva.cambiarFiscal();
+                     break;
+           /*Cambiar el resultado de un procedimiento*/
+            case 11:
+                     nueva.modificarProcedimiento();
+                    break;
+           /*Eliminar un fiscal*/
+            case 12:
+                    nueva.eliminarFiscal();
+                    break;
+          /*Eliminar una causa*/
+            case 13:
+                    nueva.eliminarCausa();
+                     break;
+          /*Eliminar un procedimiento*/
+            case 14:
+                     
+                     break;           
             case 0:  
                      System.out.println("Hasta Pronto");
                      break;

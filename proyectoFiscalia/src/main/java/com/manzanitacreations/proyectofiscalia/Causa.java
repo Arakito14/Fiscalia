@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Causa {
@@ -38,7 +40,9 @@ public class Causa {
     }
     
     
-  /**--------------------------------------------Métodos-------------------------------------------*/  
+  /**--------------------------------------------Métodos-------------------------------------------*/
+    
+ /*Método que muestra los procedimientos de una causa por pantalla*/
     public void mostrarProcedimientos(){
         int tam=peritajes.size();
         if(tam!=0){
@@ -52,10 +56,14 @@ public class Causa {
                     }
                    System.out.println("Resultado"+ peritajes.get(i).getResultado());
            }
+        }else{
+            System.out.println("Esta causa aún no tiene procedimientos");
         }
         
     }
-    
+ 
+/*Funcion para asignar un fiscal a la causa*/
+/*Recibe como parámetros el mapa de fiscales y la causa a asignar*/
 public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
        
     if(encargado.getRut().equals("")){
@@ -68,8 +76,15 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
                System.out.println("----------------------------------------------------------");
             }
        }
-       System.out.println("Ingrese el rut del fiscal elegido");/**Falta poner comprobacion de rut*/
+       System.out.println("Ingrese el rut del fiscal elegido");
+       Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
        String fiscal=leer.nextLine();
+       Matcher mat = patron.matcher(fiscal);
+       while(!mat.matches()){
+          System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+          fiscal=leer.nextLine();
+          mat=patron.matcher(fiscal);
+     }
        encargado= fiscales.get(fiscal);
        encargado.getCausasActuales().put(codigo, asignada);
        
@@ -81,7 +96,9 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
        
     
 }
-    
+
+/*Método para reemplazar al fiscal encargado de una causa*/
+/*Los parámetros son el fiscal nuevo, el mapa de fiscales y la causa*/
 public void reemplazarFiscal(Fiscal nuevo, HashMap<String,Fiscal> fiscales, Causa actual){
           String rut= encargado.getRut();
           Fiscal aux= fiscales.get(rut);
@@ -92,6 +109,7 @@ public void reemplazarFiscal(Fiscal nuevo, HashMap<String,Fiscal> fiscales, Caus
           nuevo.getCausasActuales().put(codigo, actual);
     }
 
+/*Muestra por pantalla la causa*/
 public void imprimirCausa(){
            System.out.println("Codigo Causa:"+ codigo);
            System.out.println("Estado:"+ estado);
@@ -102,6 +120,7 @@ public void imprimirCausa(){
            System.out.println("----------------------------------------------------------");
     }
 
+/*Permite modificar el resultado de un procedimiento*/
 public void modificarProcedimiento(){
     System.out.println("Causa n°:"+ codigo);
     mostrarProcedimientos();
@@ -114,7 +133,18 @@ public void modificarProcedimiento(){
         String nuevo= leer.nextLine();
         elegido.setResultado(nuevo);
     }else{
-        System.out.println("El numero de procedimiento no existe");
+        System.out.println("El numero de procedimiento es incorrecto");
+    }
+}
+/*Elimina un procedimiento de la lista de procedimientos*/
+public void eliminarProcedimiento(){
+    Scanner leer= new Scanner(System.in);
+    System.out.println("Ingrese el numero del procedimiento a eliminar");
+    int num=Integer.parseInt(leer.nextLine());
+    if(num<= peritajes.size()){
+        peritajes.remove(num-1);
+    }else{
+        System.out.println("El numero de procedimiento es incorrecto");
     }
 }
 /**--------------------------------------------Getter y setter-------------------------------------------*/

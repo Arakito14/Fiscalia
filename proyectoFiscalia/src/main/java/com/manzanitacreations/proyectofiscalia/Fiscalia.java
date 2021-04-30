@@ -336,10 +336,9 @@ public class Fiscalia {
  }
  /*Elimina el fiscal de todas las causas que tenía a su cargo*/
  public void eliminarFiscal(HashMap<String,Causa> causas){
-     ArrayList<String> claves= (ArrayList<String>) causas.keySet();
-     for(int i=0;i<claves.size();i++){
-          Causa aux=causas.get(claves.get(i));
-          aux.setEncargado(null);
+     for (Map.Entry<String,Causa> entry : causas.entrySet()) {
+           Causa aux=entry.getValue();
+           aux.setEncargado(null);
      }
      causas.clear();
  }

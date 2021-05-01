@@ -143,6 +143,7 @@ public void eliminarProcedimiento(){
     int num=Integer.parseInt(leer.nextLine());
     if(num<= peritajes.size()){
         peritajes.remove(num-1);
+        System.out.println("El procedimiento fue eliminado exitosamente.");
     }else{
         System.out.println("El numero de procedimiento es incorrecto");
     }

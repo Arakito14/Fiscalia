@@ -106,7 +106,7 @@ public class ProyectoFiscalia {
                      break;
           /*Eliminar un procedimiento*/
             case 14:
-                     
+                    nueva.eliminarProcedimiento(); 
                      break;           
             case 0:  
                      System.out.println("Hasta Pronto");

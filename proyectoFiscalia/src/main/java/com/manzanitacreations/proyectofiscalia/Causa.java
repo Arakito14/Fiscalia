@@ -54,7 +54,7 @@ public class Causa {
                    for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
                         System.out.println(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
                     }
-                   System.out.println("Resultado"+ peritajes.get(i).getResultado());
+                   System.out.println("Resultado:"+ peritajes.get(i).getResultado());
            }
         }else{
             System.out.println("Esta causa aún no tiene procedimientos");
@@ -76,19 +76,25 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
                System.out.println("----------------------------------------------------------");
             }
        }
-       System.out.println("Ingrese el rut del fiscal elegido");
-       Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
-       String fiscal=leer.nextLine();
-       Matcher mat = patron.matcher(fiscal);
-       while(!mat.matches()){
-          System.out.println("El formato es incorrecto. Por favor intente de nuevo");
-          fiscal=leer.nextLine();
-          mat=patron.matcher(fiscal);
-     }
-       encargado= fiscales.get(fiscal);
-       encargado.getCausasActuales().put(codigo, asignada);
        
-       
+       do{
+          System.out.println("Ingrese el rut del fiscal elegido");
+          Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
+          String fiscal=leer.nextLine();
+          Matcher mat = patron.matcher(fiscal);
+          while(!mat.matches()){
+             System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+             fiscal=leer.nextLine();
+             mat=patron.matcher(fiscal);
+          }
+          encargado= fiscales.get(fiscal);
+          if(encargado!=null){
+              break;
+          }else{
+               System.out.println("El fiscal ingresado no existe. Por favor intente de nuevo");
+          }
+       }while(true);
+        encargado.getCausasActuales().put(codigo, asignada);
     }else{
            System.out.println("Esta causa ya tiene fiscal");
     }

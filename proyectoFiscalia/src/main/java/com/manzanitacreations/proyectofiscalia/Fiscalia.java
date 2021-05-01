@@ -158,7 +158,24 @@ public class Fiscalia {
          System.out.println("Ingrese la especialidad del fiscal");
          String especialidad=leer.nextLine();
          System.out.println("Ingrese el distrito");
-         int distrito=Integer.parseInt(leer.nextLine());
+          String dist=leer.nextLine();
+         int distrito=0;
+         boolean esNum;
+         do{
+             esNum=true;
+             try {
+                     distrito=Integer.parseInt(dist);
+                     if(distrito<1|| distrito>28){
+                         esNum=false;
+                         System.out.println("El numero ingresado debe ser entre 1 y 28. Por favor intente de nuevo");
+                         dist=leer.nextLine();
+                     }
+             } catch (NumberFormatException nfe){
+                     esNum=false;
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     dist=leer.nextLine();
+              }
+         }while(!esNum);
      
          Fiscal nuevo= new Fiscal(nombre,rut,especialidad,distrito);
          fiscales.put(rut,nuevo);
@@ -187,8 +204,24 @@ public class Fiscalia {
          System.out.println("Ingrese el tipo de caso");
          String tipoCaso=leer.nextLine();
          System.out.println("Ingrese el distrito");
-         int distrito=Integer.parseInt(leer.nextLine());
-     
+         String dist=leer.nextLine();
+         int distrito=0;
+         boolean esNum;
+         do{
+             esNum=true;
+             try {
+                     distrito=Integer.parseInt(dist);
+                     if(distrito<1|| distrito>28){
+                         esNum=false;
+                         System.out.println("El numero ingresado debe ser entre 1 y 28. Por favor intente de nuevo");
+                         dist=leer.nextLine();
+                     }
+             } catch (NumberFormatException nfe){
+                     esNum=false;
+                     System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                     dist=leer.nextLine();
+              }
+         }while(!esNum);
          Causa nueva= new Causa(codigo,estado,tipoCaso,distrito);
          causas.put(codigo,nueva);
      }
@@ -330,6 +363,7 @@ public class Fiscalia {
         if(eliminado!=null){
             eliminarFiscal(eliminado.getCausasActuales());
             fiscales.remove(eliminado.getRut());
+            System.out.println("El fiscal ha sido eliminado con exito");
         }else{
             System.out.println("No hay nada que eliminar");
         }
@@ -346,9 +380,12 @@ public class Fiscalia {
  public void eliminarCausa(){
       Causa eliminada=buscarCausa();
       Fiscal encargado= fiscales.get(eliminada.getEncargado().getRut());
-      encargado.getCausasActuales().remove(eliminada.getCodigo());
-      eliminada.getPeritajes().clear();
-      causas.remove(eliminada.getCodigo());      
+       if(encargado!=null){
+           encargado.getCausasActuales().remove(eliminada.getCodigo());
+           eliminada.getPeritajes().clear();
+       }
+      causas.remove(eliminada.getCodigo());
+      System.out.println("La causa ha sido eliminada con éxito");      
  }
  /*Busca la causa a la que se le va a eliminar un procedimiento*/
  public void eliminarProcedimiento(){

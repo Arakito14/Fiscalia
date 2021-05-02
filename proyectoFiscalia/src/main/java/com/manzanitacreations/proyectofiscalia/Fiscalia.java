@@ -1,10 +1,7 @@
 package com.manzanitacreations.proyectofiscalia;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.regex.*;
 
 public class Fiscalia {
@@ -18,52 +15,75 @@ public class Fiscalia {
         contraseña="admin";
     }
     
-  
-  /*Método para mostrar todos los fiscales del Hashtable fiscales*/
+/*--------------------------------------------Métodos------------------------------------------*/
+/*Método para mostrar todos los fiscales del Hashtable fiscales*/
  public void mostrarFiscales(){
-       for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
-             Fiscal aux=entry.getValue();
-             aux.imprimirFiscal();//Muestra los fiscales por pantalla
-             System.out.println("Causas:");
+     fiscales.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+         aux.imprimirFiscal();//Muestra los fiscales por pantalla
+            return aux;
+        }).map(aux -> {
+            System.out.println("Causas:");
+            return aux;
+        }).map(aux -> {
             mostrarCausas(aux.getCausasActuales());//muestra las causas de cada fiscal por pantalla
+            return aux;
+        }).forEachOrdered(_item -> {
             System.out.println("----------------------------------------------------------");
-       }
+        });
  }
  
-  /*Método para mostrar todas las causas de la Hashtable causas*/
+/*Método para mostrar todas las causas de la Hashtable causas*/
  public  void mostrarCausas(){
      int tamaño=causas.size();
      if(tamaño!=0){
-         for (Map.Entry<String, Causa> entry : causas.entrySet()) {
-                Causa aux=entry.getValue();
-               System.out.println("Codigo Causa:"+ aux.getCodigo());
-               System.out.println("Rut Encargado:"+ aux.getEncargado().getRut());
-               System.out.println("Estado:"+ aux.getEstado());
-               System.out.println("Tipo de Caso:"+ aux.getTipoCaso());
-               System.out.println("Distrito:"+ aux.getDistrito());
-               System.out.println("----------------------------------------------------------");
-          }
+         causas.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+             System.out.println("Codigo Causa:"+ aux.getCodigo());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Rut Encargado:"+ aux.getEncargado().getRut());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Estado:"+ aux.getEstado());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Tipo de Caso:"+ aux.getTipoCaso());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Distrito:"+ aux.getDistrito());
+             return aux;
+         }).forEachOrdered(_item -> {
+             System.out.println("----------------------------------------------------------");
+         });
      } 
  }
  
- /*Método para mostrar todas las causas que tiene un fiscal*/
+/*Método para mostrar todas las causas que tiene un fiscal*/
  public  void mostrarCausas(HashMap<String,Causa>causas){
      int tamaño=causas.size();
      if(tamaño!=0){
-         for (Map.Entry<String, Causa> entry : causas.entrySet()) {
-                Causa aux=entry.getValue();
-               System.out.println("Codigo Causa:"+ aux.getCodigo());
-               System.out.println("Rut Encargado:"+ aux.getEncargado().getRut());
-               System.out.println("Estado:"+ aux.getEstado());
-               System.out.println("Tipo de Caso:"+ aux.getTipoCaso());
-               System.out.println("Distrito:"+ aux.getDistrito());
-               System.out.println("----------------------------------------------------------");
-          }
+         causas.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+             System.out.println("Codigo Causa:"+ aux.getCodigo());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Rut Encargado:"+ aux.getEncargado().getRut());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Estado:"+ aux.getEstado());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Tipo de Caso:"+ aux.getTipoCaso());
+             return aux;
+         }).map(aux -> {
+             System.out.println("Distrito:"+ aux.getDistrito());
+             return aux;
+         }).forEachOrdered(_item -> {
+             System.out.println("----------------------------------------------------------");
+         });
      } 
  }
  
- /*Método para buscar un fiscal y mostrarlo por pantalla*/
- /*Retorna el fiscal si es que existe y null en caso contrario*/
+/*Método para buscar un fiscal y mostrarlo por pantalla*/
+/*Retorna el fiscal si es que existe y null en caso contrario*/
  public Fiscal buscarFiscal(){
      Scanner leer= new Scanner(System.in);
      Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
@@ -87,8 +107,8 @@ public class Fiscalia {
       return buscado;
  }
  
- /*Método para buscar una causa y mostrarla por pantalla*/
- /*Retorna la causa si es que existe y null en caso contrario*/
+/*Método para buscar una causa y mostrarla por pantalla*/
+/*Retorna la causa si es que existe y null en caso contrario*/
  public Causa buscarCausa(){
      Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa");
@@ -113,8 +133,8 @@ public class Fiscalia {
      
  }
  
- /*Método para buscar una de las causas de un fiscal y mostrarla por pantalla*/
- /*Recibe como parámetro el mapa de causas dentro del fiscal*/
+/*Método para buscar una de las causas de un fiscal y mostrarla por pantalla*/
+/*Recibe como parámetro el mapa de causas dentro del fiscal*/
  public void buscarCausa(HashMap<String,Causa> causas){
           Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa");
@@ -137,7 +157,7 @@ public class Fiscalia {
      
  }
  
-  /*Método para leer un fiscal e ingresarlo a la Hashtable fiscales*/
+/*Método para leer un fiscal e ingresarlo a la Hashtable fiscales*/
  public void nuevoFiscal(){
      Scanner leer= new Scanner(System.in);
       Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
@@ -183,7 +203,7 @@ public class Fiscalia {
      
  }
  
- /*Método para leer una causa e ingresarla a la HashTable causas*/
+/*Método para leer una causa e ingresarla a la HashTable causas*/
  public void nuevaCausa(){
       Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa a asignar");
@@ -228,7 +248,7 @@ public class Fiscalia {
      
  }
  
- /*Método para buscar la causa a la que se le agregará un nuevo procedimiento*/
+/*Método para buscar la causa a la que se le agregará un nuevo procedimiento*/
   public void nuevoProcedimiento(){
       Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa");
@@ -251,14 +271,14 @@ public class Fiscalia {
       }
      }  
   
-  /*Método que agrega el nuevo procedimiento a la causa*/
+/*Método que agrega el nuevo procedimiento a la causa*/
    public void nuevoProcedimiento(Causa buscar){
        Scanner leer= new Scanner(System.in);
        System.out.println("Ingrese el nombre del nuevo procedimiento");
        String nombreProc=leer.nextLine();
        Procedimiento nuevo=new Procedimiento();
        nuevo.setNombreProc(nombreProc);
-       int opcion=0;
+       int opcion;
        do{
            System.out.println("Ingrese el nombre del participante");
            String nombre=leer.nextLine();
@@ -275,7 +295,7 @@ public class Fiscalia {
       buscar.getPeritajes().addLast(nuevo);
    }
  
-  /*Método para asignar un fiscal a una causa*/
+/*Método para asignar un fiscal a una causa*/
    public void asignarFiscal(){
           Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa a asignar");
@@ -296,7 +316,7 @@ public class Fiscalia {
           }
    }
    
- /*Método para buscar un fiscal y modificar su distrito*/
+/*Método para buscar un fiscal y modificar su distrito*/
  public void modificarDistrito(){
      Scanner leer= new Scanner(System.in);
      Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
@@ -323,7 +343,7 @@ public class Fiscalia {
       }
  }
  
- /*Método para cambiar el fiscal de una causa*/
+/*Método para cambiar el fiscal de una causa*/
  public void cambiarFiscal(){
           Scanner leer= new Scanner(System.in);
           System.out.println("Ingrese el codigo de la causa requerida");
@@ -352,12 +372,12 @@ public class Fiscalia {
                  System.out.println("La causa requerida no existe");
           }        
  }
- /*Modifica un procedimiento de una causa*/
+/*Modifica un procedimiento de una causa*/
  public void modificarProcedimiento(){
         Causa buscar=buscarCausa();
         buscar.modificarProcedimiento();
  }
- /*Elimina un fiscal de los mapas*/
+/*Elimina un fiscal de los mapas*/
  public void eliminarFiscal(){
         Fiscal eliminado=buscarFiscal();
         if(eliminado!=null){
@@ -368,15 +388,14 @@ public class Fiscalia {
             System.out.println("No hay nada que eliminar");
         }
  }
- /*Elimina el fiscal de todas las causas que tenía a su cargo*/
+/*Elimina el fiscal de todas las causas que tenía a su cargo*/
  public void eliminarFiscal(HashMap<String,Causa> causas){
-     for (Map.Entry<String,Causa> entry : causas.entrySet()) {
-           Causa aux=entry.getValue();
-           aux.setEncargado(new Fiscal());
-     }
+     causas.entrySet().stream().map(entry -> entry.getValue()).forEachOrdered(aux -> {
+        aux.setEncargado(new Fiscal());
+        });
      causas.clear();
  }
- /*Elimina la causa de todos los mapas*/
+/*Elimina la causa de todos los mapas*/
  public void eliminarCausa(){
       Causa eliminada=buscarCausa();
       Fiscal encargado= fiscales.get(eliminada.getEncargado().getRut());
@@ -392,7 +411,8 @@ public class Fiscalia {
      Causa eliminada=buscarCausa();
      eliminada.eliminarProcedimiento();
  }
-/**------------------------------------------Getter y Setter------------------------------------------------*/
+/**------------------------------------------Getter y Setter-----------------------------------------------
+     * @return -*/
     public HashMap<String, Fiscal> getFiscales() {
         return fiscales;
     }
@@ -416,5 +436,4 @@ public class Fiscalia {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-
 }

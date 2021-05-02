@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.manzanitacreations.proyectofiscalia;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class Causa {
     private String codigo;
@@ -40,9 +33,9 @@ public class Causa {
     }
     
     
-  /**--------------------------------------------Métodos-------------------------------------------*/
+/*--------------------------------------------Métodos-------------------------------------------*/
     
- /*Método que muestra los procedimientos de una causa por pantalla*/
+/*Método que muestra los procedimientos de una causa por pantalla*/
     public void mostrarProcedimientos(){
         int tam=peritajes.size();
         if(tam!=0){
@@ -65,17 +58,15 @@ public class Causa {
 /*Funcion para asignar un fiscal a la causa*/
 /*Recibe como parámetros el mapa de fiscales y la causa a asignar*/
 public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
-       
     if(encargado.getRut().equals("")){
        Scanner leer= new Scanner(System.in);
        System.out.println("Fiscales recomendados:");
-       for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
-             Fiscal aux=entry.getValue();
-             if(aux.getEspecialidad().equals(tipoCaso)){
-               aux.imprimirFiscal();
-               System.out.println("----------------------------------------------------------");
-            }
-       }
+       fiscales.entrySet().stream().map(entry -> entry.getValue()).filter(aux -> (aux.getEspecialidad().equals(tipoCaso))).map(aux -> {
+           aux.imprimirFiscal();
+            return aux;
+        }).forEachOrdered(_item -> {
+            System.out.println("----------------------------------------------------------");
+        });
        
        do{
           System.out.println("Ingrese el rut del fiscal elegido");
@@ -98,9 +89,6 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
     }else{
            System.out.println("Esta causa ya tiene fiscal");
     }
-       
-       
-    
 }
 
 /*Método para reemplazar al fiscal encargado de una causa*/
@@ -129,8 +117,7 @@ public void imprimirCausa(){
                System.out.println("Esta causa no tiene Fiscal encargado");
            }
            System.out.println("----------------------------------------------------------");
-}
-
+    }
 
 /*Permite modificar el resultado de un procedimiento*/
 public void modificarProcedimiento(){
@@ -148,6 +135,7 @@ public void modificarProcedimiento(){
         System.out.println("El numero de procedimiento es incorrecto");
     }
 }
+
 /*Elimina un procedimiento de la lista de procedimientos*/
 public void eliminarProcedimiento(){
     Scanner leer= new Scanner(System.in);
@@ -160,7 +148,9 @@ public void eliminarProcedimiento(){
         System.out.println("El numero de procedimiento es incorrecto");
     }
 }
-/**--------------------------------------------Getter y setter-------------------------------------------*/
+
+/*--------------------------------------------Getter y setter------------------------------------------
+     * @return -*/
     public String getCodigo() {
         return codigo;
     }
@@ -207,10 +197,5 @@ public void eliminarProcedimiento(){
 
     public void setDistrito(int distrito) {
         this.distrito = distrito;
-    }
-    
-
-
-
-     
+    }    
 }

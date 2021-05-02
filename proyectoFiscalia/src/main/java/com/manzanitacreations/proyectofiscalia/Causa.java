@@ -121,10 +121,16 @@ public void imprimirCausa(){
            System.out.println("Estado:"+ estado);
            System.out.println("Tipo de Caso:"+ tipoCaso);
            System.out.println("Distrito:"+ distrito);
-           System.out.println("Encargado:");
-           encargado.imprimirFiscal();
+           if(encargado!=null && !encargado.getRut().equals("")){
+              System.out.println("Encargado:");
+              encargado.imprimirFiscal(); 
+           }else{
+               System.out.println("----------------------------------------------------------");
+               System.out.println("Esta causa no tiene Fiscal encargado");
+           }
            System.out.println("----------------------------------------------------------");
-    }
+}
+
 
 /*Permite modificar el resultado de un procedimiento*/
 public void modificarProcedimiento(){

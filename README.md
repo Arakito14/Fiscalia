@@ -6,4 +6,3 @@ Fiscalia - Programación Avanzada
 - Programa Main, se encuentra en folder "com.manzanitacreations.proyectofiscalia/" con el nombre "ProyectoFiscalia.java"
 - Programa fue testeado en "Netbeans IDE 12.3
 - Se puede encontrar releases de las pre-revisiones en "https://github.com/Arakito14/Fiscalia/releases"
-...

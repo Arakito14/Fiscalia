@@ -372,7 +372,7 @@ public class Fiscalia {
  public void eliminarFiscal(HashMap<String,Causa> causas){
      for (Map.Entry<String,Causa> entry : causas.entrySet()) {
            Causa aux=entry.getValue();
-           aux.setEncargado(null);
+           aux.setEncargado(new Fiscal());
      }
      causas.clear();
  }

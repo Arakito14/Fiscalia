@@ -8,4 +8,4 @@ Fiscalia - Programación Avanzada
 - Resto de clases de proyecto se encuentrar en nuestro package folder
 - Se puede encontrar releases de las pre-revisiones en "https://github.com/Arakito14/Fiscalia/releases"
 
-**Programa fue testeado en "Netbeans IDE 12.3**
+**Programa fue testeado y ejecutado con "Netbeans IDE 12.3"**

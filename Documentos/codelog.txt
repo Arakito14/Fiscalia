@@ -1,6 +1,7 @@
 /*--------------------------------------------Inicio-----------------------------------------*/
+All important tips and code will be presented here.
 /*--------------------------------------------Tips-----------------------------------------*/
-/* 1.-En general evadir el uso de simbolos especiales como la ñ o el tilde, esto por mayor compatibilidad.
+1.-En general evadir el uso de simbolos especiales como la ñ o el tilde, esto por mayor compatibilidad.
 /*--------------------------------------------Métodos de "Iteracion" de HashMap-----------------------------------------*/
 /*Metodo 1*/
 /*Dos mapas, "vacio" con filtros y "fiscalia" con todos los datos de Fiscal, que es lo que usamos para identificar lo que imprimir, el mapa*/ /*vacio es usado para la identificación, forEach es una Iteracion de Java 8.0 para Hashmap con una condicionante.*/
@@ -48,4 +49,4 @@ public static void mapaNombres(HashMap<String,String>nombres){
 }
 /*--------------------------------------------Integer to String (junk code)-----------------------------------------*/ 
 dis_str = Integer.toString(dis_int);
-/*--------------------------------------------Fin-----------------------------------------*/
+/*--------------------------------------------FIN-----------------------------------------*/

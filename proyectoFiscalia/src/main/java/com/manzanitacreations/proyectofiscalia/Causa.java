@@ -68,26 +68,25 @@ public class Causa {
     public void escribirProcedimientos(File f){
         try {
             FileWriter writer = new FileWriter(f);
+            int tam=peritajes.size();
+            if(tam!=0){
+                writer.write("Procedimientos");
+                writer.write("----------------------------------------------------------");
+                for(int i=0;i<peritajes.size();i++){
+                       writer.write((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc());
+                       writer.write("Participantes:");
+                       for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
+                            writer.write(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
+                        }
+                       writer.write("Resultado:"+ peritajes.get(i).getResultado());
+               }
+            }else{
+                System.out.println("Esta causa aún no tiene procedimientos");
+            }
         }
         catch (Exception e) {
              System.err.println(e);
         }
-        int tam=peritajes.size();
-        if(tam!=0){
-            System.out.println("Procedimientos");
-            System.out.println("----------------------------------------------------------");
-            for(int i=0;i<peritajes.size();i++){
-                   System.out.println((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc());
-                   System.out.println("Participantes:");
-                   for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
-                        System.out.println(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
-                    }
-                   System.out.println("Resultado:"+ peritajes.get(i).getResultado());
-           }
-        }else{
-            System.out.println("Esta causa aún no tiene procedimientos");
-        }
-        
     }
  
 /*Funcion para asignar un fiscal a la causa*/

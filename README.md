@@ -1,6 +1,6 @@
 Fiscalia - Programación Avanzada
 
-- Mapa Concpetual, Mapa UML y reporte de proyecto se encuentran en "Documentos/"
+- Mapa Concpetual & UML, reporte, LOGS de actualizaciones y libreria de codigo en "Documentos/"
 - Proyecto general de java se encuentra en la carpeta "proyectoFiscalia/"
 - Archivos csv, "Fiscales.csv", "causas.csv" y "vacio.csv" de lectura se encuentran en la carpeta "resources/"
 - Package folder es llamado "com.manzanitacreations.proyectofiscalia/"

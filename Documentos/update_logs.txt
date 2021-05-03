@@ -1,0 +1,178 @@
+/*--------------------------------------------Inicio-----------------------------------------*/
+/*Github Releases*/
+
+https://github.com/Arakito14/Fiscalia/releases
+
+/*v1.14*/
+
+FIX
+
+- Metodo Eliminar Fiscal
+
+- Error Visual ":" a resultado
+
+- No se puede eliminar causa, si no hay un fiscal encargado
+
+- Al eliminar un Fiscal encargado de una causa, y luego mostrar causas por pantalla se mostraba un error al no haber un Fiscal encargado para la causa
+
+
+Agregado
+
+- Metodo Eliminar Procdemiento
+
+- Sobrecarga de metodo
+
+- Agregado sobrecarga de metodo en clase "Fiscal.java", filtro de busqueda para Fiscales, estaba pensando esto se puede aplicar para todo el programa, en revisiones finales, creo que lo mejor es hacer este filtro de busqueda uno mas general (cada entidad con su atributo de busqueda), y también reducir el número de Clases a 2 o 3 de ser posible, con la clase madre (Fiscalia.java) y uno o mas clases de apoyo.
+
+- Es posible mejorar esto ultimo, con una aplicación diferente, estuve leyendo un sitio que explica como se puede y deben abusar los metodos de sobrecarga (https://stackoverflow.com/questions/248222/method-overloading-can-you-overuse-it)
+
+- Voy a continuar mañana en esto, aún estoy investigando como iterrar y mostrar por pantalla
+
+- Added un archivo csv vacio, "vacio.csv"
+
+
+Clase Fiscal
+
+- Eliminado import Hashtable no usado
+
+
+Clase Fiscalia
+
+- Eliminado import ArrayList, Map y Set no usados
+
+- Eliminado valor de variable opcion, ya que es redundante:
+
+"It means the value is never used (not the variable as a whole). You might initialise the variable to some value, but change the value in the variable before it is read, thus the initialisation is redundant."
+
+- Modificación en metodo mostrarFiscales()
+
+for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
+
+fiscales.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+
+- Modificación en metodo eliminarFiscal()
+
+for (Map.Entry<String,Causa> entry : causas.entrySet()) {
+
+causas.entrySet().stream().map(entry -> entry.getValue()).forEachOrdered(aux -> {
+
+- Modificación en metodo mostrarCausas()
+
+for (Map.Entry<String, Causa> entry : causas.entrySet()) {
+
+causas.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+
+- Modificación en metodo mostrarCausas(HashMap<String,Causa>causas):
+
+for (Map.Entry<String, Causa> entry : causas.entrySet()) {
+
+causas.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+
+
+Clase Main
+
+- Eliminado import Map no usado
+
+- Eliminado valor de variable opcion, ya que es redundante:
+
+"It means the value is never used (not the variable as a whole). You might initialise the variable to some value, but change the value in the variable before it is read, thus the initialisation is redundant."
+
+- Modificado metodo leerFiscales (HashMap<String,Fiscal>fiscales)
+
+Scanner lector= new Scanner(archivo);
+
+try (Scanner lector = new Scanner(archivo)) {
+
+- Modificado metodo leerCausas (HashMap<String,Causa>causas,HashMap<String,Fiscal> fiscales)
+
+Scanner lector= new Scanner(archivo);
+
+try (Scanner lector = new Scanner(archivo)) {
+
+
+Clase Causa
+
+- Eliminado import Map no usado
+
+- Modificado metodo asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada)
+
+for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
+
+fiscales.entrySet().stream().map(entry -> entry.getValue()).filter(aux -> (aux.getEspecialidad().equals(tipoCaso))).map(aux -> {
+
+
+Next Updates
+
+- Especificar variables permitidas y comprobar metodos, algunos errores menores de excepción
+
+- "K" faltante en formato RUT digito verificador
+
+- Variable "aux" en metodo leerFiscales en clase main no es leido
+
+- GUI
+
+- Generar un reporte en un formato de texto
+
+- Documentacion UML, Mapa Conceptual y Reporte, agregados a .gitnore
+
+
+Codigo testeado en Netbeans IDE 12.3
+
+
+/*V1.15*/
+
+Updates
+
+- Caso de excepción en Distrito
+
+- Caso de excepción en Asignar Fiscal con RUT
+
+- Archivos csv, eliminado simbolos especiales y espacios extras
+
+- Modificado clase "Fiscal.java" para acoplarse con formato de EasyUML (Simbolos especiales removidos "contraseña", "é")
+
+- Removed import Map, Iterator y Stream.collector en clas Fiscal.java.
+
+- Removed Private String dis.str en clase Fiscal, por no uso. 
+
+- Documentacion UML, Mapa Conceptual y Reporte, agregados a .gitnore.
+
+- Actualizado "README.md" con instrucciones basicas de proyecto.
+
+- Archivo "update.logs" añadido a "Documentos/" que contendra las revisiones y sus logs.
+
+- Archivo "codeLibrary.txt" añadido a "Documentos/" que contendra algunos ejemplos de codigos (para reusar), tips varios y mas.
+
+- Añadido "Filtro de Busqueda" con sobrecarga en "Fiscal.java" para buscar cada Fiscal con el atributo pedido.
+
+- Metodo de Verificación para RUT y Distrito, que comprueba la validez del input.
+
+
+Next Updates
+
+- Interfaz Grafica (GUI)
+
+- Generar un reporte en un formato de texto
+
+- Actualizar Mapa UML y Reporte en repositorio
+ 
+
+Problemas Menores
+
+- Buscar Método optimizado para filtro de busquedas, como tambíen uso de variable "distrito"
+
+- Case de no existencia para Nombre, Distrito y Especialidad
+
+- Buscar forma de poder usar mas de un "put" en un mapa y poder iterar, en vez de usar multiple mapas por filtro
+
+- Verificación casos de exepcion en input Nombre, Especialidad y otros
+
+- "K" faltante en formato RUT digito verificador
+
+- Variable "aux" en metodo leerFiscales en clase main no es leido
+
+- Mejorar sobrecarga de método en el filtro de busqueda, aplicar herencia, downcasting, upcasting, ojetos, lo que sea necesario para hacerlo mas compacto
+
+
+Codigo testeado en Netbeans IDE 12.3
+/*--------------------------------------------Fin-----------------------------------------*/

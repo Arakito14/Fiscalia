@@ -175,4 +175,35 @@ Problemas Menores
 
 
 Codigo testeado en Netbeans IDE 12.3
+
+/*V1.16*/
+
+
+Updates
+
+- Al cerrar programa se genera reporte de fiscales con las tres colecciones anidadas
+
+- Actualizado UML
+
+
+Next Updates
+
+- Interfaz Grafica (GUI)
+ 
+
+Problemas Menores
+
+- Buscar Método optimizado para filtro de busquedas, como tambíen uso de variable "distrito"
+
+- Case de no existencia para Nombre, Distrito y Especialidad
+
+- Buscar forma de poder usar mas de un "put" en un mapa y poder iterar, en vez de usar multiple mapas por filtro
+
+- Verificación casos de exepcion en input Nombre, Especialidad y otros
+
+- "K" faltante en formato RUT digito verificador
+
+- Variable "aux" en metodo leerFiscales en clase main no es leido
+
+- Mejorar sobrecarga de método en el filtro de busqueda, aplicar herencia, downcasting, upcasting, ojetos, lo que sea necesario para hacerlo mas compacto
 /*--------------------------------------------Fin-----------------------------------------*/

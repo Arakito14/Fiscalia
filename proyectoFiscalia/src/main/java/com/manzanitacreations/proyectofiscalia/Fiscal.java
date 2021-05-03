@@ -1,7 +1,11 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.io.File;
+import java.io.*;
+import java.util.Map;
 
 public class Fiscal {
     private String nombre;
@@ -37,9 +41,39 @@ public class Fiscal {
        System.out.println("Especialidad:"+ especialidad);
        System.out.println("Distrito:"+ distrito);
     }
+  
+   /*Escribe los fiscales en el archivo de reporte. recibe de parametro el writer*/
+    public void escribirFiscal(PrintWriter writer){
+       try {
+       writer.println("Nombre Fiscal:"+ nombre);
+       writer.println("Rut:"+ rut);
+       writer.println("Especialidad:"+ especialidad);
+       writer.println("Distrito:"+ distrito);
+       }
+       catch (Exception e) {
+         System.err.println(e);
+       }
+    }
+ /*Escribe las causas de cada fiscal en el archivo de reporte. Recibe de parametro el writer*/   
+    public  void escribirCausas(PrintWriter writer){
+        int tamaño=causasActuales.size();
+        if(tamaño!=0){
+            for (Map.Entry<String, Causa> entry : causasActuales.entrySet()) {
+                Causa aux=entry.getValue();
+                writer.println("Codigo Causa:"+ aux.getCodigo());
+                writer.println("Rut Encargado:"+ aux.getEncargado().getRut());
+                writer.println("Estado:"+ aux.getEstado());
+                writer.println("Tipo de Caso:"+ aux.getTipoCaso());
+                writer.println("Distrito:"+ aux.getDistrito());
+                writer.println("----------------------------------------------------------");
+                aux.escribirProcedimientos(writer);
+            }
+        }else{
+            writer.println("Este fiscal aun no tiene causas");
+            writer.println("----------------------------------------------------------");
+        }
     
-    
-    
+    }  
     /**--------------------------------------------Getter y setter------------------------------------------*/
     public void agregarCausa(Causa nueva){
         causasActuales.put(nueva.getCodigo(), nueva);

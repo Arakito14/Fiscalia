@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.io.*;
 
 /*
 *
@@ -106,7 +107,7 @@ public class ProyectoFiscalia {
                      break;
           /*Eliminar un procedimiento*/
             case 14:
-                     
+                     nueva.eliminarProcedimiento();
                      break;           
             case 0:  
                      System.out.println("Hasta Pronto");
@@ -114,8 +115,9 @@ public class ProyectoFiscalia {
             default:
                 System.out.println("Por favor ingrese una opcion valida");
            }
-     }while(opcion !=0); 
          
+     }while(opcion !=0);
+     exportar(nueva.getFiscales(), nueva.getCausas(),nueva);
 }
     /*Método para leer los fiscales desde archivo*/    
      public static void leerFiscales(HashMap<String,Fiscal>fiscales){
@@ -165,7 +167,40 @@ public class ProyectoFiscalia {
      }
   }
   
-  
+  //Crea un archivo txt donde se muestra un reporte de las colecciones anidadas
+  public static void exportar(HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
+     try {
+         File f = new File("src/main/resources/reporte.txt");
+         if (f.exists()) {
+             f.delete();
+             f=new File("src/main/resources/reporte.txt");
+         }
+         escribirEnArchivo(f, nueva.getFiscales(), nueva.getCausas(), nueva);
+     }
+     catch (Exception e) {
+         System.err.println(e);
+     }
+  }
+/*Escribe los datos de las colecciones anidadas en un archivo*/
+/*Recibe como parametros el archivo, los mapas a usar y la fiscalia*/  
+  public static void escribirEnArchivo(File f, HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
+         try {
+             PrintWriter writer = new PrintWriter(f);
+             writer.println("Fiscales");
+             for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
+                Fiscal aux=(Fiscal)entry.getValue();
+                aux.escribirFiscal(writer);//Muestra los fiscales por pantalla
+                writer.println("Causas:");
+                aux.escribirCausas(writer);//muestra las causas de cada fiscal por pantalla
+                writer.println("----------------------------------------------------------");
+             }
+             writer.close();
+         }
+         catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+         }
+  }
 }
 
 

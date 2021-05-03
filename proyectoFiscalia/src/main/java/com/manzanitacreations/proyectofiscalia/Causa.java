@@ -5,12 +5,15 @@
  */
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.*;
 
 
 public class Causa {
@@ -54,11 +57,37 @@ public class Causa {
                    for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
                         System.out.println(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
                     }
-                   System.out.println("Resultado"+ peritajes.get(i).getResultado());
+                   System.out.println("Resultado:"+ peritajes.get(i).getResultado());
            }
         }else{
-            System.out.println("Esta causa aún no tiene procedimientos");
+            System.out.println("Esta causa aun no tiene procedimientos");
         }
+        
+    }
+    
+    /*Escribe los procedimientos de cada causa en el archivo reporte.Recibe de parametro el writer*/
+    public void escribirProcedimientos(PrintWriter writer){
+        try {
+            int tam=peritajes.size();
+            if(tam!=0){
+            writer.println("Procedimientos");
+            writer.println("----------------------------------------------------------");
+            for(int i=0;i<peritajes.size();i++){
+                   writer.println((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc());
+                   writer.println("Participantes:");
+                   for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
+                        writer.println(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
+                    }
+                   writer.println("Resultado:"+ peritajes.get(i).getResultado());
+           }
+           }else{
+            writer.println("Esta causa aun no tiene procedimientos");
+           }
+        }
+        catch (Exception e) {
+             System.err.println(e);
+        }
+        
         
     }
  
@@ -76,19 +105,25 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
                System.out.println("----------------------------------------------------------");
             }
        }
-       System.out.println("Ingrese el rut del fiscal elegido");
-       Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
-       String fiscal=leer.nextLine();
-       Matcher mat = patron.matcher(fiscal);
-       while(!mat.matches()){
-          System.out.println("El formato es incorrecto. Por favor intente de nuevo");
-          fiscal=leer.nextLine();
-          mat=patron.matcher(fiscal);
-     }
-       encargado= fiscales.get(fiscal);
-       encargado.getCausasActuales().put(codigo, asignada);
        
-       
+       do{
+          System.out.println("Ingrese el rut del fiscal elegido");
+          Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
+          String fiscal=leer.nextLine();
+          Matcher mat = patron.matcher(fiscal);
+          while(!mat.matches()){
+             System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+             fiscal=leer.nextLine();
+             mat=patron.matcher(fiscal);
+          }
+          encargado= fiscales.get(fiscal);
+          if(encargado!=null){
+              break;
+          }else{
+               System.out.println("El fiscal ingresado no existe. Por favor intente de nuevo");
+          }
+       }while(true);
+        encargado.getCausasActuales().put(codigo, asignada);
     }else{
            System.out.println("Esta causa ya tiene fiscal");
     }
@@ -115,10 +150,16 @@ public void imprimirCausa(){
            System.out.println("Estado:"+ estado);
            System.out.println("Tipo de Caso:"+ tipoCaso);
            System.out.println("Distrito:"+ distrito);
-           System.out.println("Encargado:");
-           encargado.imprimirFiscal();
+           if(encargado!=null && !encargado.getRut().equals("")){
+              System.out.println("Encargado:");
+              encargado.imprimirFiscal(); 
+           }else{
+               System.out.println("----------------------------------------------------------");
+               System.out.println("Esta causa no tiene Fiscal encargado");
+           }
            System.out.println("----------------------------------------------------------");
-    }
+}
+
 
 /*Permite modificar el resultado de un procedimiento*/
 public void modificarProcedimiento(){
@@ -143,6 +184,7 @@ public void eliminarProcedimiento(){
     int num=Integer.parseInt(leer.nextLine());
     if(num<= peritajes.size()){
         peritajes.remove(num-1);
+        System.out.println("El procedimiento fue eliminado exitosamente.");
     }else{
         System.out.println("El numero de procedimiento es incorrecto");
     }

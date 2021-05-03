@@ -2,7 +2,6 @@ package com.manzanitacreations.proyectofiscalia;
 
 import java.util.ArrayList;
 
-
 public class Procedimiento {
     private String nombreProc;
     private ArrayList<String> participantes;
@@ -15,7 +14,9 @@ public class Procedimiento {
       roles= new ArrayList<>();
       resultado= new String();
     }
- /**--------------------------------------------Métodos-------------------------------------------*/   
+/*--------------------------------------------Metodos------------------------------------------
+     * @param i-   
+     * @return */   
        public String obtenerParticipante(int i){
            return participantes.get(i);
        }
@@ -30,7 +31,8 @@ public class Procedimiento {
       }
 
     
-/**--------------------------------------------Getter y setter------------------------------------------*/
+/*--------------------------------------------Getter y setter-----------------------------------------
+     * @return -*/
 public String getNombreProc() {
         return nombreProc;
 }

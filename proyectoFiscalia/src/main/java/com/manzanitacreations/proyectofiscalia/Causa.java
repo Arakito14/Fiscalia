@@ -33,9 +33,9 @@ public class Causa {
     }
     
     
-/*--------------------------------------------Métodos-------------------------------------------*/
+/*--------------------------------------------Metodos-------------------------------------------*/
     
-/*Método que muestra los procedimientos de una causa por pantalla*/
+/*Metodo que muestra los procedimientos de una causa por pantalla*/
     public void mostrarProcedimientos(){
         int tam=peritajes.size();
         if(tam!=0){
@@ -91,7 +91,7 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
     }
 }
 
-/*Método para reemplazar al fiscal encargado de una causa*/
+/*Metodo para reemplazar al fiscal encargado de una causa*/
 /*Los parámetros son el fiscal nuevo, el mapa de fiscales y la causa*/
 public void reemplazarFiscal(Fiscal nuevo, HashMap<String,Fiscal> fiscales, Causa actual){
           String rut= encargado.getRut();

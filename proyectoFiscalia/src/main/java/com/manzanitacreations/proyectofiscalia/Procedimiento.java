@@ -14,7 +14,7 @@ public class Procedimiento {
       roles= new ArrayList<>();
       resultado= new String();
     }
-/*--------------------------------------------Métodos------------------------------------------
+/*--------------------------------------------Metodos------------------------------------------
      * @param i-   
      * @return */   
        public String obtenerParticipante(int i){

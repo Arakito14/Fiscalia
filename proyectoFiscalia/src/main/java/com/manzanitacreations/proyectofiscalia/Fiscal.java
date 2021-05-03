@@ -1,12 +1,9 @@
 package com.manzanitacreations.proyectofiscalia;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Fiscal {
     private String nombre;
@@ -14,7 +11,7 @@ public class Fiscal {
     private HashMap<String,Causa> causasActuales;
     private String especialidad;
     
-    /*Distrito en entero y string*/
+    /*Distritos*/
     private int distrito;
     private String distrito_str;
     
@@ -22,8 +19,11 @@ public class Fiscal {
     private int cont;
     private Scanner leer;
     
+    /*Mapas para Filtro de Busqueda*/
     private HashMap<String,Fiscal> fiscales;
-    private HashMap<String,Fiscal> vacio;
+    private HashMap<String,String> nombres;
+    private HashMap<String,String> especialidades;
+    private HashMap<String,Integer> distritos;
 
     public Fiscal(){
         nombre= new String();
@@ -31,12 +31,13 @@ public class Fiscal {
         causasActuales= new HashMap<>();
         especialidad = new String();
         
-        /*distrito*/
         distrito=0;
-        distrito_str= new String();
         
+        /*Filtros de Busqueda*/
         fiscales = new HashMap<>();
-        vacio = new HashMap<>();
+        nombres = new HashMap<>();
+        especialidades = new HashMap<>();
+        distritos = new HashMap<>();
     }
 
     public Fiscal(String nombre, String rut, String especialidad, int distrito) {
@@ -107,7 +108,7 @@ public class Fiscal {
         return rut_user;
     }
  
-/*--------------------------------------------Métodos------------------------------------------
+/*--------------------------------------------Metodos------------------------------------------
      * @param codigo-*/ 
     public void quitarCausa(String codigo){
         causasActuales.remove(codigo);
@@ -139,8 +140,15 @@ public class Fiscal {
 /*--------------------------------Switch para seleccion de metodo de sobrecarga------------------------------------*/
             switch(opcion){
             /*Muestra todos los fiscales y sus atributos principales*/
-                case 1: 
-                    imprimirFiscal();
+                case 1:
+                    System.out.println("----------------------------------------------------------");
+                    nombres.forEach(
+                        (key,value) -> {
+                            Fiscal buscado= fiscales.get(key);
+                            buscado.imprimirFiscal();
+                            System.out.println("----------------------------------------------------------");
+                        }
+                    );
                     break;
             /*Busca por nombre*/
                 case 2:
@@ -194,7 +202,6 @@ public class Fiscal {
                     /*Distrito en entero y string*/
                     String dis_str  = leer.nextLine();
                     int dis_int;
-                    cont = 0;
                     
                     /*verificación*/
                     dis_int=esNum(dis_str);
@@ -224,35 +231,65 @@ public class Fiscal {
     }
     
     public void imprimirFiscal(String rut_filtro){
+        System.out.println("----------------------------------------------------------");
         System.out.println("Rut a buscar: "+rut_filtro+"\nCargando...");
         Fiscal buscado= fiscales.get(rut_filtro);
+        System.out.println("----------------------------------------------------------");
+        
         if(buscado==null){
             System.out.println("El Rut buscado no existe");
        }else{
            buscado.imprimirFiscal();
         }
+        System.out.println("----------------------------------------------------------");
     }
 
     public void imprimirFiscal(String esp_filtro, int cont){
+        System.out.println("----------------------------------------------------------");
         System.out.println("Especialidad a buscar: "+esp_filtro+"\nCargando...");
-        Fiscal buscado= vacio.get(esp_filtro);
+        System.out.println("----------------------------------------------------------");
         
-        Iterator itr = vacio.entrySet().iterator();
-        vacio.forEach(
+        especialidades.forEach(
                 (key,value) -> {
-                        if(key.equals(esp_filtro)){
+                        if(value.equals(esp_filtro)){
+                            Fiscal buscado= fiscales.get(key);
                             buscado.imprimirFiscal();
+                            System.out.println("----------------------------------------------------------");
                         }
                     }
             );
     }
 
     public void imprimirFiscal(int cont, String nombre_filtro){
+        System.out.println("----------------------------------------------------------");
         System.out.println("Nombre a buscar: "+nombre_filtro+"\nCargando...");
+        System.out.println("----------------------------------------------------------");
+        
+        nombres.forEach(
+                (key,value) -> {
+                        if(value.equals(nombre_filtro)){
+                            Fiscal buscado= fiscales.get(key);
+                            buscado.imprimirFiscal();
+                            System.out.println("----------------------------------------------------------");
+                        }
+                    }
+            );
     }
     
     public void imprimirFiscal(int dis_filtro, int cont){
+        System.out.println("----------------------------------------------------------");
         System.out.println("Distrito a buscar: "+dis_filtro+"\nCargando...");
+        System.out.println("----------------------------------------------------------");
+        
+        distritos.forEach(
+                (key,value) -> {
+                        if(value.equals(dis_filtro)){
+                            Fiscal buscado= fiscales.get(key);
+                            buscado.imprimirFiscal();
+                            System.out.println("----------------------------------------------------------");
+                        }
+                    }
+            );
     }
     
 /*--------------------------------------------Getter y setter-----------------------------------------
@@ -293,6 +330,7 @@ public class Fiscal {
         this.especialidad = especialidad;
     }
 
+/*Distritos*/
     public int getDistrito() {
             return distrito;
     }
@@ -301,6 +339,15 @@ public class Fiscal {
         this.distrito = distrito;
     }
 
+    public String getDistrito_str() {
+        return distrito_str;
+    }
+
+    public void setDistrito_str(String distrito_str) {
+        this.distrito_str = distrito_str;
+    }
+
+/*--------------------------------------------Getter y setter de Filtros de Busqueda-----------------------------------------*/
     public HashMap<String, Fiscal> getFiscales() {
         return fiscales;
     }
@@ -308,13 +355,28 @@ public class Fiscal {
     public void setFiscales(HashMap<String, Fiscal> fiscales) {
         this.fiscales = fiscales;
     }
-
-    public HashMap<String, Fiscal> getVacio() {
-        return vacio;
-    }
-
-    public void setVacio(HashMap<String, Fiscal> vacio) {
-        this.vacio = vacio;
-    }
     
+    public HashMap<String, String> getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(HashMap<String, String> nombres) {
+        this.nombres = nombres;
+    }
+
+    public HashMap<String, String> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(HashMap<String, String> especialidades) {
+        this.especialidades = especialidades;
+    }
+
+    public HashMap<String, Integer> getDistritos() {
+        return distritos;
+    }
+
+    public void setDistritos(HashMap<String, Integer> distritos) {
+        this.distritos = distritos;
+    }
 }

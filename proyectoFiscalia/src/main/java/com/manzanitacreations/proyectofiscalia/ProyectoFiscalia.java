@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 public class ProyectoFiscalia {
 
-/*--------------------------------Método main------------------------------------*/
+/*--------------------------------Metodo main------------------------------------*/
 
   public static void main(String[] args) throws IOException {
          Fiscalia nueva=new Fiscalia();
@@ -28,8 +28,12 @@ public class ProyectoFiscalia {
          leerFiscales(nueva.getFiscales());
          leerCausas(nueva.getCausas(),nueva.getFiscales());
          
+         /*Filtros de busqueda*/
          leerFiscales(fis.getFiscales());
-         leerVacio(fis.getVacio());
+         mapaNombres(fis.getNombres());
+         mapaEspecialidades(fis.getEspecialidades());
+         mapaDistritos(fis.getDistritos());
+         
   
 /*--------------------------------Menú------------------------------------*/
      do{
@@ -132,7 +136,7 @@ public class ProyectoFiscalia {
      }while(opcion !=0); 
 }
 
-/*Método para leer los fiscales desde archivo*/    
+/*Metodo para leer los fiscales desde archivo*/    
      public static void leerFiscales(HashMap<String,Fiscal>fiscales){
       try{
          File archivo= new File("src/main/resources/Fiscales.csv");//abrir archivo csv
@@ -154,7 +158,7 @@ public class ProyectoFiscalia {
      }
    }
      
-/*Método para leer las causas desde archivo*/   
+/*Metodo para leer las causas desde archivo*/   
   public static void leerCausas(HashMap<String,Causa>causas,HashMap<String,Fiscal> fiscales){
       try{
          File archivo= new File("src/main/resources/causas.csv");//Leer una por una las líneas del archivo
@@ -177,9 +181,10 @@ public class ProyectoFiscalia {
       System.out.println("No se ha encontrado el archivo de Causas");
      }
   }
-  
-/*Método para leer el nombre, distrito y especialidad desde archivo*/
-     public static void leerVacio(HashMap<String,Fiscal>vacio){
+
+/*--------------------------------------------Mapas Experimentales de Filtros de Busqueda-----------------------------------------*/  
+/*Metodo para crear mapa de nombres desde archivo*/
+     public static void mapaNombres(HashMap<String,String>nombres){
       try{
          File archivo= new File("src/main/resources/Fiscales.csv");//abrir archivo csv
           try (Scanner lector = new Scanner(archivo)) {
@@ -193,12 +198,57 @@ public class ProyectoFiscalia {
                   String aux= partes.nextToken(";");
                   String dist=partes.nextToken(";");
                   nuevo.setDistrito(Integer.parseInt(dist.replace(";"," ")));
-                  /*Ingresar los datos en el mapa vacio*/
-                  //vacio.put(nuevo.getNombre(),nuevo);
-                  vacio.put(nuevo.getEspecialidad(),nuevo);
+                  /*Ingresar los datos en el mapa de nombres*/
+                  nombres.put(nuevo.getRut(),nuevo.getNombre());
               }}
      }catch (FileNotFoundException e) {//Dice que hacer en caso de que no exista el archivo
       System.out.println("No se ha encontrado el archivo de Fiscales");
      }
    }
+     
+/*Metodo para crear mapa de especialidades desde archivo*/
+     public static void mapaEspecialidades(HashMap<String,String>especialidades){
+      try{
+         File archivo= new File("src/main/resources/Fiscales.csv");//abrir archivo csv
+          try (Scanner lector = new Scanner(archivo)) {
+              while (lector.hasNextLine()) {//Leer una por una las líneas del archivo
+                  String linea = lector.nextLine();
+                  StringTokenizer partes=new StringTokenizer(linea,";");//Dividir la linea en partes para separar los elementos
+                  Fiscal nuevo=new Fiscal();//Crear un fiscal para asignarle todos los atributos sacados de la linea
+                  nuevo.setNombre(partes.nextToken(";"));
+                  nuevo.setRut(partes.nextToken(";"));
+                  nuevo.setEspecialidad(partes.nextToken(";"));
+                  String aux= partes.nextToken(";");
+                  String dist=partes.nextToken(";");
+                  nuevo.setDistrito(Integer.parseInt(dist.replace(";"," ")));
+                  /*Ingresar los datos en el mapa de especialidades*/
+                  especialidades.put(nuevo.getRut(),nuevo.getEspecialidad());
+              }}
+     }catch (FileNotFoundException e) {//Dice que hacer en caso de que no exista el archivo
+      System.out.println("No se ha encontrado el archivo de Fiscales");
+     }
+   }
+
+/*Metodo para crear mapa de distritos desde archivo*/
+     public static void mapaDistritos(HashMap<String,Integer>distritos){
+      try{
+         File archivo= new File("src/main/resources/Fiscales.csv");//abrir archivo csv
+          try (Scanner lector = new Scanner(archivo)) {
+              while (lector.hasNextLine()) {//Leer una por una las líneas del archivo
+                  String linea = lector.nextLine();
+                  StringTokenizer partes=new StringTokenizer(linea,";");//Dividir la linea en partes para separar los elementos
+                  Fiscal nuevo=new Fiscal();//Crear un fiscal para asignarle todos los atributos sacados de la linea
+                  nuevo.setNombre(partes.nextToken(";"));
+                  nuevo.setRut(partes.nextToken(";"));
+                  nuevo.setEspecialidad(partes.nextToken(";"));
+                  String aux= partes.nextToken(";");
+                  String dist=partes.nextToken(";");
+                  nuevo.setDistrito(Integer.parseInt(dist.replace(";"," ")));
+                  /*Ingresar los datos en el mapa de distritos*/
+                  distritos.put(nuevo.getRut(),nuevo.getDistrito());
+              }}
+     }catch (FileNotFoundException e) {//Dice que hacer en caso de que no exista el archivo
+      System.out.println("No se ha encontrado el archivo de Fiscales");
+     }
+   } 
 }

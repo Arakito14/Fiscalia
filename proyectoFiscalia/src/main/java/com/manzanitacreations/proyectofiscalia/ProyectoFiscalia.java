@@ -116,7 +116,7 @@ public class ProyectoFiscalia {
                 System.out.println("Por favor ingrese una opcion valida");
            }
      }while(opcion !=0);
-     exportar(nueva.getFiscales(), nueva.getCausas());
+     exportar(nueva.getFiscales(), nueva.getCausas(), nueva);
 }
     /*Método para leer los fiscales desde archivo*/    
      public static void leerFiscales(HashMap<String,Fiscal>fiscales){
@@ -183,13 +183,13 @@ public class ProyectoFiscalia {
   public static void escribirEnArchivo(File f, HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
          try {
              FileWriter writer = new FileWriter(f);
-             writer.write("Fiscales\n");
              for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
-                Fiscal aux=entry.getValue();
+                 writer.write("Fiscales\n");
+                 Fiscal aux=entry.getValue();
                 aux.escribirFiscal(f);//Muestra los fiscales por pantalla
-                writer.write("Causas:");
+                writer.write("Causas:\n");
                 nueva.escribirCausas(aux.getCausasActuales(), f);//muestra las causas de cada fiscal por pantalla
-                writer.write("----------------------------------------------------------");
+                writer.write("----------------------------------------------------------\n");
              }
              writer.close();
          }

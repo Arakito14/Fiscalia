@@ -1,10 +1,11 @@
 package com.manzanitacreations.proyectofiscalia;
 
 import java.io.FileWriter;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.io.File;
 import java.io.*;
+import java.util.Map;
 
 public class Fiscal {
     private String nombre;
@@ -44,17 +45,37 @@ public class Fiscal {
     public void escribirFiscal(File f){
        try {
        FileWriter writer = new FileWriter(f);
-       writer.write("Nombre Fiscal:"+ nombre);
-       writer.write("Rut:"+ rut);
-       writer.write("Especialidad:"+ especialidad);
-       writer.write("Distrito:"+ distrito);
+       writer.write("Nombre Fiscal:"+ nombre+"\n");
+       writer.write("Rut:"+ rut+"\n");
+       writer.write("Especialidad:"+ especialidad+"\n");
+       writer.write("Distrito:"+ distrito+"\n");
        }
        catch (Exception e) {
          System.err.println(e);
        }
     }
     
-    
+    public  void escribirCausas(HashMap<String,Causa>causas, File f){
+     try {
+         FileWriter writer = new FileWriter(f);
+         int tamaño=causas.size();
+         if(tamaño!=0){
+             for (Map.Entry<String, Causa> entry : causas.entrySet()) {
+                 Causa aux=entry.getValue();
+                 writer.write("Codigo Causa:"+ aux.getCodigo()+"\n");
+                 writer.write("Rut Encargado:"+ aux.getEncargado().getRut()+"\n");
+                 writer.write("Estado:"+ aux.getEstado()+"\n");
+                 writer.write("Tipo de Caso:"+ aux.getTipoCaso()+"\n");
+                 writer.write("Distrito:"+ aux.getDistrito()+"\n");
+                 writer.write("----------------------------------------------------------\n");
+                 aux.escribirProcedimientos(f);
+             }
+         }
+     }
+      catch (Exception e) {
+         System.err.println(e);
+     }
+ }
     
     /**--------------------------------------------Getter y setter------------------------------------------*/
     public void agregarCausa(Causa nueva){

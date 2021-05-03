@@ -64,27 +64,27 @@ public class Fiscalia {
      } 
  }
  
-  public  void escribirCausas(HashMap<String,Causa>causas, File f){
-      try {
-        FileWriter writer = new FileWriter(f);
-        int tamaño=causas.size();
-        if(tamaño!=0){
-           for (Map.Entry<String, Causa> entry : causas.entrySet()) {
+  /*public  void escribirCausas(HashMap<String,Causa>causas, File f){
+     try {
+         FileWriter writer = new FileWriter(f);
+         int tamaño=causas.size();
+         if(tamaño!=0){
+             for (Map.Entry<String, Causa> entry : causas.entrySet()) {
                  Causa aux=entry.getValue();
-                 writer.write("Codigo Causa:"+ aux.getCodigo());
-                 writer.write("Rut Encargado:"+ aux.getEncargado().getRut());
-                 writer.write("Estado:"+ aux.getEstado());
-                 writer.write("Tipo de Caso:"+ aux.getTipoCaso());
-                 writer.write("Distrito:"+ aux.getDistrito());
-                 writer.write("----------------------------------------------------------");
+                 writer.write("Codigo Causa:"+ aux.getCodigo()+"\n");
+                 writer.write("Rut Encargado:"+ aux.getEncargado().getRut()+"\n");
+                 writer.write("Estado:"+ aux.getEstado()+"\n");
+                 writer.write("Tipo de Caso:"+ aux.getTipoCaso()+"\n");
+                 writer.write("Distrito:"+ aux.getDistrito()+"\n");
+                 writer.write("----------------------------------------------------------\n");
                  aux.escribirProcedimientos(f);
-            }
-       }
-      }
+             }
+         }
+     }
       catch (Exception e) {
          System.err.println(e);
      }
- }
+ }*/
  
  /*Método para buscar un fiscal y mostrarlo por pantalla*/
  /*Retorna el fiscal si es que existe y null en caso contrario*/

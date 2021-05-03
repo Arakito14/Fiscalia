@@ -70,18 +70,18 @@ public class Causa {
             FileWriter writer = new FileWriter(f);
             int tam=peritajes.size();
             if(tam!=0){
-                writer.write("Procedimientos");
-                writer.write("----------------------------------------------------------");
+                writer.write("Procedimientos\n");
+                writer.write("----------------------------------------------------------\n");
                 for(int i=0;i<peritajes.size();i++){
-                       writer.write((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc());
-                       writer.write("Participantes:");
+                       writer.write((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc()+"\n");
+                       writer.write("Participantes:\n");
                        for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
-                            writer.write(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
+                            writer.write(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j)+"\n");
                         }
-                       writer.write("Resultado:"+ peritajes.get(i).getResultado());
+                       writer.write("Resultado:"+ peritajes.get(i).getResultado()+"\n");
                }
             }else{
-                System.out.println("Esta causa aún no tiene procedimientos");
+                writer.write("Esta causa aún no tiene procedimientos\n");
             }
         }
         catch (Exception e) {

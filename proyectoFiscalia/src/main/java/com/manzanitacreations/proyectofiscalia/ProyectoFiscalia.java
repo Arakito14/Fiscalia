@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.io.*;
 
 /*
 *
@@ -114,8 +115,8 @@ public class ProyectoFiscalia {
             default:
                 System.out.println("Por favor ingrese una opcion valida");
            }
-     }while(opcion !=0); 
-         
+     }while(opcion !=0);
+     exportar(nueva.getFiscales(), nueva.getCausas());
 }
     /*Método para leer los fiscales desde archivo*/    
      public static void leerFiscales(HashMap<String,Fiscal>fiscales){
@@ -165,7 +166,38 @@ public class ProyectoFiscalia {
      }
   }
   
+  //Crea un archivo txt donde se muestra un reporte de las colecciones anidadas
+  public static void exportar(HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
+     try {
+         File f = new File("src/main/resources/reporte.txt");
+         if (f.createNewFile() == false) {
+             System.out.println("El archivo ya ha sido creado");
+         }
+         escribirEnArchivo(f, nueva.getFiscales(), nueva.getCausas(), nueva);
+     }
+     catch (Exception e) {
+         System.err.println(e);
+     }
+  }
   
+  public static void escribirEnArchivo(File f, HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
+         try {
+             FileWriter writer = new FileWriter(f);
+             writer.write("Fiscales\n");
+             for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
+                Fiscal aux=entry.getValue();
+                aux.escribirFiscal(f);//Muestra los fiscales por pantalla
+                writer.write("Causas:");
+                nueva.escribirCausas(aux.getCausasActuales(), f);//muestra las causas de cada fiscal por pantalla
+                writer.write("----------------------------------------------------------");
+             }
+             writer.close();
+         }
+         catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+         }
+  }
 }
 
 

@@ -5,12 +5,15 @@
  */
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.*;
 
 
 public class Causa {
@@ -44,6 +47,31 @@ public class Causa {
     
  /*Método que muestra los procedimientos de una causa por pantalla*/
     public void mostrarProcedimientos(){
+        int tam=peritajes.size();
+        if(tam!=0){
+            System.out.println("Procedimientos");
+            System.out.println("----------------------------------------------------------");
+            for(int i=0;i<peritajes.size();i++){
+                   System.out.println((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc());
+                   System.out.println("Participantes:");
+                   for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
+                        System.out.println(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
+                    }
+                   System.out.println("Resultado:"+ peritajes.get(i).getResultado());
+           }
+        }else{
+            System.out.println("Esta causa aún no tiene procedimientos");
+        }
+        
+    }
+    
+    public void escribirProcedimientos(File f){
+        try {
+            FileWriter writer = new FileWriter(f);
+        }
+        catch (Exception e) {
+             System.err.println(e);
+        }
         int tam=peritajes.size();
         if(tam!=0){
             System.out.println("Procedimientos");

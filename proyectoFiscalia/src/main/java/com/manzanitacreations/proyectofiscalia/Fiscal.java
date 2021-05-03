@@ -1,7 +1,10 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.io.File;
+import java.io.*;
 
 public class Fiscal {
     private String nombre;
@@ -36,6 +39,19 @@ public class Fiscal {
        System.out.println("Rut:"+ rut);
        System.out.println("Especialidad:"+ especialidad);
        System.out.println("Distrito:"+ distrito);
+    }
+    
+    public void escribirFiscal(File f){
+       try {
+       FileWriter writer = new FileWriter(f);
+       writer.write("Nombre Fiscal:"+ nombre);
+       writer.write("Rut:"+ rut);
+       writer.write("Especialidad:"+ especialidad);
+       writer.write("Distrito:"+ distrito);
+       }
+       catch (Exception e) {
+         System.err.println(e);
+       }
     }
     
     

@@ -1,5 +1,7 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +62,28 @@ public class Fiscalia {
                System.out.println("----------------------------------------------------------");
           }
      } 
+ }
+ 
+  public  void escribirCausas(HashMap<String,Causa>causas, File f){
+      try {
+        FileWriter writer = new FileWriter(f);
+        int tamaño=causas.size();
+        if(tamaño!=0){
+           for (Map.Entry<String, Causa> entry : causas.entrySet()) {
+                 Causa aux=entry.getValue();
+                 writer.write("Codigo Causa:"+ aux.getCodigo());
+                 writer.write("Rut Encargado:"+ aux.getEncargado().getRut());
+                 writer.write("Estado:"+ aux.getEstado());
+                 writer.write("Tipo de Caso:"+ aux.getTipoCaso());
+                 writer.write("Distrito:"+ aux.getDistrito());
+                 writer.write("----------------------------------------------------------");
+                 aux.escribirProcedimientos(f);
+            }
+       }
+      }
+      catch (Exception e) {
+         System.err.println(e);
+     }
  }
  
  /*Método para buscar un fiscal y mostrarlo por pantalla*/
@@ -392,6 +416,7 @@ public class Fiscalia {
      Causa eliminada=buscarCausa();
      eliminada.eliminarProcedimiento();
  }
+
 /**------------------------------------------Getter y Setter------------------------------------------------*/
     public HashMap<String, Fiscal> getFiscales() {
         return fiscales;

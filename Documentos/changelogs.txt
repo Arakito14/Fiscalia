@@ -1,8 +1,7 @@
 /*--------------------------------------------Inicio-----------------------------------------*/
 /*Github Releases*/
-
 https://github.com/Arakito14/Fiscalia/releases
-
+/*----------------------------------------------------------------------------------------*/
 /*v1.14*/
 
 FIX
@@ -101,27 +100,9 @@ for (Map.Entry<String, Fiscal> entry : fiscales.entrySet()) {
 fiscales.entrySet().stream().map(entry -> entry.getValue()).filter(aux -> (aux.getEspecialidad().equals(tipoCaso))).map(aux -> {
 
 
-Next Updates
-
-- Especificar variables permitidas y comprobar metodos, algunos errores menores de excepción
-
-- "K" faltante en formato RUT digito verificador
-
-- Variable "aux" en metodo leerFiscales en clase main no es leido
-
-- GUI
-
-- Generar un reporte en un formato de texto
-
-- Documentacion UML, Mapa Conceptual y Reporte, agregados a .gitnore
-
-
 Codigo testeado en Netbeans IDE 12.3
-
-
+/*----------------------------------------------------------------------------------------*/
 /*V1.15*/
-
-Updates
 
 - Caso de excepción en Distrito
 
@@ -148,62 +129,13 @@ Updates
 - Metodo de Verificación para RUT y Distrito, que comprueba la validez del input.
 
 
-Next Updates
-
-- Interfaz Grafica (GUI)
-
-- Generar un reporte en un formato de texto
-
-- Actualizar Mapa UML y Reporte en repositorio
- 
-
-Problemas Menores
-
-- Buscar Método optimizado para filtro de busquedas, como tambíen uso de variable "distrito"
-
-- Case de no existencia para Nombre, Distrito y Especialidad
-
-- Buscar forma de poder usar mas de un "put" en un mapa y poder iterar, en vez de usar multiple mapas por filtro
-
-- Verificación casos de exepcion en input Nombre, Especialidad y otros
-
-- "K" faltante en formato RUT digito verificador
-
-- Variable "aux" en metodo leerFiscales en clase main no es leido
-
-- Mejorar sobrecarga de método en el filtro de busqueda, aplicar herencia, downcasting, upcasting, ojetos, lo que sea necesario para hacerlo mas compacto
-
-
 Codigo testeado en Netbeans IDE 12.3
-
+/*----------------------------------------------------------------------------------------*/
 /*V1.16*/
-
-
-Updates
 
 - Al cerrar programa se genera reporte de fiscales con las tres colecciones anidadas
 
-- Actualizado UML
+- Archivo UML actualizado
 
-
-Next Updates
-
-- Interfaz Grafica (GUI)
- 
-
-Problemas Menores
-
-- Buscar Método optimizado para filtro de busquedas, como tambíen uso de variable "distrito"
-
-- Case de no existencia para Nombre, Distrito y Especialidad
-
-- Buscar forma de poder usar mas de un "put" en un mapa y poder iterar, en vez de usar multiple mapas por filtro
-
-- Verificación casos de exepcion en input Nombre, Especialidad y otros
-
-- "K" faltante en formato RUT digito verificador
-
-- Variable "aux" en metodo leerFiscales en clase main no es leido
-
-- Mejorar sobrecarga de método en el filtro de busqueda, aplicar herencia, downcasting, upcasting, ojetos, lo que sea necesario para hacerlo mas compacto
+Codigo testeado en Netbeans IDE 12.3
 /*--------------------------------------------Fin-----------------------------------------*/

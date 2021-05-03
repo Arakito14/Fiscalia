@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException; 
 import java.util.Scanner;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -134,6 +135,8 @@ public class ProyectoFiscalia {
                     System.out.println("Por favor ingrese una opcion valida");
            }
      }while(opcion !=0); 
+     /*exportar EXP*/
+     exportar(nueva.getFiscales(), nueva.getCausas(),nueva);
 }
 
 /*Metodo para leer los fiscales desde archivo*/    
@@ -181,7 +184,45 @@ public class ProyectoFiscalia {
       System.out.println("No se ha encontrado el archivo de Causas");
      }
   }
-
+//Crea un archivo txt donde se muestra un reporte de las colecciones anidadas
+  public static void exportar(HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
+     try {
+         File f = new File("src/main/resources/reporte.txt");
+         if (f.exists()) {
+             f.delete();
+             f=new File("src/main/resources/reporte.txt");
+         }
+         escribirEnArchivo(f, nueva.getFiscales(), nueva.getCausas(), nueva);
+     }
+     catch (Exception e) {
+         System.err.println(e);
+     }
+  }
+  
+  /*--------------------------------------------Escritura-----------------------------------------*/  
+/*Escribe los datos de las colecciones anidadas en un archivo*/
+/*Recibe como parametros el archivo, los mapas a usar y la fiscalia*/
+  public static void escribirEnArchivo(File f, HashMap<String,Fiscal> fiscales, HashMap<String,Causa>causas, Fiscalia nueva) {
+         try {
+             PrintWriter writer = new PrintWriter(f);
+             writer.println("Fiscales");
+             fiscales.entrySet().stream().map(entry -> (Fiscal)entry.getValue()).map(aux -> {
+                 aux.escribirFiscal(writer);//Muestra los fiscales por pantalla
+                 return aux;
+             }).map(aux -> {
+                 writer.println("Causas:");
+                 aux.escribirCausas(writer);//muestra las causas de cada fiscal por pantalla
+                 return aux;
+             }).forEachOrdered(_item -> {
+                 writer.println("----------------------------------------------------------");
+             });
+             writer.close();
+         }
+         catch (IOException e) {
+            System.out.println("An error occurred.");
+         }
+  }  
+  
 /*--------------------------------------------Mapas Experimentales de Filtros de Busqueda-----------------------------------------*/  
 /*Metodo para crear mapa de nombres desde archivo*/
      public static void mapaNombres(HashMap<String,String>nombres){

@@ -1,5 +1,6 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -290,6 +291,48 @@ public class Fiscal {
                         }
                     }
             );
+    }
+
+/*--------------------------------------------Metodos escribir-----------------------------------------*/
+/*Escribe los fiscales en el archivo de reporte. recibe de parametro el writer*/
+    public void escribirFiscal(PrintWriter writer){
+       try {
+       writer.println("Nombre Fiscal:"+ nombre);
+       writer.println("Rut:"+ rut);
+       writer.println("Especialidad:"+ especialidad);
+       writer.println("Distrito:"+ distrito);
+       }
+       catch (Exception e) {
+         System.err.println(e);
+       }
+    }
+ /*Escribe las causas de cada fiscal en el archivo de reporte. Recibe de parametro el writer*/
+    public  void escribirCausas(PrintWriter writer){
+        int tamano=causasActuales.size();
+        if(tamano!=0){
+            causasActuales.entrySet().stream().map(entry -> entry.getValue()).map(aux -> {
+                writer.println("Codigo Causa:"+ aux.getCodigo());
+                return aux;
+            }).map(aux -> {
+                writer.println("Rut Encargado:"+ aux.getEncargado().getRut());
+                return aux;
+            }).map(aux -> {
+                writer.println("Estado:"+ aux.getEstado());
+                return aux;
+            }).map(aux -> {
+                writer.println("Tipo de Caso:"+ aux.getTipoCaso());
+                return aux;
+            }).map(aux -> {
+                writer.println("Distrito:"+ aux.getDistrito());
+                return aux;
+            }).forEachOrdered(aux -> {
+                writer.println("----------------------------------------------------------");
+                aux.escribirProcedimientos(writer);
+            });
+        }else{
+            writer.println("Este fiscal aun no tiene causas");
+            writer.println("----------------------------------------------------------");
+        }
     }
     
 /*--------------------------------------------Getter y setter-----------------------------------------

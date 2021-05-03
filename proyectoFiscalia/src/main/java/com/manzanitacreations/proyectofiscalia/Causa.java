@@ -1,5 +1,6 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -148,6 +149,31 @@ public void eliminarProcedimiento(){
         System.out.println("El numero de procedimiento es incorrecto");
     }
 }
+
+/*--------------------------------------------Metodo escritura------------------------------------------*/
+/*Escribe los procedimientos de cada causa en el archivo reporte.Recibe de parametro el writer*/
+    public void escribirProcedimientos(PrintWriter writer){
+        try {
+            int tam=peritajes.size();
+            if(tam!=0){
+            writer.println("Procedimientos");
+            writer.println("----------------------------------------------------------");
+            for(int i=0;i<peritajes.size();i++){
+                   writer.println((i+1)+"-Nombre:"+ peritajes.get(i).getNombreProc());
+                   writer.println("Participantes:");
+                   for(int j=0;j<peritajes.get(i).getParticipantes().size();j++){
+                        writer.println(peritajes.get(i).obtenerParticipante(j)+"/"+peritajes.get(i).obtenerRol(j));
+                    }
+                   writer.println("Resultado:"+ peritajes.get(i).getResultado());
+           }
+           }else{
+            writer.println("Esta causa aun no tiene procedimientos");
+           }
+        }
+        catch (Exception e) {
+             System.err.println(e);
+        }
+    }
 
 /*--------------------------------------------Getter y setter------------------------------------------
      * @return -*/

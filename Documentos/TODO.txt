@@ -14,8 +14,20 @@ Herencia, Downcasting, Upcasting y Interfaces
 https://www.geeksforgeeks.org/inheritance-in-java/
 https://www.geeksforgeeks.org/upcasting-vs-downcasting-in-java/
 https://www.geeksforgeeks.org/interfaces-in-java/
+/*--------------------------------------------EP-4-----------------------------------------*/
+- Diseño y codificación de 2 (dos) clases que utilicen sobreescritura de métodos.
+
+Una sobreescritua de metodos es la forma por la cual una clase que hereda puede re-definir los métodos de su clase Padre, de esta manera puede crear nuevos métodos con el mismo nombre de su superClase
+
+- Diseño y codificación de 1 (una) clase abstracta que sea padre de al menos 2 (dos) clases. La clase abstractadebe ser utilizada por alguna otra clase (contexto)
+
+Una clase abstracta no es más que una clase común la cual posee atributos, métodos, constructores y por lo menos un método abstracto. Una clase abstracta no puede ser instanciada, solo heredada.
+
+- Diseño y codificación de 1 (una) interfaz que sea implementada por al menos 2 (dos) clases. La interfaz debe ser utilizada por alguna otra clase (contexto)
+
+- (opcional) Generar documentación con Javadoc.
 /*--------------------------------------------To-do-----------------------------------------*/
-- Verificar que el filtro de busqueda de fiscales funcione con métodos como Asignar y nuevo fiscal.
+- Verificar que el filtro de busqueda de fiscales funcione con métodos como Asignar y nuevo fiscal, ademas de subconjunto de filtro.
 
 - Caso de no existencia para Nombre, Distrito y Especialidad
 

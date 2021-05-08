@@ -10,6 +10,10 @@ Git and GitHub for Poets Tutorial Playlist
 https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZF9C0YMKuns9sLDzK6zoiV
 Overload abuse
 https://stackoverflow.com/questions/248222/method-overloading-can-you-overuse-it
+Herencia, Downcasting, Upcasting y Interfaces 
+https://www.geeksforgeeks.org/inheritance-in-java/
+https://www.geeksforgeeks.org/upcasting-vs-downcasting-in-java/
+https://www.geeksforgeeks.org/interfaces-in-java/
 /*--------------------------------------------To-do-----------------------------------------*/
 - Verificar que el filtro de busqueda de fiscales funcione con métodos como Asignar y nuevo fiscal.
 

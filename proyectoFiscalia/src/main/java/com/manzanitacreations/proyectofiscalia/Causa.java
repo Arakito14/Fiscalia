@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import java.io.*;
 
 
-public class Causa {
+public class Causa implements Especialidad, Formato{
     private String codigo;
     private Fiscal encargado;
     private LinkedList<Procedimiento> peritajes;
@@ -108,14 +108,15 @@ public void asignarFiscal(HashMap<String,Fiscal> fiscales, Causa asignada){
        
        do{
           System.out.println("Ingrese el rut del fiscal elegido");
-          Pattern patron = Pattern.compile("[0-9]{8}-[0-9]{1}");
-          String fiscal=leer.nextLine();
-          Matcher mat = patron.matcher(fiscal);
-          while(!mat.matches()){
-             System.out.println("El formato es incorrecto. Por favor intente de nuevo");
-             fiscal=leer.nextLine();
-             mat=patron.matcher(fiscal);
-          }
+          String fiscal;
+         boolean isValid;
+         do{
+                 fiscal= leer.nextLine();
+                 isValid= comprobarRut(fiscal);
+                 if(!isValid){
+                  System.out.println("El formato es incorrecto. Por favor intente de nuevo");
+                   }
+           }while(!isValid);
           encargado= fiscales.get(fiscal);
           if(encargado!=null){
               break;
@@ -237,8 +238,71 @@ public void eliminarProcedimiento(){
     public void setDistrito(int distrito) {
         this.distrito = distrito;
     }
-    
+ /**---------------------------------------------Implementacion interfaz Especialidad--------------------------------------*/   
+ @Override
+    public String asignarEspecialidad(int esp) {
+          String asignada=new String();
+          switch(esp){
+              case 1:
+                  asignada=DELITOS_ECONOMICOS;
+                  break;
+              case 2:
+                  asignada=CRIMEN_ORGANIZADO;
+                  break;
+              case 3:
+                 asignada=RESPONSABILIDAD_ADOLESCENTE;
+                  break;
+              case 4:
+                  asignada=DELITOS_VIOLENTOS;
+                  break;
+              case 5:
+                  asignada=VIOLENCIA_INTRAFAMILIAR;
+                  break;
+              case 6:
+                  asignada=NARCOTRAFICO;
+                  break;
+              case 7:
+                  asignada=CORRUPCION;
+                  break;
+              case 8:
+                  asignada=DELITOS_SEXUALES;
+                  break;
+          }
+         return asignada;
+    }
 
+    @Override
+    public void mostrarOpciones() {
+        System.out.println("Opciones:");
+        System.out.println("1-"+DELITOS_ECONOMICOS);
+        System.out.println("2-"+CRIMEN_ORGANIZADO);
+        System.out.println("3-"+RESPONSABILIDAD_ADOLESCENTE);
+        System.out.println("4-"+DELITOS_VIOLENTOS);
+        System.out.println("5-"+VIOLENCIA_INTRAFAMILIAR);
+        System.out.println("6-"+NARCOTRAFICO);
+        System.out.println("7-"+CORRUPCION);
+        System.out.println("8-"+DELITOS_SEXUALES);   
+    }
+
+    @Override
+    public boolean comprobarCodigo(String cod) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean comprobarRut(String rut) {
+       Matcher mat = PATRON_RUT.matcher(rut);
+        if(mat.matches()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public int comprobarDistrito(String dist) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 
      

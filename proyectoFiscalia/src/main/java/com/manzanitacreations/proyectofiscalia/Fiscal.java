@@ -1,13 +1,14 @@
 package com.manzanitacreations.proyectofiscalia;
 
-import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.io.File;
 import java.io.*;
 import java.util.Map;
 
-public class Fiscal {
+/**
+ *
+ * @author Marlene
+ */
+public class Fiscal implements Especialidad {
     private String nombre;
     private String rut;
     private HashMap<String,Causa> causasActuales;
@@ -118,4 +119,49 @@ public class Fiscal {
         public void setDistrito(int distrito) {
             this.distrito = distrito;
         }
+ /**---------------------------------------------Implementacion interfaz Especialidad--------------------------------------*/
+    @Override
+    public String asignarEspecialidad(int esp) {
+          String asignada=new String();
+          switch(esp){
+              case 1:
+                  asignada=DELITOS_ECONOMICOS;
+                  break;
+              case 2:
+                  asignada=CRIMEN_ORGANIZADO;
+                  break;
+              case 3:
+                 asignada=RESPONSABILIDAD_ADOLESCENTE;
+                  break;
+              case 4:
+                  asignada=DELITOS_VIOLENTOS;
+                  break;
+              case 5:
+                  asignada=VIOLENCIA_INTRAFAMILIAR;
+                  break;
+              case 6:
+                  asignada=NARCOTRAFICO;
+                  break;
+              case 7:
+                  asignada=CORRUPCION;
+                  break;
+              case 8:
+                  asignada=DELITOS_SEXUALES;
+                  break;
+          }
+         return asignada;
+    }
+
+    @Override
+    public void mostrarOpciones() {
+        System.out.println("Opciones:");
+        System.out.println("1-"+DELITOS_ECONOMICOS);
+        System.out.println("2-"+CRIMEN_ORGANIZADO);
+        System.out.println("3-"+RESPONSABILIDAD_ADOLESCENTE);
+        System.out.println("4-"+DELITOS_VIOLENTOS);
+        System.out.println("5-"+VIOLENCIA_INTRAFAMILIAR);
+        System.out.println("6-"+NARCOTRAFICO);
+        System.out.println("7-"+CORRUPCION);
+        System.out.println("8-"+DELITOS_SEXUALES);   
+    }
 }

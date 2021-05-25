@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.manzanitacreations.proyectofiscalia;
 
-/**
- *
- * @author Marlene
+/*
+*@author Marlene Lagos
+*@author Valentina San Martin
+*@author Matias Mujica
+*ICI3241-1
  */
 public interface Especialidad {
     static final String DELITOS_ECONOMICOS="Delitos economicos";

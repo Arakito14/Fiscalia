@@ -4,9 +4,8 @@ All relevant present and past issues, bugs or problems with the proyect will be 
 Github Releases
 https://github.com/Arakito14/Fiscalia/releases
 /*----------------------------------------------------------------------------------------*/
-/*V1.16*/
+/*V2*/
 
-- Verificación casos de exepcion en input Nombre, Especialidad y otros
-
-- "K" no es reconocida en el formato de RUT de nuestro programa
+> ISSUES
+"K" no es reconocida en el formato de RUT de nuestro programa
 /*--------------------------------------------FIN-----------------------------------------*/

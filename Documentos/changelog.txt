@@ -1,9 +1,6 @@
 /*--------------------------------------------Inicio-----------------------------------------*/
 All notable changes made to our project will be represented here, this include records as bug fixes, new features and so on.
 /*----------------------------------------------------------------------------------------*/
-/*Github Releases*/
-https://github.com/Arakito14/Fiscalia/releases
-/*----------------------------------------------------------------------------------------*/
 /*v1.14*/
 
 FIX
@@ -142,4 +139,43 @@ Codigo testeado en Netbeans IDE 12.3
 - Añadido changelogs, issuelogs, TODO y codelogs a documentación
 
 Codigo testeado en Netbeans IDE 12.3
+/*----------------------------------------------------------------------------------------*/
+/*V2.0*/
+
+> Verificadores <
+Verificadores globales en Fiscalia
+Opcion para retornar al menú
+
+> General <
+Metodo Mostrar();
+Metodo modificarProcedimiento()
+Metodo eliminarProcedimiento()
+Formato.java con overrides e interfaz
+Filtro de Busqueda con overrides
+
+> Excepcion a modificarProcedimiento()
+FIXED mostrarProcedimiento() verificación
+Tenía problemas en caso de no existir procedimiento
+
+> nuevoProcedimiento (Causa buscar)
+Agregado verificacion para que no se caiga
+
+> ProyectoFiscalia.java <
+Se borraron los mapas extras, se formateo y optimizo
+
+> Formato.java <
+Interfaz para formato general de codigo
+Añadidos varios formatos diferentes para uso general
+Override de metodos de verificacion
+
+> Fiscal.java <
+Formato mejorado y limpio
+
+> Fiscalia.java <
+Implementacion de Formato.java y Especialidad.java
+Clase padre de Fiscal.java & Causa.java
+Metodo de clases abstractas de Causa y hijas
+Menu de Filtro de Busqueda con Overrides
+Verificaciones
+Formato mejorado y limpio
 /*--------------------------------------------FIN-----------------------------------------*/

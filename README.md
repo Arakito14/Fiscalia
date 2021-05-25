@@ -1,7 +1,7 @@
 **Fiscalia - Programación Avanzada**
 
 Link de pre-revisiones en:
-> "https://github.com/Arakito14/Fiscalia/releases"
+> https://github.com/Arakito14/Fiscalia/releases
 
 Ubicación de archivos:
 > Mapa Concpetual, UML y reporte se encuentra en "Documentos/"

@@ -2,6 +2,10 @@
 
 Link de pre-revisiones en:
 > https://github.com/Arakito14/Fiscalia/releases
+> 
+Entrega Parcial 4 doc en:
+> https://docs.google.com/document/d/1ZiY4tmcvCiuxew4SV8POmcBYNNjuwto1NBpr3eXWH5A/edit
+> 
 
 Ubicación de archivos:
 > Mapa Concpetual, UML y reporte se encuentra en "Documentos/"

@@ -12,6 +12,8 @@ Uso de documento zip:
 > 
 > Archivos de lectura y reporte (.csv, .txt) en -> "...\proyectoFiscalia\src\main\resources\"
 > 
+> Reporte Entrega 4 en -> "...\Documentos\Entrega Parcial 4.pdf\
+> 
 > Imagen UML en -> "...\Imagenes\Diagrama_UML_v2.0.png\"
 > 
 

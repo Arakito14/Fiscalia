@@ -40,7 +40,7 @@ Pequeña Introducción a diagrama y código:
 > 
 > Padre -> Fiscalia.java, implementa interfaces Formato.java & Especialidad.java para correcta escritura y confirmación de datos
 > 
-> Hijos -> Fiscal.java & Causa.java
+> Hijos -> Fiscal.java & Causa.java, la ultima es clase abstracta de las siguientes
 > 
 > Hijos de Causa.java -> Procedimientos.java, CausaAbierta.java, CausaCerrada.java y CausaArchivada.java
 

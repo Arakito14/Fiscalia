@@ -7,6 +7,14 @@ Entrega Parcial 4 doc en:
 > https://docs.google.com/document/d/1ZiY4tmcvCiuxew4SV8POmcBYNNjuwto1NBpr3eXWH5A/edit
 > 
 
+Uso de documento zip:
+> Archivos de trabajo en -> "...\proyectoFiscalia\src\main\java\com\manzanitacreations\proyectofiscalia\"
+> 
+> Archivos de lectura y reporte (.csv, .txt) en -> "...\proyectoFiscalia\src\main\resources\"
+> 
+> Imagen UML en -> "...\Imagenes\Diagrama_UML_v2.0.png\"
+> 
+
 Ubicación de archivos:
 > Mapa Concpetual, UML y reporte se encuentra en "Documentos/"
 > 

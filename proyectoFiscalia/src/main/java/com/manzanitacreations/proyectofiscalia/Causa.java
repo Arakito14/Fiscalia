@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 //----------------------------------------------------------------------------//
 //------------------------------Fiscalia Child--------------------------------//
 //----------------------------------------------------------------------------//
-public class Causa extends Fiscalia {
+public abstract class Causa extends Fiscalia {
 
     /*Primary Key*/
     private String codigo;

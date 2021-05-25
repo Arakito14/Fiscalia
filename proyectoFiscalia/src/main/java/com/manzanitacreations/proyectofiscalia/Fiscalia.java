@@ -518,10 +518,19 @@ public class Fiscalia implements Formato, Especialidad {
     }
 
     public void abrirCausa(String estadoOriginal, Causa buscar) {
+        CausaAbierta abierta = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());
         switch (estadoOriginal) {
             case CERRADA:
+                CausaAbierta abierta_cerrada = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());
+                abierta_cerrada.setEncargado(buscar.getEncargado());
+                abierta_cerrada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
+                eliminarCausa(buscar);                
                 break;
             case ARCHIVADA:
+                CausaAbierta abierta_archivada = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());                
+                abierta_archivada.setEncargado(buscar.getEncargado());
+                abierta_archivada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
+                eliminarCausa(buscar);                
                 break;
         }
     }
@@ -533,12 +542,20 @@ public class Fiscalia implements Formato, Especialidad {
                 String fecha = LEER.nextLine();
                 System.out.println("Ingrese la resolucion del caso");
                 String resolucion = LEER.nextLine();
+                CausaCerrada cerrada_abierta = new CausaCerrada(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito(), fecha, resolucion);
+                cerrada_abierta.setEncargado(buscar.getEncargado());
+                cerrada_abierta.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
+                eliminarCausa(buscar);                
                 break;
             case ARCHIVADA:
-                System.out.println("Ingrese la fecha de archivacion del caso. El formato debe ser DD/MM/AAAA");
-                String fechaArc = LEER.nextLine();
-                System.out.println("Ingrese la razon por la que el caso se archiva");
-                String razon = LEER.nextLine();
+                System.out.println("Ingrese la fecha de cierre del caso. El formato debe ser DD/MM/AAAA");
+                String fechaTerm = LEER.nextLine();
+                System.out.println("Ingrese la resolucion del caso");
+                String resultado = LEER.nextLine();
+                CausaCerrada cerrada_archivada = new CausaCerrada(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito(), fechaTerm, resultado);
+                cerrada_archivada.setEncargado(buscar.getEncargado());
+                cerrada_archivada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
+                eliminarCausa(buscar);
                 break;
         }
     }

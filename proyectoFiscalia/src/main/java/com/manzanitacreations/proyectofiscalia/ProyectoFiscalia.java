@@ -162,7 +162,7 @@ public class ProyectoFiscalia {
                 while (lector.hasNextLine()) {//Dividir la linea en partes para separar los elementos
                     String linea = lector.nextLine();
                     StringTokenizer partes = new StringTokenizer(linea, ";");//Dividir la linea en partes para separar los elementos
-                    Causa nuevo = new Causa();//Crear una causa para asignarle todos los atributos sacados de la linea
+                    Causa nuevo = new Causa() {};//Crear una causa para asignarle todos los atributos sacados de la linea
                     nuevo.setCodigo(partes.nextToken(";"));
                     String fiscal = partes.nextToken(";");
                     Fiscal aux = fiscales.get(fiscal);//Busca al Fiscal de esa causa si es que ya está asignado

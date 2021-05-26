@@ -178,4 +178,11 @@ Metodo de clases abstractas de Causa y hijas
 Menu de Filtro de Busqueda con Overrides
 Verificaciones
 Formato mejorado y limpio
+/*----------------------------------------------------------------------------------------*/
+**V2.1_FIX**
+
+Nuevo
+> Añadido reporte 4 y UML actualizado
+> Añadido Readme.md actualizado
+> Filled some code on Causa's children methods
 /*--------------------------------------------FIN-----------------------------------------*/

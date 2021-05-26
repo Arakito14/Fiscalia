@@ -179,7 +179,7 @@ Menu de Filtro de Busqueda con Overrides
 Verificaciones
 Formato mejorado y limpio
 /*----------------------------------------------------------------------------------------*/
-**V2.1_FIX**
+/*V2.1_FIX*/
 
 Nuevo
 > Añadido reporte 4 y UML actualizado

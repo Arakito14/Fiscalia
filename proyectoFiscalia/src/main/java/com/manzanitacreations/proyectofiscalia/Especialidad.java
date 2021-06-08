@@ -7,15 +7,15 @@ package com.manzanitacreations.proyectofiscalia;
 *ICI3241-1
  */
 public interface Especialidad {
-    static final String DELITOS_ECONOMICOS="Delitos economicos";
-    static final String CRIMEN_ORGANIZADO="Crimen organizado";
-    static final String RESPONSABILIDAD_ADOLESCENTE="Responsabilidad penal adolescente";
-    static final String DELITOS_VIOLENTOS="Delitos violentos";
-    static final String VIOLENCIA_INTRAFAMILIAR="Violencia intrafamiliar";
-    static final String NARCOTRAFICO="Narcotrafico";
-    static final String CORRUPCION="Corrupcion";
-    static final String DELITOS_SEXUALES="Delitos sexuales"; 
+    public static final String DELITOS_ECONOMICOS="Delitos economicos";
+    public static final String CRIMEN_ORGANIZADO="Crimen organizado";
+    public static final String RESPONSABILIDAD_ADOLESCENTE="Responsabilidad penal adolescente";
+    public static final String DELITOS_VIOLENTOS="Delitos violentos";
+    public static final String VIOLENCIA_INTRAFAMILIAR="Violencia intrafamiliar";
+    public static final String NARCOTRAFICO="Narcotrafico";
+    public static final String CORRUPCION="Corrupcion";
+    public static final String DELITOS_SEXUALES="Delitos sexuales"; 
     
-    String asignarEspecialidad(int esp);
-    void mostrarOpciones();
+    public String asignarEspecialidad(int esp);
+    public void mostrarOpciones();
 }

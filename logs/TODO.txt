@@ -1,0 +1,43 @@
+/*--------------------------------------------Inicio-----------------------------------------*/
+a TO-do List is presented here, with all relevant future updates and resources to read or watch
+/*----------------------------------------------------------------------------------------*/
+> REVISAR  SI ESTA IMPLEMENTADO O NO
+La opción del menú "Cambiar el fiscal encargado de una causa" no cambia al nuevo fiscal (), es asi? En mi test, si lo hace, en todos los casos, pregunte a Yesenia.
+Existe Metodo Abstracto en clase abstracta? Si no agregar.
+Esperar por Yesena con respuesta de filtros y interfaz (en mas de una clase)
+> General
+Agregar Filtros de Busqueda para Causa.java.
+"K" no es reconocida en el formato de RUT de nuestro programa.
+Falta patron para digito "K".
+modificarProcedimiento()
+buscarCausa()
+modificarEstadoCausa()
+> Parte A
+Generacion de reporte debe ser una opcion del MENU.
+> Entrega 4
+Mejorar diseño de mapa conceptual y explicacion de la sobreescritura de metodos.
+Mejorar diseño de clase abstracta.
+Agregar diseño conceptual acerca de la interfaz en 4.4
+> Parte B
+EPB.1 Actualizar reporte y codigo con todos los pasos anteriores.
+EPB.2 Se deben implementar al menos 3 ventanas gráficas(GUIs en AWT o SWING):1 ventana de menú, 1 ventana de agregar elemento y 1 ventana de listar elementos.
+EPB.3 Se debe aplicar encapsulamiento y principios OO.
+> Misc
+Variable "aux" en metodo leerFiscales en clase main no es leido.
+Confirmar que HashMap no necesite de if para comprobar tamano.
+Verificación casos de exepcion en input Nombre.
+> IDEAS
+Diferentes packages para diversas funcionalidades, por ejemplo package interfaces, package main, etc.
+Dentro de package interfaces, separarlos por funcionalidad, ya que no todas las clases hacen uso de ella.
+/*----------------------------------------------------------------------------------------*/
+> JOBS
+Marlene -> Codigo general del proyecto.
+Matias -> Comprobar codigo, formato y funcionalidad del programa.
+Vale -> Testear codigo y su correcto funcionamiento basado en lo pedido.
+NETBEANS 12.3
+/*----------------------------------------------------------------------------------------*/
+Github
+https://github.com/Arakito14/Fiscalia/
+Entrega Parte B
+https://docs.google.com/document/d/1Ziyic6sjI8BUmI57uaezCfIkohU_1mCFV-XJF0aTvjk/edit?usp=sharing
+/*--------------------------------------------FIN-----------------------------------------*/

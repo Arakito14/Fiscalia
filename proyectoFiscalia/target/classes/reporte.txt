@@ -401,3 +401,11 @@ Distrito:19
 ----------------------------------------------------------
 Esta causa aún no tiene procedimientos
 ----------------------------------------------------------
+Nombre Fiscal:Matias
+Rut:19669415-3
+Especialidad:Crimen organizado
+Distrito:2
+Causas:
+Este fiscal aun no tiene causas
+----------------------------------------------------------
+----------------------------------------------------------

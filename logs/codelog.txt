@@ -1,0 +1,150 @@
+/*--------------------------------------------Inicio-----------------------------------------*/
+All important tips and code will be presented here.
+/*----------------------------------------------------------------------------------------*/
+1.-En general evadir el uso de simbolos especiales como la ñ o el tilde, esto por mayor compatibilidad.
+/*----------------------------------------------------------------------------------------*/
+> QUICKMENU
+Verificacion = [V01]
+/*----------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------*/
+/*Metodo 1*/
+/*Dos mapas, "vacio" con filtros y "fiscalia" con todos los datos de Fiscal, que es lo que usamos para identificar lo que imprimir, el mapa*/ /*vacio es usado para la identificación, forEach es una Iteracion de Java 8.0 para Hashmap con una condicionante.*/
+
+vacio.forEach(
+	(key,value) -> {
+	if(value.equals(esp_filtro)){
+		Fiscal buscado = fiscales.get(key);
+		buscado.imprimirFiscal();
+
+                        }
+                    }
+            );
+        }
+		
+Metodo 2
+Standard.
+
+	map.forEach(
+		(k,v) -> {
+		if(value[....])
+		System.out.println("Key: "+ key +", Value: " + value);
+/*----------------------------------------------------------------------------------------*/
+/*Método para crear mapa de nombres desde archivo*/
+
+public static void mapaNombres(HashMap<String,String>nombres){
+    try{
+		File archivo= new File("src/main/resources/Fiscales.csv");//abrir archivo csv
+        try (Scanner lector = new Scanner(archivo)) {
+            while (lector.hasNextLine()) {//Leer una por una las líneas del archivo
+                String linea = lector.nextLine();
+                StringTokenizer partes=new StringTokenizer(linea,";");//Dividir la linea en partes para separar los elementos
+                Fiscal nuevo=new Fiscal();//Crear un fiscal para asignarle todos los atributos sacados de la linea
+                nuevo.setNombre(partes.nextToken(";"));
+                nuevo.setRut(partes.nextToken(";"));
+                nuevo.setEspecialidad(partes.nextToken(";"));
+                String aux= partes.nextToken(";");
+                String dist=partes.nextToken(";");
+                nuevo.setDistrito(Integer.parseInt(dist.replace(";"," ")));
+                /*Ingresar los datos en el mapa de nombres*/
+                nombres.put(nuevo.getRut(),nuevo.getNombre());
+            }}
+    }catch (FileNotFoundException e) {//Dice que hacer en caso de que no exista el archivo
+    System.out.println("No se ha encontrado el archivo de Fiscales");
+}
+/*----------------------------------------------------------------------------------------*/
+dis_str = Integer.toString(dis_int);
+/*----------------------------------------------------------------------------------------*/
+> HashMap <
+HashMap <String,Fiscal> fiscales
+protected HashMap<String,Fiscal> fiscales;
+fiscales=new HashMap<>();
+/*----------------------------------------------------------------------------------------*/
+> Ingresar al Mapa
+fiscales.put(nuevo.getRut(),nuevo);
+/*----------------------------------------------------------------------------------------*/
+> Loop and Retrieve <
+for (Entry<String, Fiscal> aux : fiscalia.fiscales.entrySet()) {
+	String key = aux.getKey();
+	Fiscal values = aux.getValue();
+	values.mostrar();
+	System.out.println("----------------------------------------------------------");
+}
+ex.2 for (Entry<String, Causa> aux : causas.entrySet()) {
+/*----------------------------------------------------------------------------------------*/
+> Loop and Retrieve Class Constructors <
+for (Entry<String, Fiscal> aux : fiscalia.fiscales.entrySet()) {
+	String key = aux.getKey();
+	Fiscal values = aux.getValue();
+	if(values.especialidad.equals(esp_filtro)){
+		values.mostrar();
+	System.out.println("----------------------------------------------------------");
+	}
+}
+/*----------------------------------------------------------------------------------------*/
+> Hierarchy <
+private Fiscal encargado;
+encargado = new Fiscal();
+String rut = encargado.getRut();
+Fiscal aux = fiscales.get(rut);
+encargado.mostrar();
+if (encargado.getRut().equals("")){ //No fiscal asignado a causa
+encargado = fiscales.get(rut);
+if(encargado==null){ //Fiscal no existe
+encargado = nuevo; // nuevo es nuevo rut ingresado
+nuevo.getCausasActuales().put(codigo, actual); //Ingreso a mapa
+Setter y Getter de Encargado
+Causa buscar = buscarCausa();
+buscar.modificarProcedimiento();
+/*----------------------------------------------------------------------------------------*/
+> Metodos de Verificacion [V01] <
+> esRut <
+System.out.println(RUT);
+String rut = LEER.nextLine();
+/*verificacion*/
+rut = esRut(rut);
+Fiscal buscado= fiscales.get(rut);
+
+> esDis <
+System.out.println(DIS);
+String dist = LEER.nextLine();
+int distrito;
+/*verificacion*/
+distrito = esDis(dist);
+
+> esEsp <
+System.out.println(CAUSA_ESP/FISCAL_ESP);
+mostrarOpciones();
+String esp_str = LEER.nextLine();
+int esp_int;
+/*verificacion*/
+esp_int = esEsp(esp_str);
+esp_str = asignarEspecialidad(esp_int);
+
+> esParticipante
+System.out.println(PROC_OPCION);
+String opcion_str = LEER.nextLine();
+int opcion;
+/*verificacion*/
+opcion = esParticipante(opcion);
+
+> esCodigo <
+System.out.println(CODIGO);
+String codigo = LEER.nextLine();
+/*verificacion*/
+codigo = esCodigo(codigo);
+boolean existe = causas.containsKey(codigo);
+Causa asignada = causas.get(codigo);
+
+> comprobarEstado <
+/*estado*/
+String estado;
+/*verificacion*/
+do {
+	System.out.println(ESTADO);
+	System.out.println("0-" + ABIERTA);
+	System.out.println("1-" + CERRADA);
+	System.out.println("2-" + ARCHIVADA);
+	int est = Integer.parseInt(LEER.nextLine());
+	estado = comprobarEstado(est);
+} while (estado == null);
+/*--------------------------------------------FIN-----------------------------------------*/

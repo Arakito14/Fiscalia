@@ -3,30 +3,23 @@
 Link de pre-revisiones en:
 > https://github.com/Arakito14/Fiscalia/releases
 > 
-Entrega Parcial 4 doc en:
-> https://docs.google.com/document/d/1ZiY4tmcvCiuxew4SV8POmcBYNNjuwto1NBpr3eXWH5A/edit
-> 
 
 Uso de documento zip:
 > Archivos de trabajo en -> "...\proyectoFiscalia\src\main\java\com\manzanitacreations\proyectofiscalia\"
 > 
 > Archivos de lectura y reporte (.csv, .txt) en -> "...\proyectoFiscalia\src\main\resources\"
 > 
-> Reporte Entrega 4 en -> "...\Documentos\Entrega Parcial 4.pdf\
+> Reporte, Diagrama UML y Mapa Conceptual en -> "...\reporte\"
 > 
-> Imagen UML en -> "...\Imagenes\Diagrama_UML_v2.0.png\"
+> changelog, codelog y TODO en "...\logs\"
 > 
 
 Ubicación de archivos:
-> Mapa Concpetual, UML y reporte se encuentra en "Documentos/"
+> Proyecto general de java se encuentra en la carpeta "...\proyectoFiscalia\"
 > 
-> changelogs, issuelogs, TODO y codelogs en "Docuementos/"
+> Archivos csv, "Fiscales.csv" y "causas.csv" de lectura se encuentran en la carpeta "...\resources\"
 > 
-> Proyecto general de java se encuentra en la carpeta "proyectoFiscalia/"
-> 
-> Archivos csv, "Fiscales.csv" y "causas.csv" de lectura se encuentran en la carpeta "resources/"
-> 
-> Archivo texto de reporte "reporte.txt" generado despues de cerrar el programa, se encuentran en la carpeta "resources/"
+> Archivo texto de reporte "reporte.txt" generado despues de cerrar el programa, se encuentran en la carpeta "...\resources\"
 > 
 > Package folder es llamado "com.manzanitacreations.proyectofiscalia/"
 > 

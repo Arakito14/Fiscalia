@@ -21,7 +21,6 @@ public class Fiscalia implements Formato, Especialidad {
     /*generales*/
     private HashMap<String, Causa> causas;
     private HashMap<String, Fiscal> fiscales;
-    public HashMap<String, Fiscal> fiscalesss;
 
     /*clase publica de mapas*/
     public Fiscalia() {

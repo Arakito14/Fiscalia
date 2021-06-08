@@ -404,8 +404,13 @@ Esta causa aún no tiene procedimientos
 Nombre Fiscal:Matias
 Rut:19669415-3
 Especialidad:Crimen organizado
-Distrito:2
+Distrito:1
 Causas:
-Este fiscal aun no tiene causas
+Codigo Causa:123456
+Rut Encargado:19669415-3
+Estado:Archivada
+Tipo de Caso:Crimen organizado
+Distrito:2
 ----------------------------------------------------------
+Esta causa aún no tiene procedimientos
 ----------------------------------------------------------

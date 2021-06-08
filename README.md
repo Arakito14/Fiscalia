@@ -19,7 +19,7 @@ Ubicación de archivos:
 > 
 > Archivos csv, "Fiscales.csv" y "causas.csv" de lectura se encuentran en la carpeta "...\resources\"
 > 
-> Archivo texto de reporte "reporte.txt" generado despues de cerrar el programa, se encuentran en la carpeta "...\resources\"
+> Archivo texto de reporte "reporte.txt", se encuentran en la carpeta "...\resources\"
 > 
 > Package folder es "com.manzanitacreations.proyectofiscalia"
 > 

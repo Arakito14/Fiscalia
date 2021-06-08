@@ -21,7 +21,7 @@ Ubicación de archivos:
 > 
 > Archivo texto de reporte "reporte.txt" generado despues de cerrar el programa, se encuentran en la carpeta "...\resources\"
 > 
-> Package folder es llamado "com.manzanitacreations.proyectofiscalia/"
+> Package folder es "com.manzanitacreations.proyectofiscalia"
 > 
 > Archivo Main es el archivo "ProyectoFiscalia.java" dentro de nuestro package folder
 > 

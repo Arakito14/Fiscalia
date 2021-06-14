@@ -23,8 +23,8 @@ NETBEANS 12.3
 /*----------------------------------------------------------------------------------------*/
 Github
 https://github.com/Arakito14/Fiscalia/
-Entrega Parte B
-https://docs.google.com/document/d/1Ziyic6sjI8BUmI57uaezCfIkohU_1mCFV-XJF0aTvjk/edit?usp=sharing
+Entrega Final
+https://docs.google.com/document/d/1uC4zq7VCUdAkppOOz4tnDxCzue_XMtYmJgJ_mWK6JSg/edit
 Entregas Parciales Drive
 https://drive.google.com/file/d/1ETWgmXbdpK5HqkN9ueJea0r8pINZxL4A/view
 /*--------------------------------------------FIN-----------------------------------------*/

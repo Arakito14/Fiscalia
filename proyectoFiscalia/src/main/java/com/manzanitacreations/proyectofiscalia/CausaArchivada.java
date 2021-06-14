@@ -21,17 +21,26 @@ public class CausaArchivada extends Causa{
         this.fechaArc=fechaArc;
         this.razonArc=razonArc;
     }
+    
+    public CausaArchivada(){
+        super();
+        fechaArc=new String();
+        razonArc=new String();
+    }
 //----------------------------------------------------------------------------//
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------//
     /*Muestra por pantalla la causa*/
+    @Override
     public void imprimirCausa() {
-        System.out.println("Codigo Causa:"+ getCodigo());
-        System.out.println("Estado:"+ getEstado());
-        System.out.println("Tipo de Caso:"+ getTipoCaso());
-        System.out.println("Distrito:"+ getDistrito());
+        System.out.println("Codigo Causa: "+ getCodigo());
+        System.out.println("Estado: "+ getEstado());
+        System.out.println("Fecha de archivacion: "+ fechaArc);
+        System.out.println("Razon de archivacion: "+ razonArc);
+        System.out.println("Tipo de Caso: "+ getTipoCaso());
+        System.out.println("Distrito: "+ getDistrito());
         if(getEncargado()!=null && !getEncargado().getRut().equals("")){
-           System.out.println("FISCAL_DIV");
+           System.out.println(FISCAL_DIV);
            getEncargado().mostrar(); 
         }else{
             System.out.println(DIVIDER);
@@ -39,37 +48,26 @@ public class CausaArchivada extends Causa{
         }
         System.out.println(DIVIDER);
     }
-    
-    /*Permite modificar el resultado de un procedimiento*/
-    public void modificarProcedimiento(){
-        System.out.println("Causa n°:"+ getCodigo());
-        mostrarProcedimientos();
-        System.out.println(PROC_CODIGO);
-        int num=Integer.parseInt(LEER.nextLine());
-        if(num<= getPeritajes().size()){
-            Procedimiento elegido= getPeritajes().get(num-1);
-            System.out.println(PROC_RESULTADO);
-            String nuevo= LEER.nextLine();
-            elegido.setResultado(nuevo);
-        }else{
-            System.out.println(INCORRECTO);
-        }
+
+ //----------------------------------------------------------------------------//
+//------------------------------Getter y Setter-------------------------------//
+//----------------------------------------------------------------------------//
+
+    public String getFechaArc() {
+        return fechaArc;
     }
-    
-    /*Elimina un procedimiento de la lista de procedimientos*/
-    public void eliminarProcedimiento(){
-        System.out.println(PROC_CODIGO);
-        int num=Integer.parseInt(LEER.nextLine());
-        if(num<= getPeritajes().size()){
-            getPeritajes().remove(num-1);
-            System.out.println(PROC_ELIMINAR);
-        }else{
-            System.out.println(INCORRECTO);
-        }
+
+    public void setFechaArc(String fechaArc) {
+        this.fechaArc = fechaArc;
     }
-    
-    public void imprimirFechaDeArchivacion(){}
-    public void imprimirCausaDeArchivacion(){}
+
+    public String getRazonArc() {
+        return razonArc;
+    }
+
+    public void setRazonArc(String razonArc) {
+        this.razonArc = razonArc;
+    }
     
 }
 //----------------------------------------------------------------------------//

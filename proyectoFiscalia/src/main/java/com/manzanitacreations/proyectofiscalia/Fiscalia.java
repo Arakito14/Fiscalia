@@ -1,9 +1,13 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import interfaces.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.regex.*;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /*
 *@author Marlene Lagos
@@ -11,10 +15,7 @@ import java.util.regex.*;
 *@author Matias Mujica
 *ICI3241-1
  */
-//----------------------------------------------------------------------------//
-//--------------------------------Father Class--------------------------------//
-//----------------------------------------------------------------------------//
-public class Fiscalia implements Formato, Especialidad {
+public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito, FormatoCodigo, FormatoEstado, FormatoFecha {
 
     /*usuario*/
     private String contrasena;
@@ -45,6 +46,10 @@ public class Fiscalia implements Formato, Especialidad {
             System.out.println("3-Por rut");
             System.out.println("4-Por especialidad");
             System.out.println("5-Por distrito");
+            System.out.println("6-Muestra causas(s) abierta(s) de fiscal buscado");
+            System.out.println("7-Muestra causas(s) cerradas(s) de fiscal buscado");
+            System.out.println("8-Muestra causas(s) archivadas(s) de fiscal buscado");
+            System.out.println("9-Muestra el Fiscal con el mayor número de casos");
             System.out.println("0-Regresar");
             System.out.println(DIVIDER);
             opcion = Integer.parseInt(LEER.nextLine());
@@ -84,6 +89,18 @@ public class Fiscalia implements Formato, Especialidad {
                     /*Volver a menu*/
                     imprimirFiscal(dis_int, fiscales);
                     break;
+                case 6:
+                    imprimirFiscal(opcion);
+                    break;
+                case 7:
+                    imprimirFiscal(opcion);
+                    break;
+                case 8:
+                    imprimirFiscal(opcion);
+                    break;
+                case 9:
+                    maxFiscal();
+                    break;
                 case 0:
                     System.out.println(REGRESO);
                     break;
@@ -104,9 +121,9 @@ public class Fiscalia implements Formato, Especialidad {
     }
 //Imprime Fiscal por Filtro a buscar
 
-    public void imprimirFiscal(String filtro, int flag, HashMap<String, Fiscal> fiscales) {
+    public void imprimirFiscal(String filtro, int atributoFiscal, HashMap<String, Fiscal> fiscales) {
         Fiscal fiscal = new Fiscal();
-        fiscal.imprimirFiscal(filtro, flag, fiscales);
+        fiscal.imprimirFiscal(filtro, atributoFiscal, fiscales);
     }
 //Imprime Fiscal por Distrito a buscar
 
@@ -114,10 +131,53 @@ public class Fiscalia implements Formato, Especialidad {
         Fiscal fiscal = new Fiscal();
         fiscal.imprimirFiscal(dis_filtro, fiscales);
     }
+//Imprime Fiscal buscado por tipo de causa
+
+    public void imprimirFiscal(int tipoCausa) {
+        System.out.println(RUT);
+        String rut = LEER.nextLine();
+        /*verificacion*/
+        rut = esRut(rut);
+        /*buscar*/
+        Fiscal buscado = fiscales.get(rut);
+        if (buscado == null) {
+            System.out.println(FISCAL_NO_EXISTE);
+        } else {
+            System.out.println(DIVIDER);
+            buscado.imprimirFiscal(tipoCausa);
+        }
+    }
+//Imprime Fiscal con el mayor numero de casos
+    
+    public void maxFiscal() {
+        System.out.println(DIVIDER);
+        int max = 0;
+        for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+            Fiscal values = aux.getValue();
+            values.maxFiscal(fiscales);
+        }
+        for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+            Fiscal values = aux.getValue();
+            for (Entry<String, Integer> abc : values.getCausasMax().entrySet()) {
+                if (values.getCausasMax() == null || abc.getValue() > 0) {
+                    max = abc.getValue();
+                }
+            }
+        }
+        for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+            Fiscal values = aux.getValue();
+            for (Entry<String, Integer> abc : values.getCausasMax().entrySet()) {
+                if (max == abc.getValue()) {
+                    values.mostrar();
+                    System.out.println(FISCAL_NUMERO_DE_CAUSAS + max);
+                }
+            }
+        }
+    }
+
 //----------------------------------Impresion---------------------------------//
 //Metodo para mostrar todos los fiscales del Hashtable fiscales
 //Sobre escritura de metodo
-
     public void mostrar() {
         System.out.println(DIVIDER);
         for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
@@ -251,9 +311,9 @@ public class Fiscalia implements Formato, Especialidad {
             fiscales.put(rut, nuevo);
         }
     }
+
 //-----------------------------------Elminar----------------------------------//
 //Elimina un fiscal de los mapas
-
     public void eliminarFiscal() {
         Fiscal eliminado = buscarFiscal();
         if (eliminado != null) {
@@ -307,7 +367,7 @@ public class Fiscalia implements Formato, Especialidad {
         /*buscar*/
         Causa buscar = causas.get(codigo);
         if (buscar != null) {
-            buscar.mostrarCausa();
+            buscar.imprimirCausa();
             buscar.mostrarProcedimientos();
             System.out.println(DIVIDER);
             return buscar;
@@ -326,7 +386,7 @@ public class Fiscalia implements Formato, Especialidad {
         codigo = esCodigo(codigo);
         Causa buscar = causas.get(codigo);
         if (buscar != null) {
-            buscar.mostrarCausa();
+            buscar.imprimirCausa();
             buscar.mostrarProcedimientos();
             System.out.println(DIVIDER);
         } else {
@@ -376,16 +436,16 @@ public class Fiscalia implements Formato, Especialidad {
                     causas.put(codigo, nueva);
                     break;
                 case CERRADA:
-                    System.out.println("Ingrese la fecha de cierre del caso. El formato debe ser DD/MM/AAAA");
-                    String fecha = LEER.nextLine();
+                    System.out.println("Ingrese la fecha de cierre del caso");
+                    String fecha = esFecha();
                     System.out.println("Ingrese la resolucion del caso");
                     String resolucion = LEER.nextLine();
                     CausaCerrada nuevaC = new CausaCerrada(codigo, estado, tipoCaso, distrito, fecha, resolucion);
                     causas.put(codigo, nuevaC);
                     break;
                 case ARCHIVADA:
-                    System.out.println("Ingrese la fecha de archivacion del caso. El formato debe ser DD/MM/AAAA");
-                    String fechaArc = LEER.nextLine();
+                    System.out.println("Ingrese la fecha de archivacion del caso");
+                    String fechaArc = esFecha();
                     System.out.println("Ingrese la razon por la que el caso se archiva");
                     String razon = LEER.nextLine();
                     CausaArchivada nuevaArc = new CausaArchivada(codigo, estado, tipoCaso, distrito, fechaArc, razon);
@@ -394,17 +454,21 @@ public class Fiscalia implements Formato, Especialidad {
         }
     }
 //-----------------------------------Elminar----------------------------------//    
-//Elimina la causa de todos los mapas
+//Elimina la causa de todos los mapas    
 
     public void eliminarCausa() {
         Causa eliminada = buscarCausa();
-        Fiscal encargado = fiscales.get(eliminada.getEncargado().getRut());
-        if (encargado != null) {
-            encargado.getCausasActuales().remove(eliminada.getCodigo());
-            eliminada.getPeritajes().clear();
+        if (eliminada != null) {
+            Fiscal encargado = fiscales.get(eliminada.getEncargado().getRut());
+            if (encargado != null) {
+                encargado.getCausasActuales().remove(eliminada.getCodigo());
+                eliminada.getPeritajes().clear();
+            }
+            causas.remove(eliminada.getCodigo());
+            System.out.println(CAUSA_ELIMINAR);
+        } else {
+            System.out.println(CAUSA_NO_EXISTE);
         }
-        causas.remove(eliminada.getCodigo());
-        System.out.println(CAUSA_ELIMINAR);
     }
 //Elimina una causa previamente seleccionada de todos los mapas
 
@@ -429,7 +493,7 @@ public class Fiscalia implements Formato, Especialidad {
         codigo = esCodigo(codigo);
         Causa buscar = causas.get(codigo);
         if (buscar != null) {
-            buscar.mostrarCausa();
+            buscar.imprimirCausa();
             buscar.mostrarProcedimientos();
             System.out.println(DIVIDER);
             nuevoProcedimiento(buscar);
@@ -523,13 +587,16 @@ public class Fiscalia implements Formato, Especialidad {
                 CausaAbierta abierta_cerrada = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());
                 abierta_cerrada.setEncargado(buscar.getEncargado());
                 abierta_cerrada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
-                eliminarCausa(buscar);                
+                eliminarCausa(buscar);
                 break;
             case ARCHIVADA:
-                CausaAbierta abierta_archivada = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());                
+                CausaAbierta abierta_archivada = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());
                 abierta_archivada.setEncargado(buscar.getEncargado());
                 abierta_archivada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
-                eliminarCausa(buscar);                
+                eliminarCausa(buscar);
+                break;
+            default:
+                System.out.println("Esta causa ya se encuentra " + buscar.getEstado() + ".No se han realizado cambios");
                 break;
         }
     }
@@ -544,11 +611,11 @@ public class Fiscalia implements Formato, Especialidad {
                 CausaCerrada cerrada_abierta = new CausaCerrada(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito(), fecha, resolucion);
                 cerrada_abierta.setEncargado(buscar.getEncargado());
                 cerrada_abierta.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
-                eliminarCausa(buscar);                
+                eliminarCausa(buscar);
                 break;
             case ARCHIVADA:
-                System.out.println("Ingrese la fecha de cierre del caso. El formato debe ser DD/MM/AAAA");
-                String fechaTerm = LEER.nextLine();
+                System.out.println("Ingrese la fecha de cierre del caso");
+                String fechaTerm = esFecha();
                 System.out.println("Ingrese la resolucion del caso");
                 String resultado = LEER.nextLine();
                 CausaCerrada cerrada_archivada = new CausaCerrada(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito(), fechaTerm, resultado);
@@ -556,12 +623,15 @@ public class Fiscalia implements Formato, Especialidad {
                 cerrada_archivada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
                 eliminarCausa(buscar);
                 break;
+            default:
+                System.out.println("Esta causa ya se encuentra " + buscar.getEstado() + ".No se han realizado cambios");
+                break;
         }
     }
 
     public void archivarCausa(String estadoOriginal, Causa buscar) {
-        System.out.println("Ingrese la fecha de archivacion del caso. El formato debe ser DD/MM/AAAA");
-        String fechaArc = LEER.nextLine();
+        System.out.println("Ingrese la fecha de archivacion del caso");
+        String fechaArc = esFecha();
         System.out.println("Ingrese la razon por la que el caso se archiva");
         String razon = LEER.nextLine();
         CausaArchivada archivada = new CausaArchivada(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito(), fechaArc, razon);
@@ -569,8 +639,35 @@ public class Fiscalia implements Formato, Especialidad {
         archivada.setPeritajes((LinkedList<Procedimiento>) buscar.getPeritajes().clone());
         eliminarCausa(buscar);
     }
+
 //----------------------------------------------------------------------------//
-//-----------------------Override Interfaz Formato.java-----------------------//
+//------------------------------Getter y Setter-------------------------------//
+//----------------------------------------------------------------------------//
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public HashMap<String, Fiscal> getFiscales() {
+        return fiscales;
+    }
+
+    public void setFiscales(HashMap<String, Fiscal> fiscales) {
+        this.fiscales = fiscales;
+    }
+
+    public HashMap<String, Causa> getCausas() {
+        return causas;
+    }
+
+    public void setCausas(HashMap<String, Causa> causas) {
+        this.causas = causas;
+    }
+//----------------------------------------------------------------------------//
+//-----------------------Implementacion Interfaces------------------------//
 //----------------------------------------------------------------------------//
 
     @Override
@@ -593,7 +690,7 @@ public class Fiscalia implements Formato, Especialidad {
                 asignada = VIOLENCIA_INTRAFAMILIAR;
                 break;
             case 6:
-                asignada = NARCOTRAFICO;
+                asignada = TRAFICO_DE_DROGAS;
                 break;
             case 7:
                 asignada = CORRUPCION;
@@ -614,7 +711,7 @@ public class Fiscalia implements Formato, Especialidad {
         System.out.println("3-" + RESPONSABILIDAD_ADOLESCENTE);
         System.out.println("4-" + DELITOS_VIOLENTOS);
         System.out.println("5-" + VIOLENCIA_INTRAFAMILIAR);
-        System.out.println("6-" + NARCOTRAFICO);
+        System.out.println("6-" + TRAFICO_DE_DROGAS);
         System.out.println("7-" + CORRUPCION);
         System.out.println("8-" + DELITOS_SEXUALES);
         System.out.println(DIVIDER);
@@ -762,32 +859,42 @@ public class Fiscalia implements Formato, Especialidad {
         return opcion_int;
     }
 
-//----------------------------------------------------------------------------//
-//------------------------------Getter y Setter-------------------------------//
-//----------------------------------------------------------------------------//
-    public String getContrasena() {
-        return contrasena;
+    @Override
+    public String esFecha() {
+        boolean result;
+        String fecha = new String();
+        do {
+            result = true;
+            System.out.println("Ingrese el año");
+            int anio = Integer.parseInt(LEER.nextLine());
+            System.out.println("Ingrese el numero correspondiente al mes");
+            int mes = Integer.parseInt(LEER.nextLine());
+            System.out.println("Ingrese el dia");
+            int dia = Integer.parseInt(LEER.nextLine());
+            //dia=esDia(dia,mes, esBisiesto(anio));
+
+            if (anio < 1900 || anio > 2100) {
+                System.out.println("No se permiten años anteriores al 1900 o posteriores al 2100");
+                result = false;
+            }
+
+            try {
+                LocalDate today = LocalDate.of(anio, mes, dia);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATRON_FECHA);
+                fecha = formatter.format(today);
+            } catch (DateTimeException e) {
+                System.out.println(INCORRECTO);
+                result = false;
+            }
+        } while (!result);
+        return fecha;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    @Override
+    public boolean confirmar(String rut) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public HashMap<String, Fiscal> getFiscales() {
-        return fiscales;
-    }
-
-    public void setFiscales(HashMap<String, Fiscal> fiscales) {
-        this.fiscales = fiscales;
-    }
-
-    public HashMap<String, Causa> getCausas() {
-        return causas;
-    }
-
-    public void setCausas(HashMap<String, Causa> causas) {
-        this.causas = causas;
-    }
 }
 //----------------------------------------------------------------------------//
 //-------------------------------------Fin------------------------------------//

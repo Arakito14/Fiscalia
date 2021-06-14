@@ -19,11 +19,18 @@ public class CausaCerrada extends Causa{
         this.fechaTerm = fechaTerm;
         this.resultado = resultado;
     }
+    
+    public CausaCerrada(){
+        super();
+        fechaTerm=new String();
+        resultado=new String();
+    }
 //----------------------------------------------------------------------------//
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------// 
 
     /*Muestra por pantalla la causa*/
+    @Override
     public void imprimirCausa() {
         System.out.println("Codigo Causa:" + getCodigo());
         System.out.println("Estado:" + getEstado());
@@ -36,8 +43,31 @@ public class CausaCerrada extends Causa{
             System.out.println(DIVIDER);
             System.out.println(CAUSA_NO_FISCAL);
         }
+        System.out.println("Fecha de termino: " + fechaTerm);
+        System.out.println("Resolucion del caso: " + resultado);
         System.out.println(DIVIDER);
     }
+    
+ //----------------------------------------------------------------------------//
+//------------------------------Getter y Setter-------------------------------//
+//----------------------------------------------------------------------------//
+
+    public String getFechaTerm() {
+        return fechaTerm;
+    }
+
+    public void setFechaTerm(String fechaTerm) {
+        this.fechaTerm = fechaTerm;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
+    
 }
 //----------------------------------------------------------------------------//
 //-------------------------------------Fin------------------------------------//

@@ -1,5 +1,7 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import ventanas.*;
+import interfaces.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -8,6 +10,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
+import  java.awt.*;
+import java.awt.event.ActionEvent;
 
 /*
 *@author Marlene Lagos
@@ -18,111 +22,17 @@ import java.util.StringTokenizer;
 //----------------------------------------------------------------------------//
 //------------------------------------Main------------------------------------//
 //----------------------------------------------------------------------------//
-public class ProyectoFiscalia {
+public class ProyectoFiscalia implements FormatoMenu,FormatoEstado {
 
-    /*formato*/
-    private static final String REPORTE = "src/main/resources/reporte.txt";
-    private static final String DIVIDER = "----------------------------------------------------------";
-    private static final String FISCALES = "src/main/resources/Fiscales.csv";
-    private static final String CAUSAS = "src/main/resources/causas.csv";
-    private static final String ERROR = "Se ah producido un error, intente nuevamente";
-    private static final String FISCAL_DIV = "Fiscales:";
-    private static final String CAUSA_DIV = "Causas:";
-    private static final String EXIT = "Hasta Pronto";
 
     /*principal*/
     public static void main(String[] args) throws IOException {
-        /*casting*/
-        Fiscalia fiscalia = new Fiscalia();
-        /*lectura archivos .csv*/
-        leerFiscales(fiscalia.getFiscales());
-        leerCausas(fiscalia.getCausas(), fiscalia.getFiscales());
-//----------------------------------------------------------------------------//
-//------------------------------------Menu------------------------------------//
-//----------------------------------------------------------------------------//
-        int opcion;
-        do {
-            Scanner leer = new Scanner(System.in);
-            System.out.println("                           Programa fiscalía");
-            System.out.println(DIVIDER);
-            System.out.println("¿Que desea hacer?");
-            System.out.println("1-Ver los fiscales");
-            System.out.println("2-Ver las causas");
-            System.out.println("3-Buscar fiscal");
-            System.out.println("4-Buscar causa");
-            System.out.println("5-Agregar fiscal nuevo");
-            System.out.println("6-Agregar causa nueva");
-            System.out.println("7-Agregar procedimiento a una causa");
-            System.out.println("8-Asignar una causa a un fiscal");
-            System.out.println("9-Modificar el distrito de un fiscal");
-            System.out.println("10-Modificar el estado de una causa");
-            System.out.println("11-Cambiar el fiscal encargado de una causa");
-            System.out.println("12-Cambiar el resultado de un procedimiento");
-            System.out.println("13-Eliminar un fiscal");
-            System.out.println("14-Eliminar una causa");
-            System.out.println("15-Eliminar un procedimiento");
-            System.out.println("16-Buscar Fiscal por filtro de busqueda");
-            System.out.println("0-Salir del programa");
-            System.out.println(DIVIDER);
-            opcion = Integer.parseInt(leer.nextLine());
-            switch (opcion) {
-                case 1:
-                    fiscalia.mostrar();
-                    break;
-                case 2:
-                    fiscalia.mostrarCausas();
-                    break;
-                case 3:
-                    fiscalia.buscarFiscal();
-                    break;
-                case 4:
-                    fiscalia.buscarCausa();
-                    break;
-                case 5:
-                    fiscalia.nuevoFiscal();
-                    break;
-                case 6:
-                    fiscalia.nuevaCausa();
-                    break;
-                case 7:
-                    fiscalia.nuevoProcedimiento();
-                    break;
-                case 8:
-                    fiscalia.asignarFiscal();
-                    break;
-                case 9:
-                    fiscalia.modificarDistrito();
-                    break;
-                case 10:
-                    fiscalia.modificarEstadoCausa();
-                    break;
-                case 11:
-                    fiscalia.cambiarFiscal();
-                    break;
-                case 12:
-                    fiscalia.modificarProcedimiento();
-                    break;
-                case 13:
-                    fiscalia.eliminarFiscal();
-                    break;
-                case 14:
-                    fiscalia.eliminarCausa();
-                    break;
-                case 15:
-                    fiscalia.eliminarProcedimiento();
-                    break;
-                case 16:
-                    fiscalia.filtros();
-                    break;
-                case 0:
-                    System.out.println(EXIT);
-                    break;
-                default:
-                    System.out.println(ERROR);
-            }
-        } while (opcion != 0);
-        /*exportar EXP*/
-        exportar(fiscalia.getFiscales(), fiscalia.getCausas(), fiscalia);
+         MenuPrincipal menu= new MenuPrincipal();
+         menu.setVisible(true);
+         menu.setResizable(false);
+         menu.setLocationRelativeTo(null);
+        leerFiscales(menu.getFiscalia().getFiscales());
+        leerCausas(menu.getFiscalia().getCausas(), menu.getFiscalia().getFiscales()); 
     }
 //----------------------------------------------------------------------------//
 //--------------------Lectura, Escritura y Mapas (ignorar)--------------------//
@@ -150,7 +60,7 @@ public class ProyectoFiscalia {
                 }
             }
         } catch (FileNotFoundException e) {//Dice que hacer en caso de que no exista el archivo
-            System.out.println(ERROR);
+            System.out.println(ERROR_MENU);
         }
     }
 
@@ -162,20 +72,50 @@ public class ProyectoFiscalia {
                 while (lector.hasNextLine()) {//Dividir la linea en partes para separar los elementos
                     String linea = lector.nextLine();
                     StringTokenizer partes = new StringTokenizer(linea, ";");//Dividir la linea en partes para separar los elementos
-                    Causa nuevo = new Causa() {};//Crear una causa para asignarle todos los atributos sacados de la linea
-                    nuevo.setCodigo(partes.nextToken(";"));
+                    
+                    String cod=partes.nextToken(";");
                     String fiscal = partes.nextToken(";");
                     Fiscal aux = fiscales.get(fiscal);//Busca al Fiscal de esa causa si es que ya está asignado
-                    nuevo.setEncargado(aux);
-                    nuevo.setEstado(partes.nextToken(";"));
-                    nuevo.setTipoCaso(partes.nextToken(";"));
-                    nuevo.setDistrito(Integer.parseInt(partes.nextToken(";")));
-                    aux.agregarCausa(nuevo);
-                    causas.put(nuevo.getCodigo(), nuevo);//Ingresa la Causa al mapa causas
+                    String est=partes.nextToken(";");
+                    String tipo=partes.nextToken(";");
+                    int dis=Integer.parseInt(partes.nextToken(";"));
+                    switch (est){
+                        case ABIERTA:
+                            CausaAbierta nuevaCA=new CausaAbierta();
+                            nuevaCA.setCodigo(cod);
+                            nuevaCA.setEncargado(aux);
+                            nuevaCA.setEstado(est);
+                            nuevaCA.setTipoCaso(tipo);
+                            nuevaCA.setDistrito(dis);
+                            aux.agregarCausa(nuevaCA);
+                            causas.put(nuevaCA.getCodigo(),nuevaCA);
+                            break;
+                        case CERRADA:
+                            CausaCerrada nuevaCC=new CausaCerrada();
+                            nuevaCC.setCodigo(cod);
+                            nuevaCC.setEncargado(aux);
+                            nuevaCC.setEstado(est);
+                            nuevaCC.setTipoCaso(tipo);
+                            nuevaCC.setDistrito(dis);
+                            aux.agregarCausa(nuevaCC);
+                            causas.put(nuevaCC.getCodigo(),nuevaCC);
+                            break;
+                        case ARCHIVADA:
+                            CausaArchivada nuevaCAR=new CausaArchivada();
+                            nuevaCAR.setCodigo(cod);
+                            nuevaCAR.setEncargado(aux);
+                            nuevaCAR.setEstado(est);
+                            nuevaCAR.setTipoCaso(tipo);
+                            nuevaCAR.setDistrito(dis);
+                            aux.agregarCausa(nuevaCAR);
+                            causas.put(nuevaCAR.getCodigo(),nuevaCAR);
+                            break;
+                            
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println(ERROR);
+            System.out.println(ERROR_MENU);
         }
     }
 
@@ -212,8 +152,18 @@ public class ProyectoFiscalia {
                 writer.close();
             }
         } catch (IOException e) {
-            System.out.println(ERROR);
+            System.out.println(ERROR_MENU);
         }
+    }
+
+    @Override
+    public int esParticipante(String opcion_str) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String comprobarEstado(int est) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 //----------------------------------------------------------------------------//

@@ -1,10 +1,15 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import interfaces.*;
+import static interfaces.FormatoMenu.INCORRECTO;
+import static interfaces.FormatoMenu.LEER;
+import static interfaces.FormatoRut.PATRON_RUT;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 /*
 *@author Marlene Lagos
@@ -15,7 +20,8 @@ import java.util.Scanner;
 //----------------------------------------------------------------------------//
 //------------------------------Fiscalia Child--------------------------------//
 //----------------------------------------------------------------------------//
-public abstract class Causa extends Fiscalia {
+
+public abstract class Causa implements FormatoMenu,FormatoRut {
 
     /*Primary Key*/
     private String codigo;
@@ -51,7 +57,6 @@ public abstract class Causa extends Fiscalia {
 //----------------------------------------------------------------------------//
 
     /*Metodo mostrar causa basico*/
-    @Override
     public void mostrar() {
         System.out.println("Codigo Causa: " + codigo);
         System.out.println("Estado: " + estado);
@@ -59,21 +64,7 @@ public abstract class Causa extends Fiscalia {
         System.out.println("Distrito: " + distrito);
     }
 
-    /*Muestra por pantalla la causa*/
-    public void mostrarCausa() {
-        System.out.println("Codigo Causa: " + codigo);
-        System.out.println("Estado: " + estado);
-        System.out.println("Tipo de Caso: " + tipoCaso);
-        System.out.println("Distrito: " + distrito);
-        if (encargado != null && !encargado.getRut().equals("")) {
-            System.out.println(FISCAL_DIV);
-            encargado.mostrar();
-        } else {
-            System.out.println(DIVIDER);
-            System.out.println(CAUSA_NO_FISCAL);
-        }
-        System.out.println(DIVIDER);
-    }
+    abstract public void imprimirCausa();
 
     /*Metodo que muestra los procedimientos de una causa por pantalla*/
     public int mostrarProcedimientos() {
@@ -136,7 +127,6 @@ public abstract class Causa extends Fiscalia {
     }
 
     /*Permite modificar el resultado de un procedimiento*/
-    @Override
     public void modificarProcedimiento() {
         System.out.println("Causa n°:" + codigo);
         int flag = mostrarProcedimientos();
@@ -155,7 +145,6 @@ public abstract class Causa extends Fiscalia {
     }
 
     /*Elimina un procedimiento de la lista de procedimientos*/
-    @Override
     public void eliminarProcedimiento() {
         Scanner leer = new Scanner(System.in);
         System.out.println(PROC_CODIGO);
@@ -196,8 +185,6 @@ public abstract class Causa extends Fiscalia {
 //----------------------------------------------------------------------------//
 //------------------------------Getter y Setter-------------------------------//
 //----------------------------------------------------------------------------//
-
-    /*Causa*/
     public String getCodigo() {
         return codigo;
     }
@@ -246,6 +233,62 @@ public abstract class Causa extends Fiscalia {
 
     public void setPeritajes(LinkedList<Procedimiento> peritajes) {
         this.peritajes = peritajes;
+    }
+    
+    
+        @Override
+    public int esParticipante(String opcion_str) {
+               boolean esParticipante;
+        int opcion_int = 1;
+
+        do {
+            esParticipante = true;
+
+            try {
+                opcion_int = Integer.parseInt(opcion_str);
+
+                if (opcion_int > 1 || opcion_int < 0) {
+                    esParticipante = false;
+                    System.out.println(INCORRECTO);
+                    opcion_str = LEER.nextLine();
+                }
+            } catch (NumberFormatException e) {
+                esParticipante = false;
+                System.out.println(INCORRECTO);
+                opcion_str = LEER.nextLine();
+            }
+        } while (!esParticipante);
+
+        /*Retorna la opcion en formato correcto*/
+        return opcion_int;
+    }
+    @Override
+    public String esRut(String rut) {
+              boolean esRut;
+
+        do {
+            esRut = true;
+            try {
+                Matcher mat = PATRON_RUT.matcher(rut);
+                if (!mat.matches()) {
+                    esRut = false;
+                    System.out.println(INCORRECTO);
+                    rut = LEER.nextLine();
+                }
+            } catch (Exception e) {
+                esRut = false;
+                System.out.println(INCORRECTO);
+                rut = LEER.nextLine();
+            }
+        } while (!esRut);
+
+        /*Retorna rut en formato correcto*/
+        return rut;
+    }
+    
+     @Override
+    public boolean confirmar(String rut) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 //----------------------------------------------------------------------------//

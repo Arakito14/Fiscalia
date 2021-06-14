@@ -9,7 +9,7 @@ Uso de documento zip:
 > 
 > Archivos de lectura y reporte (.csv, .txt) en -> "...\proyectoFiscalia\src\main\resources\"
 > 
-> Reporte, Diagrama UML y Mapa Conceptual en -> "...\reporte\"
+> Reporte y Diagramas en -> "...\reporte\"
 > 
 > changelog, codelog y TODO en "...\logs\"
 > 
@@ -26,15 +26,5 @@ Ubicación de archivos:
 > Archivo Main es el archivo "ProyectoFiscalia.java" dentro de nuestro package folder
 > 
 > Resto de clases de proyecto se encuentrar en nuestro package folder
-
-Pequeña Introducción a diagrama y código:
-
-> Clase Main -> ProyectoFiscalia.java
-> 
-> Padre -> Fiscalia.java, implementa interfaces Formato.java & Especialidad.java para correcta escritura y confirmación de datos
-> 
-> Hijos -> Fiscal.java & Causa.java, la ultima es clase abstracta de las siguientes
-> 
-> Hijos de Causa.java -> Procedimientos.java, CausaAbierta.java, CausaCerrada.java y CausaArchivada.java
 
 *Programa fue testeado y ejecutado con "Netbeans IDE 12.3"*

@@ -147,4 +147,32 @@ do {
 	int est = Integer.parseInt(LEER.nextLine());
 	estado = comprobarEstado(est);
 } while (estado == null);
+/*----------------------------------------------------------------------------------------*/
+Cambio en Codigo
+-> Antiguo
+    public void eliminarCausa() {
+        Causa eliminada = buscarCausa();
+        Fiscal encargado = fiscales.get(eliminada.getEncargado().getRut());
+        if (encargado != null) {
+            encargado.getCausasActuales().remove(eliminada.getCodigo());
+            eliminada.getPeritajes().clear();
+        }
+        causas.remove(eliminada.getCodigo());
+        System.out.println(CAUSA_ELIMINAR);
+    }
+-> Nuevo
+	public void eliminarCausa() {
+        Causa eliminada = buscarCausa();
+        if(eliminada!=null){
+            Fiscal encargado = fiscales.get(eliminada.getEncargado().getRut());
+            if (encargado != null) {
+               encargado.getCausasActuales().remove(eliminada.getCodigo());
+               eliminada.getPeritajes().clear();
+            }
+            causas.remove(eliminada.getCodigo());
+           System.out.println(CAUSA_ELIMINAR);
+        }else{
+            System.out.println(CAUSA_NO_EXISTE);
+        }
+    }
 /*--------------------------------------------FIN-----------------------------------------*/

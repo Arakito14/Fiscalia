@@ -185,4 +185,23 @@ Nuevo
 > Añadido reporte 4 y UML actualizado
 > Añadido Readme.md actualizado
 > Filled some code on Causa's children methods
+/*----------------------------------------------------------------------------------------*/
+/*V2.2*/
+
+> New
+Removed public HashMap fiscaless, era usado para testeado.
+Interfaces cambiadas a Public
+Del reporte solo falta la parte 2.3, 3 y 4.1
+Patron RUT, reconocimiento K
+Patron Fecha
+Updated Formatos Generales de Interfaces
+Generación de Reporte en Menú
+Filtro de Busqueda en dos colecciones y con los criterios correspondientes
+EPB.2 Implementacion de al menos 3 ventanas gráficas(GUIs en AWT o SWING):1 ventana de menú, 1 ventana de agregar elemento y 1 ventana de listar elementos.
+EPB.3 Encapsulamiento y principios OO.
+Packages Main, Ventanas e Interfaces
+Causa como Clase Abstracta
+Cambio en codigo "eliminarCausa()"
+Updated Reporte Parte B
+Agregado Diagrama UML con distintas versiones para nuestros packages
 /*--------------------------------------------FIN-----------------------------------------*/

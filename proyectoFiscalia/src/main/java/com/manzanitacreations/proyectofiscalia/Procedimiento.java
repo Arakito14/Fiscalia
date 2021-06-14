@@ -11,7 +11,7 @@ import java.util.ArrayList;
 //----------------------------------------------------------------------------//
 //--------------------------------Causa Child---------------------------------//
 //----------------------------------------------------------------------------//
-public class Procedimiento extends Causa{
+public class Procedimiento{
 
     private String nombreProc;
     private ArrayList<String> participantes;

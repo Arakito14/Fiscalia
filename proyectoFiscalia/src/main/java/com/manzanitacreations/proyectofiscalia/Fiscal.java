@@ -1,5 +1,6 @@
 package com.manzanitacreations.proyectofiscalia;
 
+import interfaces.*;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -13,7 +14,7 @@ import java.util.Map.Entry;
 //----------------------------------------------------------------------------//
 //------------------------------Fiscalia Child--------------------------------//
 //----------------------------------------------------------------------------//
-public class Fiscal extends Fiscalia {
+public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
 
     /*Primary Key*/
     private String rut;
@@ -22,8 +23,9 @@ public class Fiscal extends Fiscalia {
     private String especialidad;
     /*Distrito*/
     private int distrito;
-    /*Causa Actual*/
+    /*Mapas*/
     private HashMap<String, Causa> causasActuales;
+    private HashMap<String, Integer> causasMax;
 
     public Fiscal() {
         rut = new String();
@@ -31,6 +33,7 @@ public class Fiscal extends Fiscalia {
         especialidad = new String();
         distrito = 0;
         causasActuales = new HashMap<>();
+        causasMax = new HashMap<>();
     }
 
     public Fiscal(String rut, String nombre, String especialidad, int distrito) {
@@ -39,6 +42,7 @@ public class Fiscal extends Fiscalia {
         this.especialidad = especialidad;
         this.distrito = distrito;
         causasActuales = new HashMap<>();
+        causasMax = new HashMap<>();
     }
 //----------------------------------------------------------------------------//
 //------------------------------Metodos Generales-----------------------------//
@@ -49,9 +53,7 @@ public class Fiscal extends Fiscalia {
         causasActuales.remove(codigo);
     }
 
-    /*Metodo sobre escritura mostrar*/
  /*Metodo mostrar Fiscal*/
-    @Override
     public void mostrar() {
         System.out.println("Nombre Fiscal: " + nombre);
         System.out.println("Rut: " + rut);
@@ -60,10 +62,9 @@ public class Fiscal extends Fiscalia {
     }
 
     /*Imprime Fiscal por Filtro a buscar*/
-    @Override
-    public void imprimirFiscal(String filtro, int flag, HashMap<String,Fiscal> fiscales) {
+    public void imprimirFiscal(String filtro, int atributoFiscal, HashMap<String,Fiscal> fiscales) {
         /*Nombre*/
-        if (flag == 2) {
+        if (atributoFiscal == 2) {
             System.out.println(DIVIDER);
             System.out.println("Nombre a buscar: " + filtro + "\nCargando...");
             System.out.println(DIVIDER);
@@ -76,7 +77,7 @@ public class Fiscal extends Fiscalia {
             }
         }
         /*RUT*/
-        if (flag == 3) {
+        if (atributoFiscal == 3) {
             System.out.println(DIVIDER);
             System.out.println("Rut a buscar: " + filtro + "\nCargando...");
             Fiscal buscado = fiscales.get(filtro);
@@ -90,7 +91,7 @@ public class Fiscal extends Fiscalia {
             System.out.println(DIVIDER);
         }
         /*Especialidad*/
-        if (flag == 4) {
+        if (atributoFiscal == 4) {
             System.out.println(DIVIDER);
             System.out.println("Especialidad a buscar: " + filtro + "\nCargando...");
             System.out.println(DIVIDER);
@@ -105,7 +106,6 @@ public class Fiscal extends Fiscalia {
     }
 
     /*Imprime Fiscal por Distrito a buscar*/
-    @Override
     public void imprimirFiscal(int dis_filtro, HashMap<String,Fiscal> fiscales) {
         System.out.println(DIVIDER);
         System.out.println("Distrito a buscar: " + dis_filtro + "\nCargando...");
@@ -117,6 +117,56 @@ public class Fiscal extends Fiscalia {
                 values.mostrar();
                 System.out.println(DIVIDER);
             }
+        }
+    }
+    
+    /*Imprime Fiscal por tipo de Causa*/
+    public void imprimirFiscal(int tipoCausa) {
+        //CausaArchivada archivada = new CausaArchivada(codigo, estado, tipoCaso, distrito, fechaArc, razon);
+        //CausaCerrada cerrada = new CausaCerrada(codigo, estado, tipoCaso, distrito, fecha, resolucion);
+        //CausaAbierta abierta = new CausaAbierta(values.getCodigo(), values.getEstado(), values.getTipoCaso(), values.getDistrito());
+        /*Abierta*/
+        if (tipoCausa == 6) {
+            for (Entry<String, Causa> aux : causasActuales.entrySet()) {
+            //for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+                Causa values = aux.getValue();
+                if (values.getEstado().equals(ABIERTA)) {
+                    values.mostrar();
+                    System.out.println(DIVIDER);
+                }
+            }
+        }
+        /*Cerrada*/
+        if (tipoCausa == 7) {
+            for (Entry<String, Causa> aux : causasActuales.entrySet()) {
+            //for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+                Causa values = aux.getValue();
+                if (values.getEstado().equals(CERRADA)) {
+                    values.mostrar();
+                    System.out.println(DIVIDER);
+                }
+            }
+        }
+        /*Archivada*/
+        if (tipoCausa == 8) {
+            for (Entry<String, Causa> aux : causasActuales.entrySet()) {
+            //for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+                Causa values = aux.getValue();
+                if (values.getEstado().equals(ARCHIVADA)) {
+                    values.mostrar();
+                    System.out.println(DIVIDER);
+                }
+            }
+        }
+    }
+        
+    public void maxFiscal(HashMap<String,Fiscal> fiscales){
+        int max=0;
+        for (Entry<String, Causa> aux : causasActuales.entrySet()) {
+            Causa values = aux.getValue();
+            String codigo = aux.getKey();
+            max++;
+            causasMax.put(codigo,max);
         }
     }
 
@@ -204,6 +254,35 @@ public class Fiscal extends Fiscalia {
 
     public void agregarCausa(Causa nueva) {
         causasActuales.put(nueva.getCodigo(), nueva);
+    }
+
+    public HashMap<String, Integer> getCausasMax() {
+        return causasMax;
+    }
+
+    public void setCausasMax(HashMap<String, Integer> causasMax) {
+        this.causasMax = causasMax;
+    }
+
+    /*Override*/
+    @Override
+    public int esParticipante(String opcion_str) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String esRut(String rut) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean confirmar(String rut) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String comprobarEstado(int est) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 //----------------------------------------------------------------------------//

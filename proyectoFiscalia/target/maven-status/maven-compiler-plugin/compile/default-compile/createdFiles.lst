@@ -1,10 +1,8 @@
 com\manzanitacreations\proyectofiscalia\Causa.class
+com\manzanitacreations\proyectofiscalia\Fiscalia.class
 com\manzanitacreations\proyectofiscalia\ProyectoFiscalia.class
+com\manzanitacreations\proyectofiscalia\CausaAbierta.class
+com\manzanitacreations\proyectofiscalia\Procedimiento.class
 com\manzanitacreations\proyectofiscalia\CausaCerrada.class
 com\manzanitacreations\proyectofiscalia\CausaArchivada.class
-com\manzanitacreations\proyectofiscalia\Formato.class
 com\manzanitacreations\proyectofiscalia\Fiscal.class
-com\manzanitacreations\proyectofiscalia\Fiscalia.class
-com\manzanitacreations\proyectofiscalia\CausaAbierta.class
-com\manzanitacreations\proyectofiscalia\Especialidad.class
-com\manzanitacreations\proyectofiscalia\Procedimiento.class

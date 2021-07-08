@@ -11,8 +11,8 @@ package com.manzanitacreations.proyectofiscalia;
 //----------------------------------------------------------------------------//
 public class CausaCerrada extends Causa{
 
-    String fechaTerm;
-    String resultado;
+    private String fechaTerm;
+    private String resultado;
 
     public CausaCerrada(String codigo, String estado, String tipoCaso, int distrito, String fechaTerm, String resultado) {
         super(codigo, estado, tipoCaso, distrito);
@@ -29,7 +29,6 @@ public class CausaCerrada extends Causa{
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------// 
 
-    /*Muestra por pantalla la causa*/
     @Override
     public void imprimirCausa() {
         System.out.println("Codigo Causa:" + getCodigo());

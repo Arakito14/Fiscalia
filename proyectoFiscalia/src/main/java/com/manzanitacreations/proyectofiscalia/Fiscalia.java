@@ -1,6 +1,12 @@
 package com.manzanitacreations.proyectofiscalia;
 
 import interfaces.*;
+import static interfaces.FormatoEstado.*;
+import static interfaces.FormatoMenu.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
@@ -8,6 +14,8 @@ import java.util.regex.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /*
 *@author Marlene Lagos
@@ -22,18 +30,22 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
     /*generales*/
     private HashMap<String, Causa> causas;
     private HashMap<String, Fiscal> fiscales;
+    private HashMap<String, Integer> causasMax;
 
     /*clase publica de mapas*/
     public Fiscalia() {
         fiscales = new HashMap<>();
         causas = new HashMap<>();
+        causasMax = new HashMap<>();
         contrasena = "admin";
     }
 //----------------------------------------------------------------------------//
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------//
-//-----------------------------Filtros de Busqueda----------------------------//    
-
+//-----------------------------Filtros de Busqueda----------------------------//  
+ /**
+  * Método que maneja los filtros de búsqueda del programa
+  */
     public void filtros() {
         int opcion;
         do {
@@ -60,14 +72,14 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
                 case 2:
                     System.out.println(NOMBRE);
                     String nombre_filtro = LEER.nextLine();
-                    imprimirFiscal(nombre_filtro, opcion, fiscales);
+                    imprimirFiscal(nombre_filtro, opcion);
                     break;
                 case 3:
                     System.out.println(RUT);
                     String rut_filtro = LEER.nextLine();
                     /*verificacion*/
                     rut_filtro = esRut(rut_filtro);
-                    imprimirFiscal(rut_filtro, opcion, fiscales);
+                    imprimirFiscal(rut_filtro, opcion);
                     break;
                 case 4:
                     System.out.println(FISCAL_ESP);
@@ -77,7 +89,7 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
                     /*verificacion*/
                     esp_int = esEsp(esp_str);
                     esp_str = asignarEspecialidad(esp_int);
-                    imprimirFiscal(esp_str, opcion, fiscales);
+                    imprimirFiscal(esp_str, opcion);
                     break;
                 case 5:
                     System.out.println(DIS);
@@ -87,7 +99,7 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
                     /*verificacion*/
                     dis_int = esDis(dis_str);
                     /*Volver a menu*/
-                    imprimirFiscal(dis_int, fiscales);
+                    imprimirFiscalDistrito(dis_int);
                     break;
                 case 6:
                     imprimirFiscal(opcion);
@@ -109,8 +121,10 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             }
         } while (opcion != 0);
     }
-//Imprime todos los Fiscales en el mapa
 
+ /**
+  * Imprime todos los Fiscales en el mapa
+  */
     public void imprimirFiscal() {
         System.out.println(DIVIDER);
         for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
@@ -119,20 +133,86 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             System.out.println(DIVIDER);
         }
     }
-//Imprime Fiscal por Filtro a buscar
 
-    public void imprimirFiscal(String filtro, int atributoFiscal, HashMap<String, Fiscal> fiscales) {
+/**
+ * Imprime Fiscal por Filtro a buscar
+ * @param filtro Filtro elegido por el usuario
+ * @param atributoFiscal Numero de atributo a filtrar
+ */
+    public void imprimirFiscal(String filtro, int atributoFiscal) {
         Fiscal fiscal = new Fiscal();
-        fiscal.imprimirFiscal(filtro, atributoFiscal, fiscales);
+        imprimirFiscalFiltro(filtro, atributoFiscal);
     }
-//Imprime Fiscal por Distrito a buscar
-
-    public void imprimirFiscal(int dis_filtro, HashMap<String, Fiscal> fiscales) {
+/**
+ * Imprime Fiscal por Distrito a buscar
+ * @param dis_filtro Numero del distrito a filtrar
+ */
+    public void imprimirFiscalDistrito(int dis_filtro) {
         Fiscal fiscal = new Fiscal();
-        fiscal.imprimirFiscal(dis_filtro, fiscales);
-    }
-//Imprime Fiscal buscado por tipo de causa
+        System.out.println(DIVIDER);
+        System.out.println("Distrito a buscar: " + dis_filtro + "\nCargando...");
+        System.out.println(DIVIDER);
 
+        for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+            Fiscal values = aux.getValue();
+            if (values.getDistrito() == dis_filtro) {
+                values.mostrar();
+                System.out.println(DIVIDER);
+            }
+        }
+    }
+
+    /**
+     * Imprime Fiscal por Filtro a buscar
+     * @param filtro
+     * @param atributoFiscal 
+     */
+    public void imprimirFiscalFiltro(String filtro, int atributoFiscal) {
+        /*Nombre*/
+        if (atributoFiscal == 2) {
+            System.out.println(DIVIDER);
+            System.out.println("Nombre a buscar: " + filtro + "\nCargando...");
+            System.out.println(DIVIDER);
+            for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+                Fiscal values = aux.getValue();
+                if (values.getNombre().equals(filtro)) {
+                    values.mostrar();
+                    System.out.println(DIVIDER);
+                }
+            }
+        }
+        /*RUT*/
+        if (atributoFiscal == 3) {
+            System.out.println(DIVIDER);
+            System.out.println("Rut a buscar: " + filtro + "\nCargando...");
+            Fiscal buscado = fiscales.get(filtro);
+            System.out.println(DIVIDER);
+            /*Mensaje en caso de no existir rut*/
+            if (buscado == null) {
+                System.out.println(FISCAL_NO_EXISTE);
+            } else {
+                buscado.mostrar();
+            }
+            System.out.println(DIVIDER);
+        }
+        /*Especialidad*/
+        if (atributoFiscal == 4) {
+            System.out.println(DIVIDER);
+            System.out.println("Especialidad a buscar: " + filtro + "\nCargando...");
+            System.out.println(DIVIDER);
+            for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
+                Fiscal values = aux.getValue();
+                if (values.getEspecialidad().equals(filtro)) {
+                    values.mostrar();
+                    System.out.println(DIVIDER);
+                }
+            }
+        }
+    }
+/**
+ * Imprime Fiscal buscado por tipo de causa
+ * @param tipoCausa Número del tipo de Causa a filtrar
+ */
     public void imprimirFiscal(int tipoCausa) {
         System.out.println(RUT);
         String rut = LEER.nextLine();
@@ -147,37 +227,57 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             buscado.imprimirFiscal(tipoCausa);
         }
     }
-//Imprime Fiscal con el mayor numero de casos
-    
+
+/**
+ * Imprime Fiscal con el mayor numero de casos
+ */
     public void maxFiscal() {
         System.out.println(DIVIDER);
         int max = 0;
         for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
             Fiscal values = aux.getValue();
-            values.maxFiscal(fiscales);
-        }
-        for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
-            Fiscal values = aux.getValue();
-            for (Entry<String, Integer> abc : values.getCausasMax().entrySet()) {
-                if (values.getCausasMax() == null || abc.getValue() > 0) {
+            for (Entry<String, Integer> abc : causasMax.entrySet()) {
+                int aux2=causasMax.get(values.getRut());
+                if (aux2>max) {
                     max = abc.getValue();
                 }
             }
         }
         for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
             Fiscal values = aux.getValue();
-            for (Entry<String, Integer> abc : values.getCausasMax().entrySet()) {
-                if (max == abc.getValue()) {
-                    values.mostrar();
-                    System.out.println(FISCAL_NUMERO_DE_CAUSAS + max);
-                }
+            int fisc=causasMax.get(values.getRut());
+            if(fisc==max){
+                 values.mostrar();
+                 System.out.println(FISCAL_NUMERO_DE_CAUSAS + max);
             }
         }
     }
+ 
+/**
+ * Llena el mapa causasMax
+ */
+ public void llenarMax(){
+     for(Entry<String,Fiscal> aux:fiscales.entrySet()){
+          Fiscal values = aux.getValue();
+          int cont= values.contarCausas();
+          causasMax.put(values.getRut(),cont);
+     }
+ }
+ 
+ /**
+  * Actualiza el mapa causasMax si algún fiscal tiene más o menos
+  * @param aux Objeto tipo Fiscal que contiene al fiscal a actualizar
+  */
+ public void actualizarMax(Fiscal aux){
+     int cont=aux.contarCausas();
+     causasMax.remove(aux.getRut());
+     causasMax.put(aux.getRut(), cont);
+ }
 
 //----------------------------------Impresion---------------------------------//
-//Metodo para mostrar todos los fiscales del Hashtable fiscales
-//Sobre escritura de metodo
+ /**
+  * Metodo para mostrar todos los fiscales del Hashtable fiscales (Sobre escritura de metodo)
+  */
     public void mostrar() {
         System.out.println(DIVIDER);
         for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
@@ -185,7 +285,7 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             values.mostrar();
             System.out.println(CAUSA_DIV);
             System.out.println(DIVIDER);
-            mostrarCausas(values.getCausasActuales());
+            values.mostrarCausas();
         }
     }
 //-----------------------------------Edicion----------------------------------//    
@@ -197,17 +297,42 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
         /*verificacion*/
         codigo = esCodigo(codigo);
         Causa asignada = causas.get(codigo);
+        Fiscal nuevo=new Fiscal();
         if (asignada != null) {
             System.out.println(DIVIDER);
             System.out.println("Causa n°: " + codigo);
             System.out.println(DIVIDER);
-            asignada.asignarFiscal(fiscales, asignada);
+            //nuevo=asignada.asignarFiscal(fiscales, asignada);
+            if(asignada.getEncargado().getRut().equals("")){
+                  System.out.println(FISCAL_REC);
+                  for (Entry<String, Fiscal> entry : fiscales.entrySet()){
+                        Fiscal aux = entry.getValue();
+                        if (aux.getEspecialidad().equals(asignada.getTipoCaso())) {
+                              aux.mostrar();
+                              System.out.println(DIVIDER);
+                          }
+                   }
+                  System.out.println(RUT);
+                  String rut = LEER.nextLine();
+                  /*verificacion*/
+                  rut = esRut(rut);
+                 asignada.setEncargado(fiscales.get(rut));
+                 if (asignada.getEncargado() == null) {
+                      System.out.println(FISCAL_NO_EXISTE);
+                   }
+                    asignada.getEncargado().agregarCausa(asignada);
+            }else{
+                System.out.println(CAUSA_TIENE_FISCAL);
+            }
         } else {
             System.out.println(CAUSA_NO_EXISTE);
         }
+        actualizarMax(nuevo);
     }
-//Metodo para buscar un fiscal y modificar su distrito
-
+    
+/**
+ * Metodo para buscar un fiscal y modificar su distrito
+ */
     public void modificarDistrito() {
         System.out.println(RUT);
         String rut = LEER.nextLine();
@@ -226,28 +351,40 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             buscado.setDistrito(distrito);
         }
     }
-//Metodo para cambiar el fiscal de una causa
 
+/**
+ * Metodo para cambiar el fiscal de una causa
+ */
     public void cambiarFiscal() {
         System.out.println(CODIGO);
         String codigo = LEER.nextLine();
         /*verificacion*/
         codigo = esCodigo(codigo);
         Causa asignada = causas.get(codigo);
+        Fiscal aux=asignada.getEncargado();
+        Fiscal nuevo=new Fiscal();
         if (asignada != null) {
             System.out.println(RUT);
             String rut = LEER.nextLine();
             /*verificacion*/
             rut = esRut(rut);
-            Fiscal nuevo = fiscales.get(rut);
-            asignada.reemplazarFiscal(nuevo, fiscales, asignada);
+            nuevo = fiscales.get(rut);
+            if(nuevo!=null){
+                 asignada.reemplazarFiscal(nuevo, fiscales, asignada);
+            }else{
+                System.out.println(FISCAL_NO_EXISTE);
+            }   
         } else {
             System.out.println(CAUSA_NO_EXISTE);
         }
+        actualizarMax(nuevo);
+        actualizarMax(aux);
     }
-//Modifica un procedimiento de una causa
 
-    public void modificarProcedimiento() {
+/**
+ * Modifica un procedimiento de una causa
+ */
+  public void modificarProcedimiento() {
         Causa buscar = buscarCausa();
         buscar.modificarProcedimiento();
     }
@@ -273,7 +410,7 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             System.out.println(DIVIDER);
             System.out.println(CAUSA_DIV);
             System.out.println(DIVIDER);
-            mostrarCausas(buscado.getCausasActuales());
+            buscado.mostrarCausas();
         }
         return buscado;
     }
@@ -316,23 +453,16 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
 //Elimina un fiscal de los mapas
     public void eliminarFiscal() {
         Fiscal eliminado = buscarFiscal();
-        if (eliminado != null) {
-            eliminarFiscal(eliminado.getCausasActuales());
+        //if (eliminado != null) {
+            eliminado.eliminarFiscal();
             fiscales.remove(eliminado.getRut());
+            causasMax.remove(eliminado.getRut());
             System.out.println(FISCAL_ELIMINAR);
-        } else {
+       /* } else {
             System.out.println(ELIMINAR_NO_EXISTE);
-        }
+        }*/
     }
-//Elimina el fiscal de todas las causas que tenía a su cargo
 
-    public void eliminarFiscal(HashMap<String, Causa> causas) {
-        for (Entry<String, Causa> entry : causas.entrySet()) {
-            Causa aux = entry.getValue();
-            aux.setEncargado(new Fiscal());
-        }
-        causas.clear();
-    }
 //----------------------------------------------------------------------------//
 //-------------------------------Metodos Causas-------------------------------//
 //----------------------------------------------------------------------------//
@@ -394,8 +524,9 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
         }
     }
 //----------------------------------Creacion----------------------------------//
-//Metodo para leer una causa e ingresarla a la HashTable causas
-
+/**
+ * Metodo para leer una causa e ingresarla a la HashTable causas
+ */
     public void nuevaCausa() {
         System.out.println(CODIGO);
         String codigo = LEER.nextLine();
@@ -453,16 +584,18 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             }
         }
     }
-//-----------------------------------Elminar----------------------------------//    
-//Elimina la causa de todos los mapas    
-
+//-----------------------------------Elminar----------------------------------//     
+/**
+ * Elimina la causa de todos los mapas
+ */
     public void eliminarCausa() {
         Causa eliminada = buscarCausa();
         if (eliminada != null) {
             Fiscal encargado = fiscales.get(eliminada.getEncargado().getRut());
             if (encargado != null) {
-                encargado.getCausasActuales().remove(eliminada.getCodigo());
+                encargado.quitarCausa(eliminada.getCodigo());
                 eliminada.getPeritajes().clear();
+                actualizarMax(encargado);
             }
             causas.remove(eliminada.getCodigo());
             System.out.println(CAUSA_ELIMINAR);
@@ -470,12 +603,15 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             System.out.println(CAUSA_NO_EXISTE);
         }
     }
-//Elimina una causa previamente seleccionada de todos los mapas
 
+/**
+ * Elimina una causa previamente seleccionada de todos los mapas
+ * @param eliminada Objeto tipo Causa a eliminar
+ */
     public void eliminarCausa(Causa eliminada) {
         Fiscal encargado = fiscales.get(eliminada.getEncargado().getRut());
         if (encargado != null) {
-            encargado.getCausasActuales().remove(eliminada.getCodigo());
+            encargado.quitarCausa(eliminada.getCodigo());
             eliminada.getPeritajes().clear();
         }
         causas.remove(eliminada.getCodigo());
@@ -484,8 +620,9 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
 //----------------------------Metodos Procedimiento---------------------------//
 //----------------------------------------------------------------------------//
 //----------------------------------Creacion----------------------------------//    
-//Metodo para buscar la causa a la que se le agregará un nuevo procedimiento
-
+/**
+ * Metodo para buscar la causa a la que se le agregará un nuevo procedimiento
+ */
     public void nuevoProcedimiento() {
         System.out.println(CODIGO);
         String codigo = LEER.nextLine();
@@ -501,8 +638,11 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             System.out.println(CAUSA_NO_EXISTE);
         }
     }
-//Metodo que agrega el nuevo procedimiento a la causa
 
+/**
+ * Metodo que agrega el nuevo procedimiento a la causa
+ * @param buscar Objeto tipo Causa al que se le agregará el procedimiento
+ */
     public void nuevoProcedimiento(Causa buscar) {
         System.out.println(PROC);
         String nombreProc = LEER.nextLine();
@@ -526,9 +666,10 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
         nuevo.setResultado(result);
         buscar.getPeritajes().addLast(nuevo);
     }
-//-----------------------------------Elminar----------------------------------//    
-//Busca la causa a la que se le va a eliminar un procedimiento
-
+//-----------------------------------Eliminar----------------------------------//     
+/**
+ * Busca la causa a la que se le va a eliminar un procedimiento
+ */
     public void eliminarProcedimiento() {
         Causa eliminada = buscarCausa();
         eliminada.eliminarProcedimiento();
@@ -536,7 +677,9 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
 //----------------------------------------------------------------------------//
 //------------------------------Metodo EstadoCausa----------------------------//
 //----------------------------------------------------------------------------//
-
+/**
+ * Modifica el Estado actual de una Causa
+ */
     public void modificarEstadoCausa() {
         System.out.println(CODIGO);
         String codigo = LEER.nextLine();
@@ -579,7 +722,11 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
             System.out.println(CAUSA_NO_EXISTE);
         }
     }
-
+/**
+ * Cambia el estado de una causa a abierta
+ * @param estadoOriginal String con el estado actual de la causa
+ * @param buscar Objeto tipo Causa al que se le cambiará el estado
+ */
     public void abrirCausa(String estadoOriginal, Causa buscar) {
         CausaAbierta abierta = new CausaAbierta(buscar.getCodigo(), buscar.getEstado(), buscar.getTipoCaso(), buscar.getDistrito());
         switch (estadoOriginal) {
@@ -600,7 +747,11 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
                 break;
         }
     }
-
+/**
+ * Cambia el estado de una Causa a cerrada
+ * @param estadoOriginal String con el estado actual de la causa
+ * @param buscar Objeto tipo Causa al que se le cambiará el estado
+ */
     public void cerrarCausa(String estadoOriginal, Causa buscar) {
         switch (estadoOriginal) {
             case ABIERTA:
@@ -628,7 +779,11 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
                 break;
         }
     }
-
+/**
+ * Cambia el estado de una Causa a archivada
+ * @param estadoOriginal String con el estado actual de la causa
+ * @param buscar 
+ */
     public void archivarCausa(String estadoOriginal, Causa buscar) {
         System.out.println("Ingrese la fecha de archivacion del caso");
         String fechaArc = esFecha();
@@ -889,6 +1044,130 @@ public class Fiscalia implements FormatoMenu, Especialidad, FormatoRut, Distrito
         } while (!result);
         return fecha;
     }
+    
+    
+    //----------------------------------------------------------------------------//
+//--------------------Lectura, Escritura y Mapas (ignorar)--------------------//
+//----------------------------------------------------------------------------//
+
+    /*Metodo para leer los fiscales desde archivo*/
+    public  void leerFiscales() {
+        try {
+            File archivo = new File(FISCALES);//abrir archivo csv
+            try ( Scanner lector = new Scanner(archivo)) {
+                while (lector.hasNextLine()) {//Leer una por una las líneas del archivo
+                    String linea = lector.nextLine();
+                    StringTokenizer partes = new StringTokenizer(linea, ";");//Dividir la linea en partes para separar los elementos
+                    Fiscal nuevo = new Fiscal();//Crear un fiscal para asignarle todos los atributos sacados de la linea
+                    nuevo.setNombre(partes.nextToken(";"));
+                    String rut = partes.nextToken(";");
+                    nuevo.setRut(rut);
+                    nuevo.setEspecialidad(partes.nextToken(";"));
+                    /*Aux de Causas*/
+                    String aux = partes.nextToken(";");
+                    String dist = partes.nextToken(";");
+                    nuevo.setDistrito(Integer.parseInt(dist.replace(";", " ")));
+                    /*Ingresar el fiscal en el mapa de fiscales*/
+                    fiscales.put(nuevo.getRut(), nuevo);
+                }
+            }
+        } catch (FileNotFoundException e) {//Dice que hacer en caso de que no exista el archivo
+            System.out.println(ERROR_MENU);
+        }
+    }
+
+    /*Metodo para leer las causas desde archivo*/
+    public  void leerCausas() {
+        try {
+            File archivo = new File(CAUSAS);//Leer una por una las líneas del archivo
+            try ( Scanner lector = new Scanner(archivo)) {
+                while (lector.hasNextLine()) {//Dividir la linea en partes para separar los elementos
+                    String linea = lector.nextLine();
+                    StringTokenizer partes = new StringTokenizer(linea, ";");//Dividir la linea en partes para separar los elementos
+                    
+                    String cod=partes.nextToken(";");
+                    String fiscal = partes.nextToken(";");
+                    Fiscal aux = fiscales.get(fiscal);//Busca al Fiscal de esa causa si es que ya está asignado
+                    String est=partes.nextToken(";");
+                    String tipo=partes.nextToken(";");
+                    int dis=Integer.parseInt(partes.nextToken(";"));
+                    switch (est){
+                        case ABIERTA:
+                            CausaAbierta nuevaCA=new CausaAbierta();
+                            nuevaCA.setCodigo(cod);
+                            nuevaCA.setEncargado(aux);
+                            nuevaCA.setEstado(est);
+                            nuevaCA.setTipoCaso(tipo);
+                            nuevaCA.setDistrito(dis);
+                            aux.agregarCausa(nuevaCA);
+                            causas.put(nuevaCA.getCodigo(),nuevaCA);
+                            break;
+                        case CERRADA:
+                            CausaCerrada nuevaCC=new CausaCerrada();
+                            nuevaCC.setCodigo(cod);
+                            nuevaCC.setEncargado(aux);
+                            nuevaCC.setEstado(est);
+                            nuevaCC.setTipoCaso(tipo);
+                            nuevaCC.setDistrito(dis);
+                            aux.agregarCausa(nuevaCC);
+                            causas.put(nuevaCC.getCodigo(),nuevaCC);
+                            break;
+                        case ARCHIVADA:
+                            CausaArchivada nuevaCAR=new CausaArchivada();
+                            nuevaCAR.setCodigo(cod);
+                            nuevaCAR.setEncargado(aux);
+                            nuevaCAR.setEstado(est);
+                            nuevaCAR.setTipoCaso(tipo);
+                            nuevaCAR.setDistrito(dis);
+                            aux.agregarCausa(nuevaCAR);
+                            causas.put(nuevaCAR.getCodigo(),nuevaCAR);
+                            break;
+                            
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(ERROR_MENU);
+        }
+    }
+
+    /*Crea un archivo txt donde se muestra un reporte de las colecciones anidadas*/
+    public  void exportar() {
+        try {
+            File f = new File(REPORTE);
+            if (f.exists()) {
+                f.delete();
+                f = new File(REPORTE);
+            }
+            escribirEnArchivo(f);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+//----------------------------------------------------------------------------//
+//----------------------------Metodos de Escritura----------------------------//
+//----------------------------------------------------------------------------//
+
+    /*Escribe los datos de las colecciones anidadas en un archivo*/
+ /*Recibe como parametros el archivo, los mapas a usar y la fiscalia*/
+    public  void escribirEnArchivo(File f) {
+        try {
+            try ( PrintWriter writer = new PrintWriter(f)) {
+                writer.println(FISCAL_DIV);
+                for (Entry<String, Fiscal> entry : fiscales.entrySet()) {
+                    Fiscal aux = (Fiscal) entry.getValue();
+                    aux.escribirFiscal(writer);//Muestra los fiscales por pantalla
+                    writer.println(CAUSA_DIV);
+                    aux.escribirCausas(writer);//muestra las causas de cada fiscal por pantalla
+                    writer.println(DIVIDER);
+                }
+                writer.close();
+            }
+        } catch (IOException e) {
+            System.out.println(ERROR_MENU);
+        }
+    }
+
 
     @Override
     public boolean confirmar(String rut) {

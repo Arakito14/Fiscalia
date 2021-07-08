@@ -204,4 +204,19 @@ Causa como Clase Abstracta
 Cambio en codigo "eliminarCausa()"
 Updated Reporte Parte B
 Agregado Diagrama UML con distintas versiones para nuestros packages
+/*----------------------------------------------------------------------------------------*/
+/*V3*/
+
+Documentacion
+Mostrar Causa FIX
+Arreglado el metodo eliminarFiscales
+Codigo Final.
+Reporte Final.
+Diagramas UML Finales.
+Encapsulamiento
+Diseño Conceptual 1.2
+Atributos Private
+Setter y Getters de Mapas eliminados
+Manejo de Excepciones con Try-Catch extendidos de Excepcion
+Patron Strategy
 /*--------------------------------------------FIN-----------------------------------------*/

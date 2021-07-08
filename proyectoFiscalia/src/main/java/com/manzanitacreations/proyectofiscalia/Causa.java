@@ -7,10 +7,8 @@ import static interfaces.FormatoRut.PATRON_RUT;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.regex.Matcher;
-
 /*
 *@author Marlene Lagos
 *@author Valentina San Martin
@@ -56,17 +54,24 @@ public abstract class Causa implements FormatoMenu,FormatoRut {
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------//
 
-    /*Metodo mostrar causa basico*/
+    /**
+     * Metodo mostrar causa basico
+     */
     public void mostrar() {
         System.out.println("Codigo Causa: " + codigo);
         System.out.println("Estado: " + estado);
         System.out.println("Tipo de Caso: " + tipoCaso);
         System.out.println("Distrito: " + distrito);
     }
-
+/**
+ * Muestra la información de la causa por pantalla
+ */
     abstract public void imprimirCausa();
 
-    /*Metodo que muestra los procedimientos de una causa por pantalla*/
+    /**
+     * Metodo que muestra los procedimientos de una causa por pantalla
+     * @return int, 0 si la causa no tiene procedimientos y 1 en cualquier otro caso
+     */
     public int mostrarProcedimientos() {
         int tam = peritajes.size();
         if (tam != 0) {
@@ -88,45 +93,25 @@ public abstract class Causa implements FormatoMenu,FormatoRut {
 
     }
 
-    /*Funcion para asignar un fiscal a la causa*/
- /*Recibe como parámetros el mapa de fiscales y la causa a asignar*/
-    public void asignarFiscal(HashMap<String, Fiscal> fiscales, Causa asignada) {
-        if (encargado.getRut().equals("")) {
-            System.out.println(FISCAL_REC);
-            for (Entry<String, Fiscal> entry : fiscales.entrySet()) {
-                Fiscal aux = entry.getValue();
-                if (aux.getEspecialidad().equals(tipoCaso)) {
-                    aux.mostrar();
-                    System.out.println(DIVIDER);
-                }
-            }
-            System.out.println(RUT);
-            String rut = LEER.nextLine();
-            /*verificacion*/
-            rut = esRut(rut);
-            encargado = fiscales.get(rut);
-            if (encargado == null) {
-                System.out.println(FISCAL_NO_EXISTE);
-            }
-            encargado.getCausasActuales().put(codigo, asignada);
-        } else {
-            System.out.println(CAUSA_TIENE_FISCAL);
-        }
-    }
-
-    /*Metodo para reemplazar al fiscal encargado de una causa*/
- /*Los parámetros son el fiscal nuevo, el mapa de fiscales y la causa*/
+ /**
+  * Metodo para reemplazar al fiscal encargado de una causa
+  * @param nuevo Objeto tipo Fiscal que contiene al nuevo encargado
+  * @param fiscales Mapa de fiscales
+  * @param actual Objeto tipo Causa que contiene la causa a modificar
+  */
     public void reemplazarFiscal(Fiscal nuevo, HashMap<String, Fiscal> fiscales, Causa actual) {
         String rut = encargado.getRut();
         Fiscal aux = fiscales.get(rut);
         if (aux != null) {
-            aux.getCausasActuales().remove(codigo);
+            aux.quitarCausa(codigo);
         }
         encargado = nuevo;
-        nuevo.getCausasActuales().put(codigo, actual);
+        encargado.agregarCausa(actual);
     }
 
-    /*Permite modificar el resultado de un procedimiento*/
+/**
+ * Permite modificar el resultado de un procedimiento
+ */
     public void modificarProcedimiento() {
         System.out.println("Causa n°:" + codigo);
         int flag = mostrarProcedimientos();
@@ -144,7 +129,9 @@ public abstract class Causa implements FormatoMenu,FormatoRut {
         }
     }
 
-    /*Elimina un procedimiento de la lista de procedimientos*/
+ /**
+  * Elimina un procedimiento de la lista de procedimientos
+  */
     public void eliminarProcedimiento() {
         Scanner leer = new Scanner(System.in);
         System.out.println(PROC_CODIGO);
@@ -160,7 +147,10 @@ public abstract class Causa implements FormatoMenu,FormatoRut {
 //----------------------------Metodos de Escritura----------------------------//
 //----------------------------------------------------------------------------//
 
-    /*Escribe los procedimientos de cada causa en el archivo reporte.Recibe de parametro el writer*/
+/**
+ * Escribe los procedimientos de cada causa en el archivo reporte
+ * @param writer PrintWriter que va a escribir en el archivo
+ */
     public void escribirProcedimientos(PrintWriter writer) {
         try {
             int tam = peritajes.size();

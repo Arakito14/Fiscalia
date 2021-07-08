@@ -13,5 +13,9 @@ package interfaces;
 public interface FormatoFecha {
     public static final String PATRON_FECHA="dd/MM/yyyy";
     
+    /**
+     * Comprueba que la fecha se haya ingresado en el formato correcto
+     * @return String la fecha una vez que ya es válida
+     */
     public String esFecha();
 }

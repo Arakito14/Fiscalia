@@ -2,18 +2,6 @@
 a TO-do List is presented here, with all relevant future updates and resources to read or watch
 /*----------------------------------------------------------------------------------------*/
 > TODO
-Mejorar documentacion
-Mostrar Causa FIX
-Filtro de Fiscal con mayor número de Casos, necesita más restricciones
-Si max es repetido retorna el primer valor encontrado.
-En caso de cambiar "> 0" a ">= 0" entregara el ultimo que encuentre.
-Filtro de Fiscal por tipo de Causa, falta acceder a fecha en cada tipo.
-Actualizar README.md con nueva estructura.
-ENTREGA FINAL.
-Codigo Final.
-Reporte Final.
-Diagramas UML Finales.
-Enviar en zip "Entrega_Final_Lagos_SanMartin_Alevropulos.zip"
 /*----------------------------------------------------------------------------------------*/
 > JOBS
 Marlene -> Codigo general del proyecto.

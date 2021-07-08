@@ -11,6 +11,7 @@ import static interfaces.FormatoEstado.CERRADA;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextArea;
 
 
 /**
@@ -116,27 +117,14 @@ public class ListarFiscales extends javax.swing.JFrame {
             imprimirFiscales.append("\n-------------------------------------------\n");
             imprimirFiscales.append("Causas Actuales\n");
             imprimirFiscales.append("-------------------------------------------\n");
-            for(Map.Entry<String,Causa> aux2 : fila.getCausasActuales().entrySet()){
-                Causa actual=aux2.getValue();
-                imprimirFiscales.append("Codigo: "+ actual.getCodigo()+"\nEstado: "+actual.getEstado()+"\nTipo de Caso "+actual.getTipoCaso()+"\nDistrito: "+actual.getDistrito());
-                switch (actual.getEstado()){
-                    case CERRADA:
-                        CausaCerrada cerrada=(CausaCerrada)actual;
-                        imprimirFiscales.append("Fecha de Termino:"+ cerrada.getFechaTerm()+"\nResultado: "+ cerrada.getResultado());
-                        break;
-                    case ARCHIVADA:
-                        CausaArchivada archivada=(CausaArchivada)actual;
-                        imprimirFiscales.append("Fecha de Termino:"+ archivada.getFechaArc()+"\nRazon de archivacion: "+ archivada.getRazonArc());
-                        break;
-                }
-               imprimirFiscales.append("\n-------------------------------------------"); 
-               imprimirFiscales.append("\n-------------------------------------------\n");
-            }
+            fila.mostrarCausasVentana(imprimirFiscales);
+
         }
    }
     public void recibirMapa(HashMap<String, Fiscal> fiscales){
         mapaAux=fiscales;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea imprimirFiscales;
     private javax.swing.JLabel jLabel1;

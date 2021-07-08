@@ -6,7 +6,6 @@
 package ventanas;
 
 import com.manzanitacreations.proyectofiscalia.*;
-import static com.manzanitacreations.proyectofiscalia.ProyectoFiscalia.exportar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -435,7 +434,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
-        exportar(fiscalia.getFiscales(), fiscalia.getCausas(), fiscalia);
+        fiscalia.exportar();
     }//GEN-LAST:event_jButton17ActionPerformed
   
     /**

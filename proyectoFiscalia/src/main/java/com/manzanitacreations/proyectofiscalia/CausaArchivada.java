@@ -13,8 +13,8 @@ import java.util.Scanner;
 //----------------------------------------------------------------------------//
 public class CausaArchivada extends Causa{
     
-    String fechaArc;
-    String razonArc;
+    private String fechaArc;
+    private String razonArc;
     
     public CausaArchivada(String codigo,String estado,String tipoCaso,int distrito,String fechaArc,String razonArc){
         super(codigo,estado,tipoCaso,distrito);
@@ -30,7 +30,6 @@ public class CausaArchivada extends Causa{
 //----------------------------------------------------------------------------//
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------//
-    /*Muestra por pantalla la causa*/
     @Override
     public void imprimirCausa() {
         System.out.println("Codigo Causa: "+ getCodigo());

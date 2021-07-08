@@ -1,9 +1,13 @@
 package com.manzanitacreations.proyectofiscalia;
 
 import interfaces.*;
+import static interfaces.FormatoEstado.ARCHIVADA;
+import static interfaces.FormatoEstado.CERRADA;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.JTextArea;
 
 /*
 *@author Marlene Lagos
@@ -25,7 +29,7 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
     private int distrito;
     /*Mapas*/
     private HashMap<String, Causa> causasActuales;
-    private HashMap<String, Integer> causasMax;
+
 
     public Fiscal() {
         rut = new String();
@@ -33,7 +37,6 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
         especialidad = new String();
         distrito = 0;
         causasActuales = new HashMap<>();
-        causasMax = new HashMap<>();
     }
 
     public Fiscal(String rut, String nombre, String especialidad, int distrito) {
@@ -42,18 +45,17 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
         this.especialidad = especialidad;
         this.distrito = distrito;
         causasActuales = new HashMap<>();
-        causasMax = new HashMap<>();
     }
 //----------------------------------------------------------------------------//
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------//
 
-    /*Metodo Causas*/
-    public void quitarCausa(String codigo) {
-        causasActuales.remove(codigo);
-    }
 
- /*Metodo mostrar Fiscal*/
+
+
+/**
+ * Metodo mostrar Fiscal
+ */
     public void mostrar() {
         System.out.println("Nombre Fiscal: " + nombre);
         System.out.println("Rut: " + rut);
@@ -61,66 +63,13 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
         System.out.println("Distrito: " + distrito);
     }
 
-    /*Imprime Fiscal por Filtro a buscar*/
-    public void imprimirFiscal(String filtro, int atributoFiscal, HashMap<String,Fiscal> fiscales) {
-        /*Nombre*/
-        if (atributoFiscal == 2) {
-            System.out.println(DIVIDER);
-            System.out.println("Nombre a buscar: " + filtro + "\nCargando...");
-            System.out.println(DIVIDER);
-            for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
-                Fiscal values = aux.getValue();
-                if (values.nombre.equals(filtro)) {
-                    values.mostrar();
-                    System.out.println(DIVIDER);
-                }
-            }
-        }
-        /*RUT*/
-        if (atributoFiscal == 3) {
-            System.out.println(DIVIDER);
-            System.out.println("Rut a buscar: " + filtro + "\nCargando...");
-            Fiscal buscado = fiscales.get(filtro);
-            System.out.println(DIVIDER);
-            /*Mensaje en caso de no existir rut*/
-            if (buscado == null) {
-                System.out.println(FISCAL_NO_EXISTE);
-            } else {
-                buscado.mostrar();
-            }
-            System.out.println(DIVIDER);
-        }
-        /*Especialidad*/
-        if (atributoFiscal == 4) {
-            System.out.println(DIVIDER);
-            System.out.println("Especialidad a buscar: " + filtro + "\nCargando...");
-            System.out.println(DIVIDER);
-            for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
-                Fiscal values = aux.getValue();
-                if (values.especialidad.equals(filtro)) {
-                    values.mostrar();
-                    System.out.println(DIVIDER);
-                }
-            }
-        }
-    }
 
-    /*Imprime Fiscal por Distrito a buscar*/
-    public void imprimirFiscal(int dis_filtro, HashMap<String,Fiscal> fiscales) {
-        System.out.println(DIVIDER);
-        System.out.println("Distrito a buscar: " + dis_filtro + "\nCargando...");
-        System.out.println(DIVIDER);
-
-        for (Entry<String, Fiscal> aux : fiscales.entrySet()) {
-            Fiscal values = aux.getValue();
-            if (values.distrito == dis_filtro) {
-                values.mostrar();
-                System.out.println(DIVIDER);
-            }
-        }
-    }
     
-    /*Imprime Fiscal por tipo de Causa*/
+
+ /**
+  * Imprime Fiscal por tipo de Causa
+  * @param tipoCausa int con el número correspondiente al tipo de Causa
+  */
     public void imprimirFiscal(int tipoCausa) {
         //CausaArchivada archivada = new CausaArchivada(codigo, estado, tipoCaso, distrito, fechaArc, razon);
         //CausaCerrada cerrada = new CausaCerrada(codigo, estado, tipoCaso, distrito, fecha, resolucion);
@@ -159,22 +108,22 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
             }
         }
     }
-        
-    public void maxFiscal(HashMap<String,Fiscal> fiscales){
-        int max=0;
-        for (Entry<String, Causa> aux : causasActuales.entrySet()) {
-            Causa values = aux.getValue();
-            String codigo = aux.getKey();
-            max++;
-            causasMax.put(codigo,max);
-        }
-    }
-
+   /**
+    * Cuenta el numero de causas de un fiscal
+    * @return int numero de causas
+    */ 
+   public int contarCausas(){
+          return causasActuales.size(); 
+    }    
 //----------------------------------------------------------------------------//
 //----------------------------Metodos de Escritura----------------------------//
 //----------------------------------------------------------------------------//
 
-    /*Escribe los fiscales en el archivo de reporte. recibe de parametro el writer*/
+
+ /**
+  * Escribe los fiscales en el archivo de reporte
+  * @param writer PrintWriter que va a escribir en el archivo
+  */
     public void escribirFiscal(PrintWriter writer) {
         try {
             writer.println("Nombre Fiscal:" + nombre);
@@ -186,7 +135,10 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
         }
     }
 
-    /*Escribe las causas de cada fiscal en el archivo de reporte. Recibe de parametro el writer*/
+/**
+ * Escribe las causas de cada fiscal en el archivo de reporte
+ * @param writer  PrintWriter que va a escribir en el archivo
+ */
     public void escribirCausas(PrintWriter writer) {
         int tamano = causasActuales.size();
         if (tamano != 0) {
@@ -204,6 +156,67 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
             writer.println(FISCAL_NO_CAUSA);
             writer.println(DIVIDER);
         }
+    }
+    
+
+/**
+ * Elimina el fiscal de todas las causas que tenía a su cargo
+ */
+    public void eliminarFiscal() {
+        for (Entry<String, Causa> entry : causasActuales.entrySet()) {
+            Causa aux = entry.getValue();
+            aux.setEncargado(new Fiscal());
+        }
+        causasActuales.clear();
+    }
+ /**
+  * Muestra todas las causas del fiscal
+  */  
+    public void mostrarCausas() {
+        for (Entry<String, Causa> aux : causasActuales.entrySet()) {
+            Causa values = aux.getValue();
+            values.mostrar();
+            System.out.println(DIVIDER);
+        }
+    }
+    
+    /**
+     * Agrega una causa al mapa de causasActuales
+     * @param nueva Objeto tipo Causa que guarda la causa a ingresar
+     */
+    public void agregarCausa(Causa nueva) {
+        causasActuales.put(nueva.getCodigo(), nueva);
+    }
+    
+    /**
+     * Quita una causa del mapa de causasActuales
+     * @param codigo String con el codigo de la causa a eliminar
+     */
+    public void quitarCausa(String codigo) {
+        causasActuales.remove(codigo);
+    }
+    
+  /**
+   * Muestra las causas del fiscal en la ventana ListarFiscales
+   * @param aux JTextArea en donde se presentará la información
+   */
+    public void mostrarCausasVentana(JTextArea aux){
+       for(Map.Entry<String,Causa> aux2 : causasActuales.entrySet()){
+                Causa actual=aux2.getValue();
+                aux.append("Codigo: "+ actual.getCodigo()+"\nEstado: "+actual.getEstado()+"\nTipo de Caso "+actual.getTipoCaso()+"\nDistrito: "+actual.getDistrito());
+                switch (actual.getEstado()){
+                    case CERRADA:
+                        CausaCerrada cerrada=(CausaCerrada)actual;
+                        aux.append("Fecha de Termino:"+ cerrada.getFechaTerm()+"\nResultado: "+ cerrada.getResultado());
+                        break;
+                    case ARCHIVADA:
+                        CausaArchivada archivada=(CausaArchivada)actual;
+                        aux.append("Fecha de Termino:"+ archivada.getFechaArc()+"\nRazon de archivacion: "+ archivada.getRazonArc());
+                        break;
+                }
+               aux.append("\n-------------------------------------------"); 
+               aux.append("\n-------------------------------------------\n");
+       }
     }
 //----------------------------------------------------------------------------//
 //------------------------------Getter y Setter-------------------------------//
@@ -241,27 +254,6 @@ public class Fiscal implements FormatoMenu, FormatoRut, FormatoEstado {
 
     public void setDistrito(int distrito) {
         this.distrito = distrito;
-    }
-
-    /*Causa Actual*/
-    public HashMap<String, Causa> getCausasActuales() {
-        return causasActuales;
-    }
-
-    public void setCausasActuales(HashMap causasActuales) {
-        this.causasActuales = causasActuales;
-    }
-
-    public void agregarCausa(Causa nueva) {
-        causasActuales.put(nueva.getCodigo(), nueva);
-    }
-
-    public HashMap<String, Integer> getCausasMax() {
-        return causasMax;
-    }
-
-    public void setCausasMax(HashMap<String, Integer> causasMax) {
-        this.causasMax = causasMax;
     }
 
     /*Override*/

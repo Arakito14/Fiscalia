@@ -52,5 +52,10 @@ public interface FormatoMenu {
     public static final String INCORRECTO = "El formato es incorrecto. Por favor intente de nuevo";
     public static final String ELIMINAR_NO_EXISTE = "No hay nada que eliminar";
     
+    /**
+     * Comprueba que la opción al ingresar participantes sea válida
+     * @param opcion_str String la opcion seleccionada
+     * @return int la opción seleccionada en formato númerico
+     */
     public int esParticipante(String opcion_str);
 }

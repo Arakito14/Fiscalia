@@ -1,10 +1,5 @@
 package com.manzanitacreations.proyectofiscalia;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.io.*;
-
 /*
 *@author Marlene Lagos
 *@author Valentina San Martin
@@ -27,7 +22,6 @@ public class CausaAbierta extends Causa {
 //------------------------------Metodos Generales-----------------------------//
 //----------------------------------------------------------------------------//    
 
-     /*Muestra por pantalla la causa*/
     @Override
     public void imprimirCausa() {
         System.out.println("Codigo Causa:"+ getCodigo());

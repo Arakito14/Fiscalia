@@ -5,12 +5,14 @@
  */
 package ventanas;
 
+import Excepciones.*;
 import com.manzanitacreations.proyectofiscalia.*;
 import static interfaces.FormatoMenu.*;
 import interfaces.FormatoRut;
 import static interfaces.FormatoRut.PATRON_RUT;
 import java.util.HashMap;
 import java.util.regex.Matcher;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,7 +51,6 @@ public class AgregarFiscal extends javax.swing.JFrame implements FormatoRut {
         jLabel5 = new javax.swing.JLabel();
         numDistrito = new javax.swing.JComboBox<>();
         guardarFiscal = new javax.swing.JButton();
-        volverMenu = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -92,13 +93,6 @@ public class AgregarFiscal extends javax.swing.JFrame implements FormatoRut {
             }
         });
 
-        volverMenu.setText("Volver al menú principal");
-        volverMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                volverMenuActionPerformed(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jLabel6.setText("Debe ser ingresado sin puntos y con guion");
 
@@ -128,8 +122,7 @@ public class AgregarFiscal extends javax.swing.JFrame implements FormatoRut {
                                 .addComponent(textoEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(textoRut)
                                 .addComponent(textoNombre)))
-                        .addComponent(guardarFiscal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(volverMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(guardarFiscal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(46, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -161,9 +154,7 @@ public class AgregarFiscal extends javax.swing.JFrame implements FormatoRut {
                     .addComponent(numDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(guardarFiscal)
-                .addGap(30, 30, 30)
-                .addComponent(volverMenu)
-                .addGap(26, 26, 26))
+                .addGap(88, 88, 88))
         );
 
         pack();
@@ -180,29 +171,20 @@ public class AgregarFiscal extends javax.swing.JFrame implements FormatoRut {
          especialidad=(String)textoEspecialidad.getSelectedItem();
          distrito=Integer.parseInt((String)numDistrito.getSelectedItem());
          boolean valido=confirmar(rut);
-         if(valido){
-             nuevo= new Fiscal(nombre,rut,especialidad,distrito); 
-             if(mapaAux.containsKey(rut)){
-                 RutExiste repetido=new RutExiste();
-                 repetido.setVisible(true);
-                 repetido.setResizable(false);
-                 repetido.setLocationRelativeTo(null);
-             }else{
+         try{
+             if(!valido) throw new RutInvalido();
+             nuevo= new Fiscal(rut,nombre,especialidad,distrito); 
+             try{
+                 if(mapaAux.containsKey(rut)) throw new RutExiste();
                  mapaAux.put(rut, nuevo);
                  System.out.println("El fiscal ha sido ingresado con exito");
-             } 
-         }else{
-             RutInvalido malo=new RutInvalido();
-             malo.setVisible(true);
-             malo.setResizable(false);
-             malo.setLocationRelativeTo(null);
+             }catch (RutExiste e){
+                 JOptionPane.showMessageDialog(null,e.getMessage());
+             }
+         }catch (RutInvalido e){
+             JOptionPane.showMessageDialog(null,e.getMessage());
          }
     }//GEN-LAST:event_guardarFiscalActionPerformed
-
-    private void volverMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverMenuActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-    }//GEN-LAST:event_volverMenuActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
         // TODO add your handling code here:
@@ -259,7 +241,6 @@ public class AgregarFiscal extends javax.swing.JFrame implements FormatoRut {
     private javax.swing.JComboBox<String> textoEspecialidad;
     private javax.swing.JTextField textoNombre;
     private javax.swing.JTextField textoRut;
-    private javax.swing.JButton volverMenu;
     // End of variables declaration//GEN-END:variables
 
     public void recibirMapa(HashMap<String, Fiscal> fiscales){

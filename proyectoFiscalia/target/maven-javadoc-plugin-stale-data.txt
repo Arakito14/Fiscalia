@@ -1,0 +1,70 @@
+@options
+@packages
+@argfile
+-classpath
+'C:/Users/Marlene/.m2/repository/com/opencsv/opencsv/5.4/opencsv-5.4.pom.sha512;C:/Users/Marlene/.m2/repository/org/kie/modules/net-sf-opencsv/6.5.0.Final/net-sf-opencsv-6.5.0.Final.pom'
+-encoding
+'UTF-8'
+-protected
+-source
+'1.8'
+-sourcepath
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2021. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'proyectoFiscalia 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'proyectoFiscalia 1.0-SNAPSHOT API'
+com.manzanitacreations.proyectofiscalia
+Excepciones
+interfaces
+ventanas
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/Causa.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/CausaAbierta.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/CausaArchivada.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/CausaCerrada.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/Fiscal.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/Fiscalia.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/Procedimiento.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/com/manzanitacreations/proyectofiscalia/ProyectoFiscalia.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/Excepciones/RutExiste.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/Excepciones/RutInvalido.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/Distrito.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/Especialidad.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/FormatoCodigo.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/FormatoEstado.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/FormatoFecha.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/FormatoMenu.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/interfaces/FormatoRut.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/ventanas/AgregarFiscal.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/ventanas/ListarFiscales.java'
+'C:/Users/Marlene/OneDrive/Escritorio/Fiscalia/proyectoFiscalia/src/main/java/ventanas/MenuPrincipal.java'
+C:\Users\Marlene\.m2\repository\com\opencsv\opencsv\5.4\opencsv-5.4.pom.sha512 = 1617202844939
+C:\Users\Marlene\.m2\repository\org\kie\modules\net-sf-opencsv\6.5.0.Final\net-sf-opencsv-6.5.0.Final.pom = 1617204332461
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\src\main\java = 1625105572642
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\allclasses-frame.html = 1625447612525
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\allclasses-noframe.html = 1625447612528
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\constant-values.html = 1625447612252
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\deprecated-list.html = 1625447612518
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\help-doc.html = 1625447612538
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\index-all.html = 1625447612513
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\index.html = 1625447612531
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\overview-frame.html = 1625447612178
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\overview-summary.html = 1625447612536
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\overview-tree.html = 1625447612467
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\package-list = 1625447612175
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\script.js = 1625447612547
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\serialized-form.html = 1625447612286
+C:\Users\Marlene\OneDrive\Escritorio\Fiscalia\proyectoFiscalia\target\site\apidocs\stylesheet.css = 1625447612544
